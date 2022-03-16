@@ -99,7 +99,8 @@
             returnUrl: null,
             pid: 0,
             sid: 0,
-            num:1
+            num: 1,
+            uid: 0,
         },
         created: function () {
             this.tips = getUrlParam("tips");
@@ -111,6 +112,8 @@
             this.sid = getUrlParam("sid");
 
             this.num = getUrlParam("num");
+
+            this.uid = getUrlParam("num");
 
         },
         methods: {
@@ -128,13 +131,24 @@
                         if (result.code == 10001) {
                             setCookieValue("userId", result.data.userId);
                             setCookieValue("token", result.msg);
+
                             setCookieValue("username", result.data.username);
                             setCookieValue("userImg", result.data.userImg);
 
                             if (this.returnUrl == null) {
                                 window.location.href = "index.html"
                             } else {
-                                window.location.href = this.returnUrl+"?pid="+this.pid +"&sid="+this.sid+"&num="+this.num;
+                                this.returnUrl = this.returnUrl + "?m=" + Math.random();
+                                if (this.pid != null) {
+                                    this.returnUrl = this.returnUrl + "&pid=" + this.pid
+                                }
+                                if (this.sid != null) {
+                                    this.returnUrl = this.returnUrl + "&sid=" + this.sid
+                                }
+                                if (this.num != null) {
+                                    this.returnUrl = this.returnUrl + "&num=" + this.num
+                                }
+                                window.location.href = this.returnUrl;
                             }
                         } else {
                             vm.tips = "账号或密码错误";
