@@ -14,4 +14,12 @@ import com.lmy.shopping.vo.ResultVo;
 public interface ShoppingCartService {
 
     ResultVo addShoppingCart(ShoppingCart shoppingCart);
+
+
+    ResultVo selectShoppingCartByUserId(int user_id);
+
+
+    ResultVo updateCartNum(int cartId,int cartNum);
+
+    ResultVo deleteCartByUserId(int cartId);
 }
