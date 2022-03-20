@@ -51,7 +51,7 @@
                 <div class="topMessage mini-cart">
                     <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
                             class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
-                            id="J_MiniCartNum" class="h">0</strong></a>
+                            id="J_MiniCartNum" class="h">{{this.shopCarts.length||0}}</strong></a>
                     </div>
                 </div>
                 <div class="topMessage favorite">
@@ -484,7 +484,7 @@
                                     <p>
                                         购物车
                                     </p>
-                                    <p class="cart_num ">0</p>
+                                    <p class="cart_num ">{{this.shopCarts.length}}</p>
                                 </div>
                                 <div id="asset " class="item ">
                                     <a href="# ">
@@ -639,8 +639,8 @@
             indexImgs: [],
             categories: [],
             recommendPro: [],
-            recommendCategories: []
-
+            recommendCategories: [],
+            shopCarts: [],
         },
 
         created: function () {
@@ -682,6 +682,7 @@
                     }, 100);
                 }
             });
+            
             //首页上新推荐数据请求
             axios.get(baseUrl + "product/recommendShow").then(res => {
                 let result = res.data;
@@ -698,6 +699,40 @@
 
                 }
             })
+
+            //购物车数量
+            var token = getCookieValue("token");
+            if (token == null) {
+                var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
+                window.location.href = encodeURI(loginUrl);
+            } else {
+                this.token = token;
+                var userId = getCookieValue("userId");
+                axios({
+                    url: baseUrl + "shoppingCart/list",
+                    method: "Get",
+                    headers: {
+                        token: token
+                    },
+                    params: {
+                        userId: userId,
+                    }
+                }).then(res => {
+                    console.log(res.data);
+                    if(res.data.code==10009 || res.data.code==10011){
+                        //token过期
+                        var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
+                        window.location.href = encodeURI(loginUrl);
+                    }else if(res.data.code==10000){
+                        //请求成功
+                        this.shopCarts = res.data.data;
+                        console.log(this.shopCarts,'this.shopCarts----->')
+                    }else if(res.data.code==99999){
+                        //请求失败
+                        alert("出错了")
+                    }
+                });
+            }
         },
         methods: {
             signOut: function () {

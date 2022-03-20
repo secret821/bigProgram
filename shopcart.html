@@ -25,10 +25,21 @@
 <div id="container">
     <!--顶部导航条 -->
     <div class="am-container header">
-        <ul class="message-l">
+        <!-- <ul class="message-l">
             <div class="topMessage">
                 <div class="menu-hd">
                     <a href="#" target="_top" class="h">亲，请登录</a>
+                    <a href="#" target="_top">免费注册</a>
+                </div>
+            </div>
+        </ul> -->
+        <ul class="message-l">
+            <div class="topMessage">
+                <div class="menu-hd" v-if="isLogin">
+                    {{username}},欢迎您
+                </div>
+                <div class="menu-hd" v-else>
+                    亲，请<a href="login.html" target="_top" class="h">登录</a>
                     <a href="#" target="_top">免费注册</a>
                 </div>
             </div>
@@ -44,7 +55,7 @@
             <div class="topMessage mini-cart">
                 <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
                         class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum"
-                                                                                              class="h">0</strong></a>
+                                                                                              class="h">{{shopCarts.length}}</strong></a>
                 </div>
             </div>
             <div class="topMessage favorite">
@@ -315,9 +326,16 @@
         data: {
             shopCarts: [],
             token: null,
+            username: "",
         },
         created: function () {
             var token = getCookieValue("token");
+            if (token != null && token != "") {
+                this.isLogin = true;
+                this.username = getCookieValue("username");
+                this.userImg = getCookieValue("userImg");
+            }
+
             if (token == null) {
                 var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
                 window.location.href = encodeURI(loginUrl);
@@ -333,7 +351,6 @@
                     params: {
                         userId: userId,
                     }
-
                 }).then(res => {
                     console.log(res.data);
                     if(res.data.code==10009 || res.data.code==10011){
