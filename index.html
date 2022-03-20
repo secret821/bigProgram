@@ -535,7 +535,7 @@
                                     <li class="qtitem ">
                                         <a href="#none "><span class="mpbtn_qrcode "></span></a>
                                         <div class="mp_qrcode " style="display:none; "><img
-                                                src="static/images/weixin.jpg"/><i
+                                                src="static/images/Wechatly.jpg"/><i
                                                 class="icon_arrow_white "></i></div>
                                     </li>
                                     <li class="qtitem ">
@@ -641,6 +641,7 @@
             recommendPro: [],
             recommendCategories: [],
             shopCarts: [],
+            token: null,
         },
 
         created: function () {
@@ -688,10 +689,11 @@
                 let result = res.data;
                 if (result.code == 10000) {
                     this.recommendPro = result.data.RecommendPro;
-
                 }
+                console.log(result,'result_______..')
             });
 
+            //分类菜单展示接口
             axios.get(baseUrl + "index/categoryProShow").then(res => {
                 let result = res.data;
                 if (result.code == 10000) {
@@ -701,10 +703,11 @@
             })
 
             //购物车数量
-            var token = getCookieValue("token");
+            // var token = getCookieValue("token");
             if (token == null) {
-                var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
-                window.location.href = encodeURI(loginUrl);
+                // var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
+                // window.location.href = encodeURI(loginUrl);
+                // return
             } else {
                 this.token = token;
                 var userId = getCookieValue("userId");
@@ -721,8 +724,8 @@
                     console.log(res.data);
                     if(res.data.code==10009 || res.data.code==10011){
                         //token过期
-                        var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
-                        window.location.href = encodeURI(loginUrl);
+                        // var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
+                        // window.location.href = encodeURI(loginUrl);
                     }else if(res.data.code==10000){
                         //请求成功
                         this.shopCarts = res.data.data;
@@ -744,7 +747,6 @@
         }
     });
 </script>
-
 
 </body>
 
