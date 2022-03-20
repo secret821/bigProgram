@@ -130,61 +130,67 @@
                                 <li class="td td-chk">
                                     <div class="cart-checkbox ">
                                         <input class="check" id="J_CheckBox_170769542747" name="items[]"
-                                               value="170769542747" type="checkbox">
+                                               v-model="opts" :value="index" type="checkbox">
                                         <label for="J_CheckBox_170769542747"></label>
                                     </div>
                                 </li>
                                 <li class="td td-item">
                                     <div class="item-pic">
-                                        <a :src="'static/pimgs/'+sc.productImg" target="_blank" :data-title="sc.productName"
+                                        <a :src="'static/pimgs/'+sc.productImg" target="_blank"
+                                           :data-title="sc.productName"
                                            class="J_MakePoint" data-point="tbcart.8.12">
                                             <img :src="'static/pimgs/'+sc.productImg" height="70"
                                                  class="itempic J_ItemImg"></a>
                                     </div>
                                     <div class="item-info">
                                         <div class="item-basic-info">
-                                            <a :href="'introduction.html?pid='+sc.productId" target="_blank" :title="sc.productName"
-                                               class="item-title J_MakePoint" data-point="tbcart.8.11">{{sc.productName}}</a>
+                                            <a :href="'introduction.html?pid='+sc.productId" target="_blank"
+                                               :title="sc.productName"
+                                               class="item-title J_MakePoint"
+                                               data-point="tbcart.8.11">{{sc.productName}}</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="td td-info">
-									<br/>
-									<span class="sku-line">{{sc.skuProps}}</span>
+                                    <br/>
+                                    <span class="sku-line">{{sc.skuProps}}</span>
                                 </li>
                                 <li class="td td-price">
                                     <div class="item-price price-promo-promo">
-										<div class="price-content">
-											<div class="price-line">
-												￥<em class="price-original">{{sc.originalPrice}}</em>
-											</div>
-											<div class="price-line">
-												<em class="J_Price price-now" tabindex="0">￥{{sc.sellPrice}}</em>
-											</div>
-										</div>
+                                        <div class="price-content">
+                                            <div class="price-line">
+                                                ￥<em class="price-original">{{sc.originalPrice}}</em>
+                                            </div>
+                                            <div class="price-line">
+                                                <em class="J_Price price-now" tabindex="0">￥{{sc.sellPrice}}</em>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="td td-amount">
                                     <div class="amount-wrapper ">
                                         <div class="item-amount ">
                                             <div class="sl">
-                                                <input class="min am-btn" name="" type="button" value="-" :data-id="index" @click="changeNum" data-oper="-"/>
-                                                <input class="text_box" name="" type="text" :value="sc.cartNum" style="width:30px;text-align: center" />
-                                                <input class="add am-btn" name="" type="button" value="+" :data-id="index" @click="changeNum"  data-oper="+" />
+                                                <input class="min am-btn" name="" type="button" value="-"
+                                                       :data-id="index" @click="changeNum" data-oper="-"/>
+                                                <input class="text_box" name="" type="text" :value="sc.cartNum"
+                                                       style="width:30px;text-align: center"/>
+                                                <input class="add am-btn" name="" type="button" value="+"
+                                                       :data-id="index" @click="changeNum" data-oper="+"/>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="td td-sum">
                                     <div class="td-inner">
-                                        <em tabindex="0" class="J_ItemSum number">{{sc.sellPrice*sc.cartNum}}</em>
+                                        <em tabindex="0" class="J_ItemSum number">{{sc.sellPrice * sc.cartNum}}</em>
                                     </div>
                                 </li>
                                 <li class="td td-op">
                                     <div class="td-inner">
-                                       <!-- <a title="移入收藏夹" class="btn-fav" href="#">
-                                            移入收藏夹</a>-->
-                                        <a  data-point-url="#" class="delete" :data-id="index" @click="deleteCart">
+                                        <!-- <a title="移入收藏夹" class="btn-fav" href="#">
+                                             移入收藏夹</a>-->
+                                        <a data-point-url="#" class="delete" :data-id="index" @click="deleteCart">
                                             删除</a>
                                     </div>
                                 </li>
@@ -212,7 +218,7 @@
             <div class="float-bar-right">
                 <div class="amount-sum">
                     <span class="txt">已选商品</span>
-                    <em id="J_SelectedItemsCount">0</em><span class="txt">件</span>
+                    <em id="J_SelectedItemsCount">{{opts.length}}</em><span class="txt">件</span>
                     <div class="arrow-box">
                         <span class="selected-items-arrow"></span>
                         <span class="arrow"></span>
@@ -220,16 +226,14 @@
                 </div>
                 <div class="price-sum">
                     <span class="txt">合计:</span>
-                    <strong class="price">¥<em id="J_Total">0.00</em></strong>
+                    <strong class="price"><em id="J_Total">¥{{totalPrice}}</em></strong>
                 </div>
                 <div class="btn-area">
-                    <a href="pay.html" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
+                    <a href="order-add.html" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算" @click="gotoOrderAdd">
                         <span>结&nbsp;算</span></a>
                 </div>
             </div>
-
         </div>
-
         <div class="footer">
             <div class="footer-hd">
                 <p>
@@ -259,60 +263,6 @@
 
     <div class="theme-popover-mask"></div>
 
-    <div class="theme-popover">
-        <div class="theme-span"></div>
-        <div class="theme-poptit h-title">
-            <a href="javascript:;" title="关闭" class="close">×</a>
-        </div>
-        <div class="theme-popbod dform">
-            <form class="theme-signin" name="loginform" action="" method="post">
-
-                <div class="theme-signin-left">
-
-                    <li class="theme-options">
-                        <div class="cart-title">颜色：</div>
-                        <ul>
-                            <li class="sku-line selected">12#川南玛瑙<i></i></li>
-                            <li class="sku-line">10#蜜橘色+17#樱花粉<i></i></li>
-                        </ul>
-                    </li>
-                    <li class="theme-options">
-                        <div class="cart-title">包装：</div>
-                        <ul>
-                            <li class="sku-line selected">包装：裸装<i></i></li>
-                            <li class="sku-line">两支手袋装（送彩带）<i></i></li>
-                        </ul>
-                    </li>
-                    <div class="theme-options">
-                        <div class="cart-title number">数量</div>
-                        <dd>
-                            <input class="min am-btn am-btn-default" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1" style="width:30px;"/>
-                            <input class="add am-btn am-btn-default" name="" type="button" value="+"/>
-                            <span class="tb-hidden">库存<span class="stock">1000</span>件</span>
-                        </dd>
-
-                    </div>
-                    <div class="clear"></div>
-                    <div class="btn-op">
-                        <div class="btn am-btn am-btn-warning">确认</div>
-                        <div class="btn close am-btn am-btn-warning">取消</div>
-                    </div>
-
-                </div>
-                <div class="theme-signin-right">
-                    <div class="img-info">
-                        <img src="static/images/kouhong.jpg_80x80.jpg"/>
-                    </div>
-                    <div class="text-info">
-                        <span class="J_Price price-now">¥39.00</span>
-                        <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
     <!--引导 -->
     <div class="navCir">
         <li><a href="index.html"><i class="am-icon-home "></i>首页</a></li>
@@ -338,8 +288,20 @@
         data: {
             shopCarts: [],
             token: null,
-            isLogin:false,
-            username:null,
+            isLogin: false,
+            username: null,
+            opts: [],
+            totalPrice: 0.00,
+        },
+        watch: {
+            opts: function () {
+                debugger
+                this.totalPrice = 0;
+                for (var i = 0; i < this.opts.length; i++) {
+                    var index = this.opts[i]; //index就是选择的购物车记录的索引
+                    this.totalPrice = this.totalPrice + this.shopCarts[index].cartNum * this.shopCarts[index].sellPrice;
+                }
+            }
         },
         created: function () {
             var token = getCookieValue("token");
@@ -368,14 +330,14 @@
                     }
                 }).then(res => {
                     console.log(res.data);
-                    if(res.data.code==10009 || res.data.code==10011){
+                    if (res.data.code == 10009 || res.data.code == 10011) {
                         //token过期
                         var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
                         window.location.href = encodeURI(loginUrl);
-                    }else if(res.data.code==10000){
+                    } else if (res.data.code == 10000) {
                         //请求成功
                         this.shopCarts = res.data.data;
-                    }else if(res.data.code==99999){
+                    } else if (res.data.code == 99999) {
                         //请求失败
                         alert("出错了")
                     }
@@ -383,48 +345,74 @@
             }
         },
         methods: {
-            changeNum:function(event){
+            changeNum: function (event) {
                 var oper = event.srcElement.dataset.oper;
                 var index = event.srcElement.dataset.id;
-                if(oper =="+"){
-                    this.shopCarts[index].cartNum = parseInt( this.shopCarts[index].cartNum )+1;
-                }else if(oper =="-" && this.shopCarts[index].cartNum>1){
-                    this.shopCarts[index].cartNum = parseInt( this.shopCarts[index].cartNum )-1;
+                if (oper == "+") {
+                    this.shopCarts[index].cartNum = parseInt(this.shopCarts[index].cartNum) + 1;
+                } else if (oper == "-" && this.shopCarts[index].cartNum > 1) {
+                    this.shopCarts[index].cartNum = parseInt(this.shopCarts[index].cartNum) - 1;
                 }
                 //请求购物车修改接口： cartId  num
                 var cid = this.shopCarts[index].cartId;
                 var cnum = this.shopCarts[index].cartNum;
                 axios({
-                    url:baseUrl+"shoppingCart/update/"+cid+"/"+cnum,
-                    method:"put",
-                    headers:{
-                        token:this.token
+                    url: baseUrl + "shoppingCart/update/" + cid + "/" + cnum,
+                    method: "put",
+                    headers: {
+                        token: this.token
                     }
-                }).then(res=>{
-                    if (res.data.code=10000){
+                }).then(res => {
+                    if (res.data.code == 10000) {
                         console.log(res);
+                        if (res.data.code == 10000) {
+                            this.totalPrice = 0;
+                            for (var i = 0; i < this.opts.length; i++) {
+                                var index = this.opts[i]; //index就是选择的购物车记录的索引
+                                this.totalPrice = this.totalPrice + this.shopCarts[index].cartNum * this.shopCarts[index].sellPrice;
+                            }
+                        }
                     }
                 });
             },
-            deleteCart:function (event){
+            deleteCart: function (event) {
                 debugger
                 var index = event.srcElement.dataset.id;
                 var cid = this.shopCarts[index].cartId;
                 console.log(cid);
                 axios({
-                    url:baseUrl+"shoppingCart/delete/"+cid,
-                    method:"delete",
-                    headers:{
-                        token:this.token
+                    url: baseUrl + "shoppingCart/delete/" + cid,
+                    method: "delete",
+                    headers: {
+                        token: this.token
                     }
-                }).then(res=>{
-                    if (res.data.code=10000){
+                }).then(res => {
+                    if (res.data.code = 10000) {
                         layer.msg("删除成功！");
                         location.reload();
-                    }else {
+                    } else {
                         layer.msg("删除失败！")
                     }
                 });
+            },
+            gotoOrderAdd:function(){
+                if(this.opts.length ==0){
+                    alert("请选择要购买的商品！")
+                }else{
+                    //1.获取选择购物车记录的id [0,2]  --->  cartId 8   cartId 10 --- 8,10,
+                    var cids="";
+                    for(var i=0;i<this.opts.length; i++){
+                        var index = this.opts[i];
+                        var cartId = this.shopcarts[index].cartId;
+                        if(i < this.opts.length-1){
+                            cids = cids + cartId + ",";
+                        }else{
+                            cids = cids + cartId;
+                        }
+                    }
+                    //2.跳转到order-add.html，并cids传递过去
+                    window.location.href="order-add.html?cids="+cids;
+                }
             }
 
         },
