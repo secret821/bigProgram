@@ -4,6 +4,8 @@ package com.lmy.shopping.service;
 import com.lmy.shopping.entity.ShoppingCart;
 import com.lmy.shopping.vo.ResultVo;
 
+import java.util.List;
+
 /**
  * 购物车业务接口
  *
@@ -18,8 +20,9 @@ public interface ShoppingCartService {
 
     ResultVo selectShoppingCartByUserId(int user_id);
 
-
     ResultVo updateCartNum(int cartId,int cartNum);
 
     ResultVo deleteCartByUserId(int cartId);
+
+    ResultVo selectShoppingCartBycid(String cids);
 }

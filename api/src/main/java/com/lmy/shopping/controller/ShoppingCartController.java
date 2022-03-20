@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 购物车接口
  *
@@ -61,4 +63,16 @@ public class ShoppingCartController {
         ResultVo resultVO = shoppingCartService.deleteCartByUserId(cartId);
         return resultVO;
     }
+
+    @ApiOperation("查询购物车商品根据cid")
+    @GetMapping("/listBycids")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String",name = "cids", value = "购物车id",required = true)
+    })
+    public ResultVo listShoppingCartByCids(String cids,
+                              @RequestHeader("token") String token){
+        ResultVo resultVO = shoppingCartService.selectShoppingCartBycid(cids);
+        return resultVO;
+    }
+
 }

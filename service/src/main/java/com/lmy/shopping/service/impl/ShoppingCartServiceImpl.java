@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,5 +71,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             return  new ResultVo(StatusCode.STATUS_OK,"Success",null);
         }
         return  new ResultVo(StatusCode.STATUS_FAIL,"Fail",null);
+    }
+
+
+
+    @Override
+    public ResultVo selectShoppingCartBycid(String cids) {
+        String[] arr = cids.split(",");
+        List<Integer> cartIds = new ArrayList<>();
+        for (int i=0; i<arr.length; i++){
+            cartIds.add(Integer.parseInt(arr[i]));
+        }
+        List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectShoppingCartBycid(cartIds);
+        return new ResultVo(StatusCode.STATUS_OK,"SUCCESS",shoppingCartVos);
     }
 }
