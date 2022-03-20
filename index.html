@@ -51,7 +51,7 @@
                 <div class="topMessage mini-cart">
                     <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
                             class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
-                            id="J_MiniCartNum" class="h">{{this.shopCarts.length||0}}</strong></a>
+                            id="J_MiniCartNum" class="h" v-if="isLogin">{{this.shopCarts.length}}</strong></a>
                     </div>
                 </div>
                 <div class="topMessage favorite">
@@ -703,11 +703,8 @@
             })
 
             //购物车数量
-            // var token = getCookieValue("token");
+
             if (token == null) {
-                // var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
-                // window.location.href = encodeURI(loginUrl);
-                // return
             } else {
                 this.token = token;
                 var userId = getCookieValue("userId");
@@ -723,13 +720,9 @@
                 }).then(res => {
                     console.log(res.data);
                     if(res.data.code==10009 || res.data.code==10011){
-                        //token过期
-                        // var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
-                        // window.location.href = encodeURI(loginUrl);
                     }else if(res.data.code==10000){
                         //请求成功
                         this.shopCarts = res.data.data;
-                        console.log(this.shopCarts,'this.shopCarts----->')
                     }else if(res.data.code==99999){
                         //请求失败
                         alert("出错了")
