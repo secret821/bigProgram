@@ -86,7 +86,7 @@
                 <div class="clear"></div>
                 <ul>
 							<span style="">
-								<template v-for="addr,index in addrs">
+								<template v-for="(addr,index) in addrs">
 									<li :class="{'user-addresslist':true, 'defaultAddr':index==addrIndex}"
                                         style="margin-top: 6px;" @click="chooseAddr" :data-index="index">
 										<div class="address-left">
@@ -115,8 +115,8 @@
 										<div class="new-addr-btn">
 											<a href="javascript:void(0);" class="hidden">设为默认</a> <span
                                                 class="new-addr-bar hidden">|</span>
-										<!--	<a href="javascript:void(0);">编辑</a> <span class="new-addr-bar">|</span>
-											<a href="javascript:void(0);" @click="deleteAdder">删除</a>-->
+                                            <!--	<a href="javascript:void(0);">编辑</a> <span class="new-addr-bar">|</span>
+                                                <a href="javascript:void(0);" @click="deleteAdder">删除</a>-->
 										</div>
 									</li>
 								</template>
@@ -154,9 +154,9 @@
                             <div class="th th-sum">
                                 <div class="td-inner">金额</div>
                             </div>
-                            <div class="th th-oplist">
+                           <!-- <div class="th th-oplist">
                                 <div class="td-inner">配送方式</div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -203,13 +203,6 @@
                                                                   class="J_ItemSum number">{{sc.sellPrice * sc.cartNum}}</em>
                                         </div>
                                     </li>
-                                    <li class="td td-oplist">
-                                        <div class="td-inner"><span class="phone-title">配送方式</span>
-                                            <div class="pay-logis">
-                                                包邮
-                                            </div>
-                                        </div>
-                                    </li>
                                 </ul>
                                 <div class="clear"></div>
                             </div>
@@ -236,7 +229,7 @@
             </div>
             <div class="buy-point-discharge ">
                 <p class="price g_price ">
-                    合计（包邮）
+                    合计
                     <em class="pay-sum">¥{{totalPrice}}</em></p>
             </div>
             <div class="order-go clearfix">
@@ -249,13 +242,17 @@
                         <div id="holyshit268" class="pay-address">
                             <p class="buy-footer-address"><span class="buy-line-title buy-line-title-type">寄送至：</span>
                                 <span class="buy--address-detail">
-
+	                                <span class="province">{{addrs[addrIndex].province}}</span>
+									<span class="city">{{addrs[addrIndex].city}}</span>
+									<span class="dist">{{addrs[addrIndex].area}}</span>
+									<span class="street">{{addrs[addrIndex].addr}}</span>
 								</span>
                             </p>
                             <p class="buy-footer-address">
                                 <span class="buy-line-title">收货人：</span>
                                 <span class="buy-address-detail">
-
+                                    <span class="buy-user">{{addrs[addrIndex].receiverName}}</span>
+									<span class="buy-phone">{{addrs[addrIndex].receiverMobile}}</span>
 								</span>
                             </p>
                         </div>
@@ -287,11 +284,11 @@
         </div>
         <div class="footer-bd">
             <p>
-                <a href="#">关于千锋</a>
+                <a href="#">关于我們</a>
                 <a href="#">合作伙伴</a>
                 <a href="#">联系我们</a>
                 <a href="#">网站地图</a>
-                <em>©qfedu.com 版权所有</em>
+                <em>©L15970677836.com 版权所有</em>
             </p>
         </div>
     </div>
@@ -465,7 +462,9 @@
                 if (res.data.code = 10000) {
                     this.shopCarts = res.data.data;
                     console.log(this.shopCarts);
-
+                    for(var i=0; i<this.shopCarts.length; i++){
+                        this.totalPrice = this.totalPrice + this.shopCarts[i].cartNum*this.shopCarts[i].sellPrice;
+                    }
                 }
             });
 
