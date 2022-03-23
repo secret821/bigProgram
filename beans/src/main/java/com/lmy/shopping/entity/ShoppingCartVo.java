@@ -85,9 +85,20 @@ public class ShoppingCartVo {
     private double originalPrice;
 
     /**
+     * 套餐名字
+     */
+
+    private String skuName;
+
+    /**
      * 售价
      */
 
     private double sellPrice;
 
+    /**
+     * 库存
+     */
+
+    private   int stock;
 }
