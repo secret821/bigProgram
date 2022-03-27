@@ -980,8 +980,8 @@
             }
             
 			if (token == null) {
-                var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
-                window.location.href = encodeURI(loginUrl);
+                // var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
+                // window.location.href = encodeURI(loginUrl);
             } else {
                 this.token = token;
                 var userId = getCookieValue("userId");
@@ -1000,8 +1000,8 @@
                     console.log(res.data);
                     if(res.data.code==10009 || res.data.code==10011){
                         //token过期
-                        var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
-                        window.location.href = encodeURI(loginUrl);
+                        // var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
+                        // window.location.href = encodeURI(loginUrl);
                     }else if(res.data.code==10000){
                         //请求成功
                         this.shopCarts = res.data.data;
