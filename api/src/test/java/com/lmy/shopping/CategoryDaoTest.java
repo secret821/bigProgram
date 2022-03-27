@@ -148,4 +148,13 @@ public class CategoryDaoTest {
             System.out.println(c1);
         }
     }
+
+
+    @Test
+    public void test10(){
+        List<CategoryVO> categoryVOS = categoryMapper.selectFirstCategory();
+        for (CategoryVO c1:categoryVOS){
+            System.out.println(c1);
+        }
+    }
 }
