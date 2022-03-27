@@ -1,9 +1,9 @@
 package com.lmy.shopping.service;
 
 import com.lmy.shopping.entity.Orders;
-import com.lmy.shopping.vo.ResultVo;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * @desc
@@ -13,5 +13,5 @@ import java.sql.SQLException;
 public interface OrderService {
 
     //生成订单
-    ResultVo addOrder(String cids, Orders order) throws SQLException;
+    Map<String,String> addOrder(String cids, Orders order) throws SQLException;
 }

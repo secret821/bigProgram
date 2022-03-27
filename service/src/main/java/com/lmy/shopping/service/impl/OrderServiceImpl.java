@@ -9,8 +9,6 @@ import com.lmy.shopping.mapper.OrdersMapper;
 import com.lmy.shopping.mapper.ProductSkuMapper;
 import com.lmy.shopping.mapper.ShoppingCartMapper;
 import com.lmy.shopping.service.OrderService;
-import com.lmy.shopping.vo.ResultVo;
-import com.lmy.shopping.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,9 +39,13 @@ public class OrderServiceImpl implements OrderService {
 
     //添加事务 出错回滚所有事务
     @Transactional
-    public ResultVo addOrder(String cids, Orders orders) throws SQLException {
+    public Map<String, String> addOrder(String cids, Orders orders) throws SQLException {
+
+        Map<String,String>map =new HashMap<>();
+
         //获得前台购物车数组
         String[] arr = cids.split(",");
+
         List<Integer> cidsList = new ArrayList<>();
         //遍历数组
         for (int i = 0; i < arr.length; i++) {
@@ -97,9 +99,12 @@ public class OrderServiceImpl implements OrderService {
             for (int cid : cidsList) {
                 shoppingCartMapper.deleteByPrimaryKey(cid);
             }
-            return new ResultVo(StatusCode.STATUS_OK, "下单成功", OrderId);
+
+            map.put("orderId",OrderId);
+            map.put("productNames",untitled);
+            return  map;
 
         }
-        return new ResultVo(StatusCode.STATUS_FAIL, "库存不足，下单失败", null);
+        return  null;
     }
 }
