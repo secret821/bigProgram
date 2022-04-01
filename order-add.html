@@ -46,8 +46,7 @@
             </div>
             <div class="topMessage mini-cart">
                 <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
-                        class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum"
-                                                                                              class="h">0</strong></a>
+                        class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span></a>
                 </div>
             </div>
             <div class="topMessage favorite">
@@ -79,7 +78,7 @@
     <div class="concent" style="margin-top: 35px;">
         <div class="paycont">
             <div class="address">
-                <h3>确认收货地址 </h3>
+                <h3>确认配送地址 </h3>
                 <div class="control selected">
                     <div class="tc-btn createAddr theme-login am-btn am-btn-danger">使用新地址</div>
                 </div>
@@ -128,11 +127,13 @@
             <div class="logistics">
                 <h3>选择支付方式</h3>
                 <ul class="pay-list">
-                    <li style="width: 100px; height: 40px; padding: 3px;"><img src="static/images/weizhifu.jpg"
-                                                                               style="width: 50px; height: 40px;"><span></span>
+                    <li style="width: 100px; height: 40px; padding: 3px;" :class="{'selected':payType==1}" @click="changePayType(1)">
+                        <img src="static/images/weizhifu.jpg" style="width: 70px; height: 34px;" >
+                        <span></span>
                     </li>
-                    <li style="width: 100px; height: 40px; padding: 3px;"><img src="static/images/zhifubao.jpg"
-                                                                               style="width: 50px; height: 40px;"><span></span>
+                    <li style="width: 100px; height: 40px; padding: 3px;" :class="{'selected':payType==2}" @click="changePayType(2)">
+                        <img src="static/images/zhifubao.jpg" style="width: 70px; height: 34px;">
+                        <span></span>
                     </li>
                 </ul>
             </div>
@@ -154,9 +155,9 @@
                             <div class="th th-sum">
                                 <div class="td-inner">金额</div>
                             </div>
-                           <!-- <div class="th th-oplist">
-                                <div class="td-inner">配送方式</div>
-                            </div>-->
+                            <!-- <div class="th th-oplist">
+                                 <div class="td-inner">配送方式</div>
+                             </div>-->
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -217,8 +218,7 @@
                 <div class="order-extra">
                     <div class="order-user-info">
                         <div id="holyshit257" class="memo"><label>买家留言：</label> <input type="text" title="选填, 可写备注"
-                                                                                       placeholder="选填, 可写备注"
-                                                                                       class="memo-input J_MakePoint c2c-text-default memo-close">
+                                                                                       placeholder="选填, 可写备注" class="memo-input J_MakePoint c2c-text-default memo-close" v-model="orderRemark">
                             <div class="msg hidden J-msg">
                                 <p class="error">最多输入500个字符</p>
                             </div>
@@ -260,7 +260,7 @@
                     <div id="holyshit269" class="submitOrder">
                         <div class="go-btn-wrap">
                             <a id="J_Go" href="javascript:void(0);" tabindex="0" title="点击此按钮，提交订单"
-                               class="btn-go">提交订单</a>
+                               class="btn-go" @click="doSubmit">提交订单</a>
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -411,10 +411,12 @@
             isLogin: false,
             username: "",
             userId: "",
+            orderRemark:"",
+            payType: 1,
+
         },
         created: function () {
             var token = getCookieValue("token");
-
 
             if (token != null && token != "") {
                 this.isLogin = true;
@@ -473,6 +475,47 @@
             chooseAddr: function (event) {
                 this.addrIndex = event.srcElement.dataset.index;
             },
+            changePayType:function(m){
+                this.payType = m;
+            },
+            doSubmit:function(){
+                var cids=this.cartIds;
+                var address = this.addrs[this.addrIndex].province + " " +this.addrs[this.addrIndex].city+" "
+                    +this.addrs[this.addrIndex].area+" " +this.addrs[this.addrIndex].addr;
+                var orders={
+                    "actualAmount": this.totalPrice,
+                    "orderRemark": this.orderRemark,
+                    "payType": this.payType,
+                    "receiverAddress":  address,
+                    "receiverMobile": this.addrs[this.addrIndex].receiverMobile,
+                    "receiverName": this.addrs[this.addrIndex].receiverName,
+                    "totalAmount": this.totalPrice,
+                    "userId": getCookieValue("userId")
+                }
+                axios({
+                    url:baseUrl+"order/add",
+                    method:"post",
+                    headers:{
+                        token:getCookieValue("token")
+                    },
+                    params:{
+                        cids: this.cartIds
+                    },
+                    data:orders
+                }).then(res=>{
+                    if(res.data.code=10000){
+                        debugger
+                        var orderInfo=res.data.data;
+                        orderInfo.totalPrice=this.totalPrice;
+                        localStorage.setItem("orderInfo",JSON.stringify(orderInfo));
+                        window.location.href="order-pay.html";
+                    }else if (res.data.code==10009 ||res.data.code==10010){
+                        window.location.href="index.html";
+                    }else {
+                        alert(res.msg);
+                    }
+                })
+            }
 
         }
     });
