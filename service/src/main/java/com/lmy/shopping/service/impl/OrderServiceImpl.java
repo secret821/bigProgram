@@ -9,9 +9,14 @@ import com.lmy.shopping.mapper.OrdersMapper;
 import com.lmy.shopping.mapper.ProductSkuMapper;
 import com.lmy.shopping.mapper.ShoppingCartMapper;
 import com.lmy.shopping.service.OrderService;
+import com.lmy.shopping.vo.ResultVo;
+import com.lmy.shopping.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.annotation.Order;
+import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -41,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Map<String, String> addOrder(String cids, Orders orders) throws SQLException {
 
-        Map<String,String>map =new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         //获得前台购物车数组
         String[] arr = cids.split(",");
@@ -100,11 +105,55 @@ public class OrderServiceImpl implements OrderService {
                 shoppingCartMapper.deleteByPrimaryKey(cid);
             }
 
-            map.put("orderId",OrderId);
-            map.put("productNames",untitled);
-            return  map;
+            map.put("orderId", OrderId);
+            map.put("productNames", untitled);
+            return map;
 
         }
-        return  null;
+        return null;
+    }
+
+
+    @Override
+    public int updateStatus(String orderId, String status) {
+
+        Orders order = new Orders();
+        order.setOrderId(orderId);
+        order.setStatus(status);
+        int i = ordersMapper.updateByPrimaryKeySelective(order);
+        return i;
+    }
+
+    @Override
+    public ResultVo queryOrderInfo(String orderId) {
+        Orders orders = ordersMapper.selectByPrimaryKey(orderId);
+        return new ResultVo(StatusCode.STATUS_OK, "success", orders.getStatus());
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void closeOrder(String orderId) {
+        synchronized (this) {
+            //  1.修改当前订单：status=6 已关闭  close_type=1 超时未支付
+            Orders cancleOrder = new Orders();
+            cancleOrder.setOrderId(orderId);
+            cancleOrder.setStatus("6");  //已关闭
+            cancleOrder.setCloseType(1); //关闭类型：超时未支付
+            ordersMapper.updateByPrimaryKeySelective(cancleOrder);
+
+            //  2.还原库存：先根据当前订单编号查询商品快照（skuid  buy_count）--->修改product_sku
+            Example example1 = new Example(OrderItem.class);
+            Example.Criteria criteria1 = example1.createCriteria();
+            criteria1.andEqualTo("orderId", orderId);
+            List<OrderItem> orderItems = orderItemMapper.selectByExample(example1);
+            //还原库存
+            for (int j = 0; j < orderItems.size(); j++) {
+                OrderItem orderItem = orderItems.get(j);
+                //修改
+                ProductSku productSku = productSkuMapper.selectByPrimaryKey(orderItem.getSkuId());
+                productSku.setStock(productSku.getStock() + orderItem.getBuyCounts());
+                productSkuMapper.updateByPrimaryKey(productSku);
+            }
+        }
     }
 }

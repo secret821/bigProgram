@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
 public class Orders {
     /**
      * 订单ID 同时也是订单编号
@@ -29,6 +29,34 @@ public class Orders {
      */
     @Column(name = "receiver_name")
     private String receiverName;
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderId='" + orderId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", untitled='" + untitled + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", receiverMobile='" + receiverMobile + '\'' +
+                ", receiverAddress='" + receiverAddress + '\'' +
+                ", totalAmount=" + totalAmount +
+                ", actualAmount=" + actualAmount +
+                ", payType=" + payType +
+                ", orderRemark='" + orderRemark + '\'' +
+                ", status='" + status + '\'' +
+                ", deliveryType='" + deliveryType + '\'' +
+                ", deliveryFlowId='" + deliveryFlowId + '\'' +
+                ", orderFreight=" + orderFreight +
+                ", deleteStatus=" + deleteStatus +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", payTime=" + payTime +
+                ", deliveryTime=" + deliveryTime +
+                ", flishTime=" + flishTime +
+                ", cancelTime=" + cancelTime +
+                ", closeType=" + closeType +
+                '}';
+    }
 
     /**
      * 收货人手机号快照

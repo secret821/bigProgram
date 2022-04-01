@@ -1,11 +1,11 @@
-package com.lmy.shopping.config;
+package com.lmy.shopping.service.job;
 
 import com.github.wxpay.sdk.WXPayConfig;
 
 import java.io.InputStream;
 
 /**
- * @desc 微信支付配置类
+ * @desc 微信支付Config类
  * @Auther LMY233
  * @Date 2022/3/24
  */
