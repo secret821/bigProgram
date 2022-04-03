@@ -6,6 +6,7 @@ import com.lmy.shopping.mapper.ProductMapper;
 import com.lmy.shopping.mapper.ProductParamsMapper;
 import com.lmy.shopping.mapper.ProductSkuMapper;
 import com.lmy.shopping.service.ProductService;
+import com.lmy.shopping.vo.PageHelper;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,8 +103,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResultVo ListProductRand(int num) {
         HashMap<String, Object> proMap = new HashMap<>();
-        List<ProductVO> randProduct = productMapper.queryProductRand(5);
+        List<ProductVO> randProduct = productMapper.queryProductRand(num);
         proMap.put("randProduct",randProduct);
         return new ResultVo(StatusCode.STATUS_OK,"success",proMap);
+    }
+
+
+    @Override
+    public ResultVo queryProductByCategory3(int category_id, int pageNum, int limit) {
+        Example example=new Example(Product.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("categoryId",category_id);
+
+        int start=(pageNum-1)*limit;
+        List<ProductVO> productVOS = productMapper.queryProductByCategory3(start, limit, category_id);
+        int count = productMapper.selectCountByExample(example);
+        int pageCount=count%limit==0 ? count/limit:count/limit+1;
+        PageHelper<ProductVO> productVOPageHelper = new PageHelper<>(count, pageCount, productVOS);
+        return new ResultVo(StatusCode.STATUS_OK,"success",productVOPageHelper);
     }
 }

@@ -33,6 +33,24 @@
       <collection property="productImgs" column="product_id" select="com.lmy.shopping.mapper.ProductImgMapper.queryProductImg"/>
     </resultMap>
 
+
+    <resultMap id="ProductVOMap2" type="com.lmy.shopping.entity.ProductVO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="product_id" jdbcType="VARCHAR" property="productId" />
+        <result column="product_name" jdbcType="VARCHAR" property="productName" />
+        <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="root_category_id" jdbcType="INTEGER" property="rootCategoryId" />
+        <result column="sold_num" jdbcType="INTEGER" property="soldNum" />
+        <result column="product_status" jdbcType="INTEGER" property="productStatus" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="content" jdbcType="LONGVARCHAR" property="content" />
+        <collection property="productSkus" column="product_id" select="com.lmy.shopping.mapper.ProductSkuMapper.selectLowerestPriceByProductId"/>
+
+    </resultMap>
+
     <select id="queryProduct" resultMap="ProductVOMap">
         select
             product_id,
@@ -76,6 +94,21 @@
             update_time
             from  product
             order by rand() LIMIT #{randNum}
+    </select>
+
+    <select id="queryProductByCategory3" resultMap="ProductVOMap2">
+        select  product_id,
+                product_name,
+                category_id,
+                root_category_id,
+                sold_num,
+                product_status,
+                content,
+                create_time,
+                update_time
+        from product
+        where category_id=#{cid}
+            limit #{start},#{limit}
     </select>
 
 </mapper>

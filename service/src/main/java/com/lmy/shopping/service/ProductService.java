@@ -42,4 +42,10 @@ public interface ProductService {
      */
 
     ResultVo queryProductParams(int product_id);
+
+    /**
+     * 三級分類下的商品查詢
+     * @return
+     */
+    ResultVo queryProductByCategory3(int category_id, int pageNum, int limit);
 }

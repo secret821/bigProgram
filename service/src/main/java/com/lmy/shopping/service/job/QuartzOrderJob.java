@@ -31,7 +31,7 @@ public class QuartzOrderJob {
 
     private WXPay wxPay = new WXPay(new MyPayConfig());
 
-    @Scheduled(cron = "0/60 * * * * ?")
+    @Scheduled(cron = "1/60 * * * * ?")
     public void CheckAndClose() {
         Example example=new Example(Orders.class);
         Example.Criteria criteria = example.createCriteria();

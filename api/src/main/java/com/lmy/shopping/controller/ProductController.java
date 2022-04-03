@@ -76,4 +76,15 @@ public class ProductController {
         ResultVo resultVo=productService.ListProductRand(num);
         return resultVo;
     }
+
+    @ApiOperation("根据商品三级id分页查询接口")
+    @GetMapping(value = "queryProduct/{cid}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "当前页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true)
+    })
+    public ResultVo ListProductByCategoryId3(@PathVariable("cid") int  category_id,int pageNum,int limit){
+        ResultVo resultVo=productService.queryProductByCategory3(category_id,pageNum,limit);
+        return resultVo;
+    }
 }

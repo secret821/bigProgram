@@ -3,6 +3,7 @@ package com.lmy.shopping.mapper;
 import com.lmy.shopping.entity.Product;
 import com.lmy.shopping.entity.ProductVO;
 import com.lmy.shopping.general.GeneralDAO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,9 @@ public interface ProductMapper extends GeneralDAO<Product> {
     List<ProductVO> queryProductTop6(int cid); //查询某个一级类别下销量最高的6个商品
 
     List<ProductVO> queryProductRand(int randNum);//指定随机数随机查询
+
+    List<ProductVO> queryProductByCategory3(
+            @Param("start") int start,
+            @Param("limit") int limit,
+            @Param("cid") int cid); //查詢三級分類下的所有商品（分頁查詢）
 }

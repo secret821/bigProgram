@@ -62,7 +62,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ResultVo deleteCartByUserId(int cartId) {
+    public ResultVo deleteCartByCid(int cartId) {
         Example example=new Example(ShoppingCart.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("cartId",cartId);
@@ -84,5 +84,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectShoppingCartBycid(cartIds);
         return new ResultVo(StatusCode.STATUS_OK,"SUCCESS",shoppingCartVos);
+    }
+
+    @Override
+    public ResultVo queryShoppingCartNum(String uid) {
+        Example example=new Example(ShoppingCart.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId",uid);
+        int i = shoppingCartMapper.selectCountByExample(example);
+        return new ResultVo(StatusCode.STATUS_OK,"success",i);
     }
 }

@@ -69,7 +69,8 @@ public class ProductCommentServiceImpl implements ProductCommentService {
                 .andEqualTo("productId", product_id).andEqualTo("isShow", 1);
         int bad = productCommentsMapper.selectCountByExample(example3);
         double percent = (Double.parseDouble(good+"") / Double.parseDouble(count+"") )*100;
-        String percentValue = (percent+"").substring(0,(percent+"").lastIndexOf(".")+3)+"%";
+        DecimalFormat df = new DecimalFormat("#.00");
+        String percentValue = df.format(percent)+'%';
         map.put("count",count);
         map.put("medium",medium);
         map.put("bad",bad);

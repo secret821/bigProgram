@@ -60,11 +60,11 @@ public class ShoppingCartController {
     @DeleteMapping("/delete/{cid}")
     public ResultVo updateNum(@PathVariable("cid") Integer cartId,
                               @RequestHeader("token") String token){
-        ResultVo resultVO = shoppingCartService.deleteCartByUserId(cartId);
+        ResultVo resultVO = shoppingCartService.deleteCartByCid(cartId);
         return resultVO;
     }
 
-    @ApiOperation("查询购物车商品根据cid")
+    @ApiOperation("查询购物车商品根据购物车")
     @GetMapping("/listBycids")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "String",name = "cids", value = "购物车id",required = true)
@@ -72,6 +72,17 @@ public class ShoppingCartController {
     public ResultVo listShoppingCartByCids(String cids,
                               @RequestHeader("token") String token){
         ResultVo resultVO = shoppingCartService.selectShoppingCartBycid(cids);
+        return resultVO;
+    }
+
+    @ApiOperation("查询购物车商品数量根据用户id")
+    @GetMapping("/countByUid/{uid}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String",name = "uid", value = "用户id",required = true)
+    })
+    public ResultVo countShoppingByUid(@PathVariable("uid") String uid,
+                                           @RequestHeader("token") String token){
+        ResultVo resultVO = shoppingCartService.queryShoppingCartNum(uid);
         return resultVO;
     }
 

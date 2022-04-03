@@ -15,14 +15,46 @@ import java.util.List;
  */
 public interface ShoppingCartService {
 
+    /**
+     * 添加购物车
+     * @param shoppingCart
+     * @return
+     */
     ResultVo addShoppingCart(ShoppingCart shoppingCart);
 
-
+    /**
+     * 通过uid查询购物车信息
+     * @param user_id
+     * @return
+     */
     ResultVo selectShoppingCartByUserId(int user_id);
 
+    /**
+     * 更新购物车的商品数量，动态更新
+     * @param cartId
+     * @param cartNum
+     * @return
+     */
     ResultVo updateCartNum(int cartId,int cartNum);
 
-    ResultVo deleteCartByUserId(int cartId);
+    /**
+     * 刪除购物车通过cid
+     * @param cartId
+     * @return
+     */
+    ResultVo deleteCartByCid(int cartId);
 
+    /**
+     * 根据cid查询购物车信息
+     * @param cids
+     * @return
+     */
     ResultVo selectShoppingCartBycid(String cids);
+
+    /**
+     * 查询购物车的数量根据用户id
+     * @param uid
+     * @return
+     */
+    ResultVo queryShoppingCartNum(String uid);
 }
