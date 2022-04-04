@@ -103,16 +103,11 @@
                 <div class="am-u-sm-12 am-u-md-12">
                     <div class="theme-popover">
                         <div class="searchAbout">
-                            <span class="font-pale">相关搜索：</span>
-                            <a title="坚果" href="#">坚果</a>
-                            <a title="瓜子" href="#">瓜子</a>
-                            <a title="鸡腿" href="#">豆干</a>
-
                         </div>
                         <ul class="select">
-                            <p class="title font-normal">
-                                <span class="fl">松子</span>
-                                <span class="total fl">搜索到<strong class="num">997</strong>件相关商品</span>
+                            <p class="title font-normal" >
+                                <span class="price fl" v-if="categoryId!=0&&categoryId!=null"><b>{{category.categoryName}}</b></span>
+                                <span class="total fl">搜索到<strong class="price num"> {{count}} </strong>件相关商品</span>
                             </p>
                             <div class="clear"></div>
                             <li class="select-result">
@@ -128,42 +123,14 @@
                                     <dt class="am-badge am-round">品牌</dt>
 
                                     <div class="dd-conent">
-                                        <dd class="select-all selected"><a href="#">全部</a></dd>
-                                        <dd><a href="#">百草味</a></dd>
-                                        <dd><a href="#">良品铺子</a></dd>
-                                        <dd><a href="#">新农哥</a></dd>
-                                        <dd><a href="#">楼兰蜜语</a></dd>
-                                        <dd><a href="#">口水娃</a></dd>
-                                        <dd><a href="#">考拉兄弟</a></dd>
+                                        <dd :class="{'select-all':false, 'selected':currentIndex==999}"><a :data_id="999" @click="changeIndex(999)">全部</a></dd>
+                                        <template v-for="(b,index) in brand">
+                                            <dd :class="{'selected':currentIndex==index}"><a :data_id="index" @click="changeIndex(index)" >{{b}}</a></dd>
+                                        </template>
                                     </div>
 
                                 </dl>
                             </li>
-                            <li class="select-list">
-                                <dl id="select2">
-                                    <dt class="am-badge am-round">种类</dt>
-                                    <div class="dd-conent">
-                                        <dd class="select-all selected"><a href="#">全部</a></dd>
-                                        <dd><a href="#">东北松子</a></dd>
-                                        <dd><a href="#">巴西松子</a></dd>
-                                        <dd><a href="#">夏威夷果</a></dd>
-                                        <dd><a href="#">松子</a></dd>
-                                    </div>
-                                </dl>
-                            </li>
-                            <li class="select-list">
-                                <dl id="select3">
-                                    <dt class="am-badge am-round">选购热点</dt>
-                                    <div class="dd-conent">
-                                        <dd class="select-all selected"><a href="#">全部</a></dd>
-                                        <dd><a href="#">手剥松子</a></dd>
-                                        <dd><a href="#">薄壳松子</a></dd>
-                                        <dd><a href="#">进口零食</a></dd>
-                                        <dd><a href="#">有机零食</a></dd>
-                                    </div>
-                                </dl>
-                            </li>
-
                         </ul>
                         <div class="clear"></div>
                     </div>
@@ -180,10 +147,10 @@
                             <template v-for="p in products">
                                 <li>
                                     <div class="i-pic limit"
-                                         onclick="javascript:location.href='introduction.html'+p.productId">
+                                         @click="toIntroduction(p.productId)">
                                         <img :src="'static/pimgs/'+p.productSkus[0].skuImg "
-                                             style="width: 218px;height: 218px"/>
-                                        <p class="title fl"> {{p.productId}}
+                                             style="width: 218px;height: 218px" :data-id="p.productId"/>
+                                        <p class="title fl">
                                             【{{p.productName}}】{{p.productSkus[0].skuName}}</p>
                                         <p class="price fl">
                                             <b>¥</b>
@@ -447,6 +414,10 @@
             limit: 8,
             pageCount: 0,
             count: 0,
+            brand:[],
+            category:{},
+            keyWord:"",
+            currentIndex:999,
         },
         created: function () {
             var token = getCookieValue("token");
@@ -486,8 +457,55 @@
                         this.count = pageHelper.count;
 
                     }
+                });
+                axios({
+                    methods: "get",
+                    url: baseUrl + "product/queryCategory/" + this.categoryId,
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        this.category = res.data.data;
+                    }
+                })
+                axios({
+                    methods: "get",
+                    url: baseUrl + "product/queryBrand/" + this.categoryId,
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        this.brand = res.data.data;
+                    }
                 })
             }
+
+            var keyWord=getUrlParam("keyWord")
+            if (keyWord!=null){
+                debugger
+                this.keyWord=keyWord;
+                axios({
+                    methods:"get",
+                    url:baseUrl+"product/queryProductByKeyWord/"+this.keyWord,
+                    params:{
+                        pageNum: this.pageNum,
+                        limit: this.limit
+                    }
+                }).then(res=>{
+                    var pageHelper = res.data.data;
+                    if (res.data.code = 10000) {
+                        this.products = pageHelper.list;
+                        this.pageCount = pageHelper.pageCount;
+                        this.count = pageHelper.count;
+
+                    }
+                })
+                axios({
+                    methods: "get",
+                    url: baseUrl + "product/queryBrandByKeyWord/" + this.keyWord,
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        this.brand = res.data.data;
+                    }
+                })
+            }
+
         },
         methods: {
             pager: function (currentPage) {
@@ -507,6 +525,53 @@
                     }
                 });
             },
+            toIntroduction: function (pid) {
+                window.location.href = "introduction.html?pid=" + pid;
+            },
+
+            changeIndex(index){
+                this.currentIndex=index;
+                var brandName= this.brand[index];
+                if(this.categoryId!=null &&this.categoryId!=""){
+                    axios({
+                        url: baseUrl + "product/queryProduct/" + this.categoryId,
+                        methods: "get",
+                        params: {
+                            pageNum: this.pageNum,
+                            limit: this.limit,
+                            brand: brandName,
+                        }
+                    }).then(res => {
+                        var pageHelper = res.data.data;
+                        if (res.data.code = 10000) {
+                            this.products = pageHelper.list;
+                            this.pageCount = pageHelper.pageCount;
+                            this.count = pageHelper.count;
+
+                        }
+                    });
+                }
+                if (this.keyWord!=null&&this.keyWord!=""){
+                    axios({
+                        url: baseUrl + "product/queryProductByKeyWord/" + this.keyWord,
+                        methods: "get",
+                        params: {
+                            pageNum: this.pageNum,
+                            limit: this.limit,
+                            brand: brandName,
+                        }
+                    }).then(res => {
+                        var pageHelper = res.data.data;
+                        if (res.data.code = 10000) {
+                            this.products = pageHelper.list;
+                            this.pageCount = pageHelper.pageCount;
+                            this.count = pageHelper.count;
+
+                        }
+                    });
+                }
+            }
+
         }
     })
 </script>
