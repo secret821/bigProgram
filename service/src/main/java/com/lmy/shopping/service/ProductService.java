@@ -47,5 +47,33 @@ public interface ProductService {
      * 三級分類下的商品查詢
      * @return
      */
-    ResultVo queryProductByCategory3(int category_id, int pageNum, int limit);
+    ResultVo queryProductByCategory3(int category_id, int pageNum, int limit,String brand);
+
+
+    /**
+     * 查询三级分类下的商品品牌
+     * @param category_id
+     * @return
+     */
+    ResultVo queryBrand(int category_id);
+
+
+
+    /**
+     * 根据关键词查询商品
+     * @param keyWord
+     * @param pageNum
+     * @param limit
+     * @param brand
+     * @return
+     */
+    ResultVo queryProductByKeyWord(String keyWord,int pageNum, int limit,String brand);
+
+    /**
+     * 根据关键字查询的商品的品牌
+     * @param keyWord
+     * @return
+     */
+    ResultVo queryBrandByKeyWord(String keyWord);
+
 }

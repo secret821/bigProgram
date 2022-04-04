@@ -18,5 +18,18 @@ public interface ProductMapper extends GeneralDAO<Product> {
     List<ProductVO> queryProductByCategory3(
             @Param("start") int start,
             @Param("limit") int limit,
-            @Param("cid") int cid); //查詢三級分類下的所有商品（分頁查詢）
+            @Param("cid") int cid,
+            @Param("brand")String brand); //查詢三級分類下的所有商品（分頁查詢）
+
+
+    List<String> queryBrandByCategory(int cid);
+
+
+    List<String> queryBrandByKeyWord(String keyWord);
+
+    List<ProductVO> queryProductByKeyWord(
+            @Param("start") int start,
+            @Param("limit") int limit,
+            @Param("keyWord") String keyWord,
+            @Param("brand")String brand);
 }

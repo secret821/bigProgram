@@ -12,5 +12,7 @@ import com.lmy.shopping.vo.ResultVo;
 
 public interface CategoryService {
 
-    public ResultVo listCategoriesPro();//查询第一层级类别下销量前六的商品业务
+    ResultVo listCategoriesPro();//查询第一层级类别下销量前六的商品业务
+
+    ResultVo queryCategory(int cid);
 }

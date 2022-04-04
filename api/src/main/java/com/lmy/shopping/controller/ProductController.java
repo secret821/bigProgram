@@ -1,7 +1,9 @@
 package com.lmy.shopping.controller;
 
+import com.lmy.shopping.mapper.CategoryMapper;
 import com.lmy.shopping.service.ProductCommentService;
 import com.lmy.shopping.service.ProductService;
+import com.lmy.shopping.service.impl.CategoryServiceImpl;
 import com.lmy.shopping.vo.ResultVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,6 +31,9 @@ public class ProductController {
 
     @Autowired
     private ProductCommentService productCommentService;
+
+    @Autowired
+    private CategoryServiceImpl categoryService;
 
     @ApiOperation("首页推荐商品展示接口")
     @GetMapping(value = "recommendShow")
@@ -77,14 +82,48 @@ public class ProductController {
         return resultVo;
     }
 
-    @ApiOperation("根据商品三级id分页查询接口")
+    @ApiOperation("根据商品三级分类查询接口")
     @GetMapping(value = "queryProduct/{cid}")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "int",name = "pageNum", value = "当前页码",required = true),
-            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true)
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true),
+            @ApiImplicitParam(dataType = "String",name = "brand", value = "品牌",required = false)
     })
-    public ResultVo ListProductByCategoryId3(@PathVariable("cid") int  category_id,int pageNum,int limit){
-        ResultVo resultVo=productService.queryProductByCategory3(category_id,pageNum,limit);
+    public ResultVo ListProductByCategoryId3(@PathVariable("cid") int  category_id,int pageNum,int limit,String brand){
+        ResultVo resultVo=productService.queryProductByCategory3(category_id,pageNum,limit,brand);
+        return resultVo;
+    }
+
+    @ApiOperation("根据商品关键字查询接口")
+    @GetMapping(value = "queryProductByKeyWord/{keyWord}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "当前页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true),
+            @ApiImplicitParam(dataType = "String",name = "brand", value = "品牌",required = false)
+    })
+    public ResultVo ListProductByKeyWord(@PathVariable("keyWord") String keyWord,int pageNum,int limit,String brand){
+        ResultVo resultVo=productService.queryProductByKeyWord(keyWord,pageNum,limit,brand);
+        return resultVo;
+    }
+
+    @ApiOperation("查询商品品牌接口")
+    @GetMapping(value = "queryBrand/{cid}")
+    public ResultVo ListBrand(@PathVariable("cid") int cid){
+        ResultVo resultVo=productService.queryBrand(cid);
+        return resultVo;
+
+    }
+    @ApiOperation("查询商品品牌接口")
+    @GetMapping(value = "queryBrandByKeyWord/{keyWord}")
+    public ResultVo ListBrandByKeyWord(@PathVariable("keyWord") String keyWord){
+        ResultVo resultVo=productService.queryBrandByKeyWord(keyWord);
+        return resultVo;
+
+    }
+    @ApiOperation("查询類別接口")
+    @GetMapping(value = "queryCategory/{cid}")
+    public ResultVo queryCategory(@PathVariable("cid") int cid){
+        ResultVo resultVo=categoryService.queryCategory(cid);
         return resultVo;
     }
 }
