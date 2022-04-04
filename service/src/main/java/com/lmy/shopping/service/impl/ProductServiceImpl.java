@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductSkuMapper productSkuMapper;
-
 
     @Autowired
     private ProductParamsMapper productParamsMapper;
@@ -110,16 +110,64 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResultVo queryProductByCategory3(int category_id, int pageNum, int limit) {
+    public ResultVo queryProductByCategory3(int category_id, int pageNum, int limit,String brand) {
         Example example=new Example(Product.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("categoryId",category_id);
+        if (brand!=null&&brand!=""){
+         Example example1=new Example(ProductParams.class);
+            Example.Criteria criteria1 = example1.createCriteria();
+            criteria1.andEqualTo("brand",brand);
+            List<ProductParams> productParams = productParamsMapper.selectByExample(example1);
+            ArrayList<String> strings = new ArrayList<>();
+            for (ProductParams p:productParams){
+                strings.add(p.getProductId());
+            }
+            criteria.andIn("productId",strings);
+        }
 
         int start=(pageNum-1)*limit;
-        List<ProductVO> productVOS = productMapper.queryProductByCategory3(start, limit, category_id);
+        List<ProductVO> productVOS = productMapper.queryProductByCategory3(start, limit, category_id,brand);
         int count = productMapper.selectCountByExample(example);
         int pageCount=count%limit==0 ? count/limit:count/limit+1;
         PageHelper<ProductVO> productVOPageHelper = new PageHelper<>(count, pageCount, productVOS);
         return new ResultVo(StatusCode.STATUS_OK,"success",productVOPageHelper);
+    }
+
+
+    @Override
+    public ResultVo queryBrand(int category_id) {
+        List<String> strings = productMapper.queryBrandByCategory(category_id);
+        return new ResultVo(StatusCode.STATUS_OK,"success",strings);
+    }
+
+    @Override
+    public ResultVo queryProductByKeyWord(String keyWord, int pageNum, int limit, String brand) {
+        Example example=new Example(Product.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andLike("productName",'%'+keyWord+'%');
+        if (brand!=null&&brand!=""){
+            Example example1=new Example(ProductParams.class);
+            Example.Criteria criteria1 = example1.createCriteria();
+            criteria1.andEqualTo("brand",brand);
+            List<ProductParams> productParams = productParamsMapper.selectByExample(example1);
+            ArrayList<String> strings = new ArrayList<>();
+            for (ProductParams p:productParams){
+                strings.add(p.getProductId());
+            }
+            criteria.andIn("productId",strings);
+        }
+        int start=(pageNum-1)*limit;
+        List<ProductVO> productVOS = productMapper.queryProductByKeyWord(start, limit,keyWord,brand);
+        int count = productMapper.selectCountByExample(example);
+        int pageCount=count%limit==0 ? count/limit:count/limit+1;
+        PageHelper<ProductVO> productVOPageHelper = new PageHelper<>(count, pageCount, productVOS);
+        return new ResultVo(StatusCode.STATUS_OK,"success",productVOPageHelper);
+    }
+
+    @Override
+    public ResultVo queryBrandByKeyWord(String keyWord) {
+        List<String> strings = productMapper.queryBrandByKeyWord(keyWord);
+        return new ResultVo(StatusCode.STATUS_OK,"success",strings);
     }
 }
