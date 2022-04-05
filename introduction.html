@@ -65,7 +65,7 @@
             <div class="topMessage mini-cart">
                 <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
                         class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum"
-                                                                                              class="h">{{shopCarts.length}}</strong></a>
+                                                                                              class="h" v-if="isLogin">{{shopCartsCount}}</strong></a>
                 </div>
             </div>
             <div class="topMessage favorite">
@@ -538,7 +538,7 @@
                                     </header>
 
                                     <div class="am-comment-bd">
-                                        <div class="tb-rev-item " data-id="255776406962">
+                                        <div class="tb-rev-item " data-id="">
                                             <div class="J_TbcRate_ReviewContent tb-tbcr-content ">
                                                 {{comment.commContent}}
                                             </div>
@@ -581,141 +581,12 @@
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
-                                    <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
-                                    </p>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                     <div class="clear"></div>
 
                     <!--分页 -->
-                    <ul class="am-pagination am-pagination-right">
-                        <li class="am-disabled"><a href="#">&laquo;</a></li>
-                        <li class="am-active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
+
                     <div class="clear"></div>
 
                 </div>
@@ -783,7 +654,7 @@
                 <p>
                     购物车
                 </p>
-                <p class="cart_num ">{{this.shopCarts.length}}</p>
+                <p class="cart_num">{{shopCartsCount}}</p>
             </div>
             <div id="asset " class="item ">
                 <a href="# ">
@@ -963,55 +834,32 @@
             currentSku: {},
             num: 1,
             token: "",
-            shopCarts:[],
+            shopCartsCount:0,
         },
 
         created: function () {
             this.productId = getUrlParam("pid");
             this.currentIndex = getUrlParam("sid") != null ? getUrlParam("sid") : 0;
             this.num = getUrlParam("num") != null ? getUrlParam("num") : 1;
-            
-            console.log(this.productId,'this.productId----->')
             var token = getCookieValue("token");
-            if (this.token != null && this.token != "") {
+            if (token != null && token != "") {
                 this.isLogin = true;
                 this.username = getCookieValue("username");
                 this.userImg = getCookieValue("userImg");
-            }
-            
-			if (token == null) {
-                // var loginUrl = "login.html?tips=请先登录!&returnUrl=shopcart.html";
-                // window.location.href = encodeURI(loginUrl);
-            } else {
-                this.token = token;
                 var userId = getCookieValue("userId");
-                this.isLogin = true;
-                this.username = getCookieValue("username");
                 axios({
-                    url: baseUrl + "shoppingCart/list",
-                    method: "Get",
-                    headers: {
-                        token: token
-                    },
-                    params: {
-                        userId: userId,
+                    url:baseUrl+"shoppingCart/countByUid/"+userId,
+                    methods: "get",
+                    headers:{
+                        token:token
                     }
-                }).then(res => {
-                    console.log(res.data);
-                    if(res.data.code==10009 || res.data.code==10011){
-                        //token过期
-                        // var loginUrl = "login.html?tips=请先登录！&returnUrl=shopcart.html";
-                        // window.location.href = encodeURI(loginUrl);
-                    }else if(res.data.code==10000){
-                        //请求成功
-                        this.shopCarts = res.data.data;
-                    }else if(res.data.code==99999){
-                        //请求失败
-                        alert("出错了")
+                }).then(res =>{
+                    if(res.data.code=10000){
+                        this.shopCartsCount=res.data.data;
                     }
-                });
-            }
 
+                })
+            }
             /*商品的细节请求*/
             axios.get(baseUrl + "product/detail-info/" + this.productId).then(res => {
                 let result = res.data;
@@ -1053,7 +901,7 @@
                 }
             });
             /*随机查询推荐商品*/
-            axios.get(baseUrl + "product/randProduct/5").then(res => {
+            axios.get(baseUrl + "product/randProduct/3").then(res => {
                 let result = res.data;
                 if (result.code = 10000) {
                     this.randProduct = result.data.randProduct;

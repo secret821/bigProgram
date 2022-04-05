@@ -51,13 +51,13 @@
                 <div class="topMessage mini-cart">
                     <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
                             class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
-                            id="J_MiniCartNum" class="h" v-if="isLogin">{{this.shopCarts.length}}</strong></a>
+                            id="J_MiniCartNum" class="h" v-if="isLogin">{{shopCartsCount}}</strong></a>
                     </div>
                 </div>
-                <div class="topMessage favorite">
-                    <div class="menu-hd"><a href="#" target="_top"><i
-                            class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-                </div>
+                <!--   <div class="topMessage favorite">
+                       <div class="menu-hd"><a href="#" target="_top"><i
+                               class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
+                   </div>-->
 
                 <div class="topMessage exit" v-if="isLogin">
                     <div class="menu-hd"><a target="_top" @click="signOut" href="#"><i
@@ -69,7 +69,7 @@
         <div class="nav white">
 
             <div class="logoBig">
-                <img src="static/images/logo.jpg"  style="width: 55%; height: 100%;">
+                <img src="static/images/logo.jpg" style="width: 55%; height: 100%;">
             </div>
 
             <div class="search-bar pr">
@@ -140,7 +140,7 @@
                                                                 </dt>
                                                                 <dd v-for="c3 in c2.categories">
                                                                     <a :title="c3.categoryName"
-                                                                       href="search.html"><span>{{c3.categoryName}}</span></a>
+                                                                       :href="'search.html?cid='+c3.categoryId"><span>{{c3.categoryName}}</span></a>
                                                                 </dd>
                                                             </dl>
                                                         </div>
@@ -163,7 +163,7 @@
                 <!--小导航 -->
                 <div class="am-g am-g-fixed smallnav">
                     <div class="am-u-sm-3">
-                        <a href="sort.html"><img src="static/images/navsmall.jpg"/>
+                        <a href="#"><img src="static/images/navsmall.jpg"/>
                             <div class="title">商品分类</div>
                         </a>
                     </div>
@@ -484,7 +484,7 @@
                                     <p>
                                         购物车
                                     </p>
-                                    <p class="cart_num ">{{this.shopCarts.length}}</p>
+                                    <p class="cart_num ">{{shopCartsCount}}</p>
                                 </div>
                                 <div id="asset " class="item ">
                                     <a href="# ">
@@ -640,8 +640,9 @@
             categories: [],
             recommendPro: [],
             recommendCategories: [],
-            shopCarts: [],
+            shopCartsCount: 0,
             token: null,
+            userId: null,
         },
 
         created: function () {
@@ -650,6 +651,20 @@
                 this.isLogin = true;
                 this.username = getCookieValue("username");
                 this.userImg = getCookieValue("userImg");
+                this.userId = getCookieValue("userId");
+                //購物車數量查詢
+                axios({
+                    url:baseUrl+"shoppingCart/countByUid/"+this.userId,
+                    methods: "get",
+                    headers:{
+                        token:token
+                    }
+                }).then(res =>{
+                      if(res.data.code=10000){
+                          this.shopCartsCount=res.data.data;
+                      }
+
+                })
             }
             //轮播图请求
             axios.get(baseUrl + "index/imgShow").then(res => {
@@ -683,14 +698,13 @@
                     }, 100);
                 }
             });
-            
+
             //首页上新推荐数据请求
             axios.get(baseUrl + "product/recommendShow").then(res => {
                 let result = res.data;
                 if (result.code == 10000) {
                     this.recommendPro = result.data.RecommendPro;
                 }
-                console.log(result,'result_______..')
             });
 
             //分类菜单展示接口
@@ -702,33 +716,6 @@
                 }
             })
 
-            //购物车数量
-
-            if (token == null) {
-            } else {
-                this.token = token;
-                var userId = getCookieValue("userId");
-                axios({
-                    url: baseUrl + "shoppingCart/list",
-                    method: "Get",
-                    headers: {
-                        token: token
-                    },
-                    params: {
-                        userId: userId,
-                    }
-                }).then(res => {
-                    console.log(res.data);
-                    if(res.data.code==10009 || res.data.code==10011){
-                    }else if(res.data.code==10000){
-                        //请求成功
-                        this.shopCarts = res.data.data;
-                    }else if(res.data.code==99999){
-                        //请求失败
-                        alert("出错了")
-                    }
-                });
-            }
         },
         methods: {
             signOut: function () {
