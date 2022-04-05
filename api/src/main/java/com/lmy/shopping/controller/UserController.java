@@ -3,6 +3,7 @@ package com.lmy.shopping.controller;
 import com.lmy.shopping.entity.Users;
 import com.lmy.shopping.service.impl.UserServiceImpl;
 import com.lmy.shopping.vo.ResultVo;
+import com.lmy.shopping.vo.StatusCode;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -48,5 +49,11 @@ public class UserController {
         ResultVo resultVo = userService.userRegist(users.getUsername(), users.getPassword());
         return resultVo;
 
+    }
+
+    @ApiOperation("用户Token校验接口")
+    @GetMapping("/userTokenCheck")
+    public ResultVo userTokenCheck(@RequestHeader("token")String token){
+        return new ResultVo(StatusCode.STATUS_OK,"success",null);
     }
 }
