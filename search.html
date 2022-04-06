@@ -486,10 +486,9 @@
                 })
             }
 
-            var keyWord = getUrlParam("keyWord")
-            if (keyWord != null) {
-                debugger
-                this.keyWord = keyWord;
+            var keyWord=getUrlParam("keyWord")
+            if (keyWord!=null){
+                this.keyWord=keyWord;
                 axios({
                     methods: "get",
                     url: baseUrl + "product/queryProductByKeyWord/" + this.keyWord,

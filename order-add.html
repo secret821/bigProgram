@@ -504,11 +504,10 @@
                     data:orders
                 }).then(res=>{
                     if(res.data.code=10000){
-                        debugger
                         var orderInfo=res.data.data;
                         orderInfo.totalPrice=this.totalPrice;
                         localStorage.setItem("orderInfo",JSON.stringify(orderInfo));
-                        window.location.href="order-pay.html";
+                        window.location.href="order-toPay.html";
                     }else if (res.data.code==10009 ||res.data.code==10010){
                         window.location.href="index.html";
                     }else {
