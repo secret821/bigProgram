@@ -1,0 +1,115 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>支付页面</title>
+
+    <link href="static/css/amazeui.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/demo.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/cartstyle.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/optstyle.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/order-pay.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/qrcode.min.js"></script>
+
+</head>
+
+<body>
+    <div id="container">
+        <div class="order-paybg">
+            <div style="background: rgba(0, 0, 0, 0.8); height: 740px; padding: 15px;">
+                <p>&nbsp;</p>
+                <!-- <p>&nbsp;</p> -->
+                <div style="width:31%; height: 51%; background: #fff; margin-top: 70px;margin-left:450px;">
+                    <!-- <div style="width:45%; height: 35%; background: #fff; "></div> -->
+                    <p>&nbsp;</p>
+                    <h3>订单编号: {{orderInfo.orderId}}</h3>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+
+                    <!-- <h3>订单金额:￥ {{orderInfo.totalPrice}}</h3> -->
+                    <img src="./static/images/close-sure.png" alt=""
+                        style="width: 35px; height: 35px; margin-top: 280px;margin-left:205px"
+                        onclick="javascript:window.location.href='shopcart.html'">
+                    <hr />
+                    <div id="div1">
+                        <div id="payQrcodeDiv"
+                            style="width: 130px; height: 130px;background-color:black;margin-top: -324px; margin-left: 154px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="static/js/cookie_utils.js"></script>
+    <script type="text/javascript" src="static/js/vue.js"></script>
+    <script type="text/javascript" src="static/js/axios.min.js"></script>
+
+    <script type="text/javascript">
+        var baseUrl = "http://localhost:8080/";
+        var vm = new Vue({
+            el: "#container",
+            data: {
+                isLogin: false,
+                username: "",
+                orderInfo: {}
+            },
+
+            // mounted:function(){
+            //     //渲染二维码
+            //     var qrcode = new QRCode($("#payQrcodeDiv")[0],{
+            //         width:200,
+            //         height:200
+            //     });
+            //     qrcode.makeCode(this.orderInfo.payUrl);
+
+            //     var oid = this.orderInfo.orderId;
+            //     var i = setInterval(function(){
+            //         console.log("-----");
+            //         var url = baseUrl+"order/status/"+oid;
+            //         axios({
+            //             url:url,
+            //             method:"get",
+            //             headers:{
+            //                 token:getCookieValue("token")
+            //             }
+            //         }).then((res)=>{
+            //             if(res.data.data == "2"){
+            //                 $("#div1").html("<label style='font-size:20px; color:green'>订单支付完成！</label>");
+            //                 clearInterval(i);
+            //             }
+            //         });
+            //     },1000);
+            // },
+
+            created: function () {
+                var token = getCookieValue("token");
+
+                if (token != null && token != "") {
+                    this.isLogin = true;
+                    this.username = getCookieValue("username");
+                }
+                var jsostr = localStorage.getItem("orderInfo");
+                if (jsostr != null) {
+                    localStorage.removeItem("orderInfo");
+                }
+                this.orderInfo = eval("(" + jsostr + ")");
+                console.log(this.orderInfo);
+            },
+            methods: {
+            },
+
+        })
+    </script>
+
+
+</body>
+
+</html>

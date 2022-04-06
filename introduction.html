@@ -821,7 +821,22 @@
                 productName: "",
             },
             productImgs: [],
-            productSkus: [],
+            productSkus: [
+                {
+                    "skuId": "",
+                    "productId": "",
+                    "skuName": "",
+                    "skuImg": "",
+                    "untitled": "",
+                    "originalPrice": 0,
+                    "sellPrice": 0,
+                    "discounts": 0,
+                    "stock":0,
+                    "createTime": "",
+                    "updateTime": "",
+                    "status": 1
+                },
+            ],
             productComments: [],
             pageNum: 1,
             limit: 2,
@@ -834,7 +849,7 @@
             currentSku: {},
             num: 1,
             token: "",
-            shopCartsCount:0,
+            shopCartsCount: 0,
         },
 
         created: function () {
@@ -848,14 +863,14 @@
                 this.userImg = getCookieValue("userImg");
                 var userId = getCookieValue("userId");
                 axios({
-                    url:baseUrl+"shoppingCart/countByUid/"+userId,
+                    url: baseUrl + "shoppingCart/countByUid/" + userId,
                     methods: "get",
-                    headers:{
-                        token:token
+                    headers: {
+                        token: token
                     }
-                }).then(res =>{
-                    if(res.data.code=10000){
-                        this.shopCartsCount=res.data.data;
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        this.shopCartsCount = res.data.data;
                     }
 
                 })
