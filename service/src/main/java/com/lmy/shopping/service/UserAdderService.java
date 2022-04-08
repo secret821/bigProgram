@@ -12,4 +12,6 @@ import com.lmy.shopping.vo.ResultVo;
 public interface UserAdderService {
 
     ResultVo selectUserAdder(int userId);
+
+    ResultVo  updataUserAdder(String uid,String addrId);
 }

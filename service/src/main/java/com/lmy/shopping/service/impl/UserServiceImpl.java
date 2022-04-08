@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
                         //map中可以存放用户的角色权限信息
                         .setClaims(map)
                         //设置token过期时间
-                        .setExpiration(new Date(System.currentTimeMillis() + 60*60*1000))
+                        .setExpiration(new Date(System.currentTimeMillis() + 4*60*60*1000))
                         //设置加密方式和加密密码
                         .signWith(SignatureAlgorithm.HS256, "LY&&LMY")
                         .compact();

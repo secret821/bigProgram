@@ -1,14 +1,12 @@
 package com.lmy.shopping.service.impl;
 
-import com.lmy.shopping.entity.OrderItem;
-import com.lmy.shopping.entity.Orders;
-import com.lmy.shopping.entity.ProductSku;
-import com.lmy.shopping.entity.ShoppingCartVo;
+import com.lmy.shopping.entity.*;
 import com.lmy.shopping.mapper.OrderItemMapper;
 import com.lmy.shopping.mapper.OrdersMapper;
 import com.lmy.shopping.mapper.ProductSkuMapper;
 import com.lmy.shopping.mapper.ShoppingCartMapper;
 import com.lmy.shopping.service.OrderService;
+import com.lmy.shopping.vo.PageHelper;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,5 +153,47 @@ public class OrderServiceImpl implements OrderService {
                 productSkuMapper.updateByPrimaryKey(productSku);
             }
         }
+
+    }
+
+    @Override
+    public ResultVo queryOrdersList(String userId, String status, int pageNum, int limit) {
+        //1.分页查询
+        int start = (pageNum-1)*limit;
+        List<OrdersVo> ordersVOS = ordersMapper.queryOrderList(userId, status, start, limit);
+
+        //2.查询总记录数
+        Example example = new Example(Orders.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andLike("userId",userId);
+        if(status != null && !"".equals(status)){
+            criteria.andLike("status",status);
+        }
+        int count = ordersMapper.selectCountByExample(example);
+
+        //3.计算总页数
+        int pageCount = count%limit==0?count/limit:count/limit+1;
+
+        //4.封装数据
+        PageHelper<OrdersVo> pageHelper = new PageHelper<>(count, pageCount, ordersVOS);
+        return new ResultVo(StatusCode.STATUS_OK,"success",pageHelper);
+    }
+
+    @Override
+    public ResultVo queryOrdersCount(String userId) {
+        List<StatusCount> statusCounts = ordersMapper.queryOrdersCount(userId);
+        return new ResultVo(StatusCode.STATUS_OK,"success",statusCounts);
+    }
+
+    @Override
+    public ResultVo deleteOrderById(String orderId) {
+        Orders orders=new Orders();
+        orders.setOrderId(orderId);
+        orders.setDeleteStatus(1);
+        int i = ordersMapper.updateByPrimaryKeySelective(orders);
+        if (i>0){
+            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
     }
 }

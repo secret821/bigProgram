@@ -31,11 +31,23 @@ public class UserAdderController {
 
     @ApiOperation("用户地址查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(dataType = "int", name = "userId", value = "用戶ID", required = true),
+            @ApiImplicitParam(dataType = "int", name = "userId", value = "用戶Id", required = true),
     })
     @GetMapping(value = "/list")
     public ResultVo checkLogin(int userId,@RequestHeader("token") String token) {
         ResultVo resultVo = userAdderService.selectUserAdder(userId);
+        return resultVo;
+    }
+
+
+    @ApiOperation("默认地址修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String", name = "userId", value = "用戶Id", required = true),
+            @ApiImplicitParam(dataType = "String", name = "addrId", value = "地址Id", required = true),
+    })
+    @GetMapping(value = "/updataStatus")
+    public ResultVo updataAddr(String userId,String addrId,@RequestHeader("token") String token) {
+        ResultVo resultVo = userAdderService.updataUserAdder(userId,addrId);
         return resultVo;
     }
 

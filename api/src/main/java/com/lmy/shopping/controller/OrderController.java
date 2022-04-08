@@ -7,6 +7,8 @@ import com.lmy.shopping.service.impl.OrderServiceImpl;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +70,34 @@ public class OrderController {
     @ApiOperation("查询订单状态接口")
     public ResultVo queryStatus(@PathVariable("oid") String orderId, @RequestHeader("token") String token) {
         ResultVo resultVo = orderService.queryOrderInfo(orderId);
+        return resultVo;
+    }
+
+    @GetMapping("/list")
+    @ApiOperation("订单查询接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "string",name = "userId", value = "用户ID",required = true),
+            @ApiImplicitParam(dataType = "string",name = "status", value = "订单状态",required = false),
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页条数",required = true)
+    })
+    public ResultVo list(@RequestHeader("token")String token,
+                         String userId,String status,int pageNum,int limit){
+        ResultVo resultVO = orderService.queryOrdersList(userId, status, pageNum, limit);
+        return resultVO;
+    }
+
+
+    @GetMapping("/statusCount/{uid}")
+    @ApiOperation("查询订单状态总数接口")
+    public ResultVo queryStatusCount(@PathVariable("uid") String userId, @RequestHeader("token") String token) {
+        ResultVo resultVo = orderService.queryOrdersCount(userId);
+        return resultVo;
+    }
+    @GetMapping("/deleteOrder")
+    @ApiOperation("删除过期未支付订单")
+    public ResultVo deleteOrderById(String orderId, @RequestHeader("token") String token) {
+        ResultVo resultVo = orderService.deleteOrderById(orderId);
         return resultVo;
     }
 }

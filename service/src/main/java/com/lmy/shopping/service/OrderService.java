@@ -24,4 +24,13 @@ public interface OrderService {
     //关闭订单
     void closeOrder(String orderId);
 
+    //分頁查询状态订单
+    ResultVo queryOrdersList(String userId,String status,int pageNum, int limit);
+
+    //查询用户的所有订单状态的总数
+    ResultVo queryOrdersCount(String userId);
+
+    //刪除过期未支付订单(逻辑删除)
+    ResultVo deleteOrderById(String orderId);
+
 }
