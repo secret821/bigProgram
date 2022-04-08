@@ -803,11 +803,103 @@
     <script type="text/javascript">
         $(function () {
         });
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                start: function (slider) {
-                    $('body').removeClass('loading');
+    //     $(window).load(function () {
+    //         $('.flexslider').flexslider({
+    //             animation: "slide",
+    //             start: function (slider) {
+    //                 $('body').removeClass('loading');
+    // });
+</script>
+<script type="text/javascript">
+    var baseUrl = "http://localhost:8080/";
+
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
+    var vm = new Vue({
+        el: "#container",
+        data: {
+            username: "",
+            userImg: "",
+            isLogin: false,
+            productId: "",
+            currentIndex: "0",
+            product: {
+                productName: "",
+            },
+            productImgs: [],
+            productSkus: [
+                {
+                    "skuId": "",
+                    "productId": "",
+                    "skuName": "",
+                    "skuImg": "",
+                    "untitled": "",
+                    "originalPrice": 0,
+                    "sellPrice": 0,
+                    "discounts": 0,
+                    "stock":0,
+                    "createTime": "",
+                    "updateTime": "",
+                    "status": 1
+                },
+            ],
+            productComments: [],
+            pageNum: 1,
+            limit: 2,
+            pageCount: 0,
+            count: 0,
+            productParams: {},
+            randProduct: [],
+            commentNum: {},
+            skuProps: {},
+            currentSku: {},
+            num: 1,
+            token: "",
+            shopCartsCount: 0,
+        },
+
+        created: function () {
+            this.productId = getUrlParam("pid");
+            this.currentIndex = getUrlParam("sid") != null ? getUrlParam("sid") : 0;
+            this.num = getUrlParam("num") != null ? getUrlParam("num") : 1;
+            var token = getCookieValue("token");
+            if (token != null && token != "") {
+                this.isLogin = true;
+                this.username = getCookieValue("username");
+                this.userImg = getCookieValue("userImg");
+                var userId = getCookieValue("userId");
+                axios({
+                    url: baseUrl + "shoppingCart/countByUid/" + userId,
+                    methods: "get",
+                    headers: {
+                        token: token
+                    }
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        this.shopCartsCount = res.data.data;
+                    }
+
+                })
+            }
+            /*商品的细节请求*/
+            axios.get(baseUrl + "product/detail-info/" + this.productId).then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.product = result.data.product[0];
+                    this.productImgs = result.data.productImgs;
+                    this.productSkus = result.data.productSkus;
+                    var proStr = this.productSkus[0].untitled;
+                    this.skuProps = eval("(" + proStr + ")");
+                }
+            });
+            /*商品基本参数请求*/
+            axios.get(baseUrl + "product/param-info/" + this.productId).then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.productParams = result.data.productParams[0];
                 }
             });
         });

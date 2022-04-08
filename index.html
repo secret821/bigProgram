@@ -42,10 +42,10 @@
             </ul>
             <ul class="message-r">
                 <div class="topMessage home">
-                    <div class="menu-hd"><a href="#" target="_top" class="h">首页</a></div>
+                    <div class="menu-hd"><a href="index.html" target="_top" class="h">首页</a></div>
                 </div>
                 <div class="topMessage my-shangcheng">
-                    <div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
+                    <div class="menu-hd MyShangcheng"><a href="user-center.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
                     </div>
                 </div>
                 <div class="topMessage mini-cart">
@@ -54,10 +54,10 @@
                             id="J_MiniCartNum" class="h" v-if="isLogin">{{shopCartsCount}}</strong></a>
                     </div>
                 </div>
-                <!--   <div class="topMessage favorite">
+                   <div class="topMessage favorite">
                        <div class="menu-hd"><a href="#" target="_top"><i
                                class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-                   </div>-->
+                   </div>
 
                 <div class="topMessage exit" v-if="isLogin">
                     <div class="menu-hd"><a target="_top" @click="signOut" href="#"><i
@@ -76,8 +76,8 @@
                 <a name="index_none_header_sysc" href="#"></a>
                 <form action="search.html">
                     <input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索"
-                           autocomplete="off">
-                    <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+                           autocomplete="off" v-model="keyWord">
+                    <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="button" @click="toSearch">
                 </form>
             </div>
         </div>
@@ -173,7 +173,7 @@
                         </a>
                     </div>
                     <div class="am-u-sm-3">
-                        <a href="#"><img src="static/images/mansmall.jpg"/>
+                        <a href="user-center.html"><img src="static/images/mansmall.jpg"/>
                             <div class="title">个人中心</div>
                         </a>
                     </div>
@@ -643,26 +643,27 @@
             shopCartsCount: 0,
             token: null,
             userId: null,
+            keyWord:"",
         },
 
         created: function () {
-            var token = getCookieValue("token");
-            if (token != null && token != "") {
+            this.token = getCookieValue("token");
+            if (this.token != null && this.token != "") {
                 this.isLogin = true;
                 this.username = getCookieValue("username");
                 this.userImg = getCookieValue("userImg");
                 this.userId = getCookieValue("userId");
                 //購物車數量查詢
                 axios({
-                    url:baseUrl+"shoppingCart/countByUid/"+this.userId,
+                    url: baseUrl + "shoppingCart/countByUid/" + this.userId,
                     methods: "get",
-                    headers:{
-                        token:token
+                    headers: {
+                        token: this.token
                     }
-                }).then(res =>{
-                      if(res.data.code=10000){
-                          this.shopCartsCount=res.data.data;
-                      }
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        this.shopCartsCount = res.data.data;
+                    }
 
                 })
             }
@@ -724,6 +725,10 @@
                 Object.assign(this.$data, this.$options.data());
                 window.location.href = "index.html"
             },
+            toSearch:function (){
+                var url="search.html?keyWord="+this.keyWord;
+                window.location.href=encodeURI(url);
+            }
         }
     });
 </script>
