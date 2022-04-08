@@ -35,12 +35,12 @@
 
                     <!-- <h3>订单金额:￥ {{orderInfo.totalPrice}}</h3> -->
                     <img src="./static/images/close-sure.png" alt=""
-                        style="width: 35px; height: 35px; margin-top: 280px;margin-left:205px"
+                        style="width: 35px; height: 35px; margin-top: 307px;margin-left:205px"
                         onclick="javascript:window.location.href='shopcart.html'">
                     <hr />
                     <div id="div1">
                         <div id="payQrcodeDiv"
-                            style="width: 130px; height: 130px;background-color:black;margin-top: -324px; margin-left: 154px;">
+                            style="width: 130px; height: 130px;margin-top: -324px; margin-left: 154px;">
                         </div>
                     </div>
                 </div>
@@ -63,32 +63,32 @@
                 orderInfo: {}
             },
 
-            // mounted:function(){
-            //     //渲染二维码
-            //     var qrcode = new QRCode($("#payQrcodeDiv")[0],{
-            //         width:200,
-            //         height:200
-            //     });
-            //     qrcode.makeCode(this.orderInfo.payUrl);
+            mounted:function(){
+                //渲染二维码
+                var qrcode = new QRCode($("#payQrcodeDiv")[0],{
+                    width:200,
+                    height:200
+                });
+                qrcode.makeCode(this.orderInfo.payUrl);
 
-            //     var oid = this.orderInfo.orderId;
-            //     var i = setInterval(function(){
-            //         console.log("-----");
-            //         var url = baseUrl+"order/status/"+oid;
-            //         axios({
-            //             url:url,
-            //             method:"get",
-            //             headers:{
-            //                 token:getCookieValue("token")
-            //             }
-            //         }).then((res)=>{
-            //             if(res.data.data == "2"){
-            //                 $("#div1").html("<label style='font-size:20px; color:green'>订单支付完成！</label>");
-            //                 clearInterval(i);
-            //             }
-            //         });
-            //     },1000);
-            // },
+                var oid = this.orderInfo.orderId;
+                var i = setInterval(function(){
+                    console.log("-----");
+                    var url = baseUrl+"order/status/"+oid;
+                    axios({
+                        url:url,
+                        method:"get",
+                        headers:{
+                            token:getCookieValue("token")
+                        }
+                    }).then((res)=>{
+                        if(res.data.data == "2"){
+                            $("#div1").html("<label style='font-size:20px; color:green'>订单支付完成！</label>");
+                            clearInterval(i);
+                        }
+                    });
+                },1000);
+            },
 
             created: function () {
                 var token = getCookieValue("token");
