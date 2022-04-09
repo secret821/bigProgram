@@ -59,7 +59,7 @@
                 <div class="menu-hd"><a href="index.html" target="_top" class="h">商城首页</a></div>
             </div>
             <div class="topMessage my-shangcheng">
-                <div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
+                <div class="menu-hd MyShangcheng"><a href="user-center.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
                 </div>
             </div>
             <div class="topMessage mini-cart">
@@ -570,17 +570,18 @@
                 <div class="am-tab-panel am-fade">
                     <div class="like">
                         <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
+                           <template v-for="r2 in randProduct2">
                             <li>
                                 <div class="i-pic limit">
-                                    <img src="static/images/imgsearch1.jpg"/>
-                                    <p>【良品铺子_开口松子】零食坚果特产炒货
-                                        <span>东北红松子奶油味</span></p>
+                                    <img :src="'static/pimgs/'+r2.productImgs[0].url" width="214.5" height="214.5"/>
+                                    <p>{{r2.productName}}</p>
                                     <p class="price fl">
-                                        <b>¥</b>
-                                        <strong>298.00</strong>
+                                        <b>銷量</b>
+                                        <strong>{{r2.soldNum}}</strong>
                                     </p>
                                 </div>
                             </li>
+                           </template>
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -839,11 +840,12 @@
             ],
             productComments: [],
             pageNum: 1,
-            limit: 2,
+            limit: 5,
             pageCount: 0,
             count: 0,
             productParams: {},
             randProduct: [],
+            randProduct2:[],
             commentNum: {},
             skuProps: {},
             currentSku: {},
@@ -920,6 +922,15 @@
                 let result = res.data;
                 if (result.code = 10000) {
                     this.randProduct = result.data.randProduct;
+                }
+            })
+
+
+            /*随机查询推荐商品*/
+            axios.get(baseUrl + "product/randProduct/12").then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.randProduct2 = result.data.randProduct;
                 }
             })
         },
@@ -1005,7 +1016,6 @@
                     },
                     data: cart
                 }).then(res => {
-                    console.log(res.data);
                     if (res.data.code == 10000) {
                         //加购成功
                         layer.msg("添加购物车成功！")
@@ -1036,7 +1046,6 @@
                 for (var key in this.skuProps) {
                     this.currentSku[key] = this.skuProps[key][0];
                 }
-                console.log(this.currentSku);
             }
         }
     })

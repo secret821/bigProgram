@@ -42,7 +42,7 @@
                 <div class="menu-hd"><a href="index.html" target="_top" class="h">商城首页</a></div>
             </div>
             <div class="topMessage my-shangcheng">
-                <div class="menu-hd MyShangcheng"><a href="#" target="_top"><i
+                <div class="menu-hd MyShangcheng"><a href="user-center.html" target="_top"><i
                         class="am-icon-user am-icon-fw"></i>个人中心</a></div>
             </div>
             <div class="topMessage mini-cart">
@@ -51,11 +51,11 @@
                                                                                               class="h" v-if="isLogin">{{shopCartsCount}}</strong></a>
                 </div>
             </div>
-            <!--<div class="topMessage favorite">
+            <div class="topMessage favorite">
                 <div class="menu-hd"><a href="#" target="_top"><i
                             class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a>
                 </div>
-            </div>-->
+            </div>
         </ul>
     </div>
 
@@ -71,8 +71,8 @@
             <a name="index_none_header_sysc" href="#"></a>
             <form>
                 <input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索"
-                       autocomplete="off" v-model="keyWord">
-                <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+                       autocomplete="off" v-model="keyWord" >
+                <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" @click="search">
             </form>
         </div>
     </div>
@@ -517,6 +517,35 @@
 
         },
         methods: {
+            search:function (){
+
+                if (this.keyWord!=null){
+                    axios({
+                        methods: "get",
+                        url: baseUrl + "product/queryProductByKeyWord/" + this.keyWord,
+                        params: {
+                            pageNum: this.pageNum,
+                            limit: this.limit
+                        }
+                    }).then(res => {
+                        var pageHelper = res.data.data;
+                        if (res.data.code = 10000) {
+                            this.products = pageHelper.list;
+                            this.pageCount = pageHelper.pageCount;
+                            this.count = pageHelper.count;
+
+                        }
+                    })
+                    axios({
+                        methods: "get",
+                        url: baseUrl + "product/queryBrandByKeyWord/" + this.keyWord,
+                    }).then(res => {
+                        if (res.data.code = 10000) {
+                            this.brand = res.data.data;
+                        }
+                    })
+                }
+            },
             pager: function (currentPage) {
                 if (this.categoryId != null && this.categoryId != "") {
                     this.pageNum = currentPage;

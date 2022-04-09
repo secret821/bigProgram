@@ -12,6 +12,8 @@
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.js"></script>
     <STYLE type="text/css">
         .cart_num {
@@ -82,20 +84,26 @@
                         <td>
                             <template v-if="order.status == '1'">
                                 <button class="btn btn-success btn-xs">去支付</button>
-                                <button class="btn btn-danger btn-xs">取消订单</button>
+                                <button class="btn btn-danger btn-xs" @click="cancelOrder" :data-id="order.orderId">
+                                    取消订单
+                                </button>
                             </template>
                             <template v-if="order.status == '2'">
                                 <button class="btn btn-danger btn-xs">取消订单</button>
                             </template>
                             <template v-if="order.status == '3'">
-                                <button class="btn btn-success btn-xs">确认收货</button>
+                                <button class="btn btn-success btn-xs" @click="confirmOrder" :data-id="order.orderId">
+                                    确认收货
+                                </button>
                             </template>
                             <template v-if="order.status == '4'">
                                 <button class="btn btn-success btn-xs" @click="gotoComment" :data-index="index">去评价
                                 </button>
                             </template>
                             <template v-if="order.status == '5' || order.status == '6'">
-                                <button class="btn btn-success btn-xs" @click="deleteOrder" :data-id="order.orderId">删除</button>
+                                <button class="btn btn-success btn-xs" @click="deleteOrder" :data-id="order.orderId">
+                                    删除
+                                </button>
                             </template>
                         </td>
                     </tr>
@@ -120,6 +128,10 @@
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script type="text/javascript">
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
     var baseUrl = "http://localhost:8080/";
     var vm = new Vue({
         el: "#container",
@@ -236,7 +248,7 @@
                     }
                 });
             },
-            deleteOrder:function (){
+            deleteOrder: function () {
                 var orderId = event.srcElement.dataset.id;
                 axios({
                     url: baseUrl + "order/deleteOrder",
@@ -249,9 +261,50 @@
                     }
                 }).then((res) => {
                     if (res.data.code == 10000) {
+                        layer.msg("刪除成功！！")
                         location.reload();
-                    }else  if (res.data.code=99999){
-                        alert("刪除订单失敗");
+                    } else if (res.data.code = 99999) {
+                        layer.msg("刪除订单失敗！！")
+                    }
+                });
+            },
+            cancelOrder: function () {
+                var orderId = event.srcElement.dataset.id;
+                axios({
+                    url: baseUrl + "order/cancelOrder",
+                    method: "get",
+                    headers: {
+                        token: this.token
+                    },
+                    params: {
+                        orderId: orderId,
+                        //关闭类型 4 为买家取消
+                        closeType: 4,
+                    }
+                }).then((res) => {
+                    layer.msg("取消订单成功！！");
+                    location.reload();
+                });
+            },
+            confirmOrder: function () {
+                var orderId = event.srcElement.dataset.id;
+                axios({
+                    url: baseUrl + "order/confirmOrderById",
+                    method: "get",
+                    headers: {
+                        token: this.token
+                    },
+                    params: {
+                        orderId: orderId,
+                        //订单状态 4 为去评价状态
+                        status: 4,
+                    }
+                }).then((res) => {
+                    if (res.data.code == 10000) {
+                        layer.msg("确认收货成功！！")
+                        location.reload();
+                    } else if (res.data.code = 99999) {
+                        layer.msg("确认成功失败！！")
                     }
                 });
             },
