@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,11 +46,13 @@ public class UserAdderServiceImpl implements UserAdderService {
         List<UserAddr> userAddrs = userAddrMapper.selectByExample(example);
         if (userAddrs.size()>0){
             userAddrs.get(0).setCommonAddr(0);
+            userAddrs.get(0).setUpdateTime(new Date());
             userAddrMapper.updateByPrimaryKeySelective(userAddrs.get(0));
         }
         UserAddr userAddr1 = userAddrMapper.selectByPrimaryKey(addrId);
         if (userAddr1!=null && userAddr1.getStatus()==1){
             userAddr1.setCommonAddr(1);
+            userAddr1.setUpdateTime(new Date());
             userAddrMapper.updateByPrimaryKeySelective(userAddr1);
             return new ResultVo(StatusCode.STATUS_OK,"success",null);
         }

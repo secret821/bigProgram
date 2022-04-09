@@ -96,8 +96,28 @@ public class OrderController {
     }
     @GetMapping("/deleteOrder")
     @ApiOperation("删除过期未支付订单")
+    /**
+     * 由于定时任务会自动处理过期未支付的订单，且会还原库存，删除过期订单只做逻辑删除处理
+     */
     public ResultVo deleteOrderById(String orderId, @RequestHeader("token") String token) {
         ResultVo resultVo = orderService.deleteOrderById(orderId);
+        return resultVo;
+    }
+
+
+    @GetMapping("/cancelOrder")
+    @ApiOperation("取消未支付(尚未过期)订单")
+    /**
+     *  此订单尚未支付且未过期 需要还原库存 修改状态等
+     */
+    public void cancelOrderById(String orderId,int closeType, @RequestHeader("token") String token) {
+        orderService.closeOrder(orderId,closeType);
+    }
+
+    @GetMapping("/confirmOrderById")
+    @ApiOperation("修改订单状态")
+    public ResultVo confirmOrderById(String orderId,String status, @RequestHeader("token") String token) {
+        ResultVo resultVo = orderService.confirmOrderById(orderId,status);
         return resultVo;
     }
 }

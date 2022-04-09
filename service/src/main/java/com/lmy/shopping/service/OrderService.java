@@ -22,7 +22,7 @@ public interface OrderService {
     //查询订单状态
     ResultVo queryOrderInfo(String orderId);
     //关闭订单
-    void closeOrder(String orderId);
+    void closeOrder(String orderId,int closeType);
 
     //分頁查询状态订单
     ResultVo queryOrdersList(String userId,String status,int pageNum, int limit);
@@ -32,5 +32,8 @@ public interface OrderService {
 
     //刪除过期未支付订单(逻辑删除)
     ResultVo deleteOrderById(String orderId);
+
+    //确认收货 修改订单状态
+    ResultVo confirmOrderById(String orderId,String status);
 
 }

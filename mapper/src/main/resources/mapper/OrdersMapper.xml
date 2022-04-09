@@ -68,7 +68,7 @@
         delivery_flow_id,order_freight,delete_status,create_time,
         update_time,pay_time,delivery_time, flish_time,cancel_time,close_type
         from orders
-        where user_id=#{uid}
+        where user_id=#{uid} and delete_status=0
         <if test="status != null and status!=''">
             and status=#{status}
         </if>
@@ -82,8 +82,8 @@
             orders
         WHERE
             user_id =#{uid}
-          and (delete_status is null
-           or delete_status=0)
+          and
+          delete_status=0
         GROUP BY
             STATUS;
     </select>

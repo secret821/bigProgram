@@ -78,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
             orders.setUntitled(untitled);
             orders.setCreateTime(new Date());
             orders.setStatus("1");
+            orders.setDeleteStatus(0);
             int insert = ordersMapper.insert(orders);
             //保存订单快照
             for (ShoppingCartVo sc : shoppingCartList) {
@@ -130,13 +131,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void closeOrder(String orderId) {
+    public void closeOrder(String orderId,int closeType) {
         synchronized (this) {
             //  1.修改当前订单：status=6 已关闭  close_type=1 超时未支付
             Orders cancleOrder = new Orders();
             cancleOrder.setOrderId(orderId);
             cancleOrder.setStatus("6");  //已关闭
-            cancleOrder.setCloseType(1); //关闭类型：超时未支付
+            cancleOrder.setCloseType(closeType); //关闭类型：1 超时关闭  4 买家取消关闭
             ordersMapper.updateByPrimaryKeySelective(cancleOrder);
 
             //  2.还原库存：先根据当前订单编号查询商品快照（skuid  buy_count）--->修改product_sku
@@ -165,7 +166,8 @@ public class OrderServiceImpl implements OrderService {
         //2.查询总记录数
         Example example = new Example(Orders.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andLike("userId",userId);
+        criteria.andEqualTo("userId",userId)
+                .andEqualTo("deleteStatus",0);
         if(status != null && !"".equals(status)){
             criteria.andLike("status",status);
         }
@@ -189,7 +191,20 @@ public class OrderServiceImpl implements OrderService {
     public ResultVo deleteOrderById(String orderId) {
         Orders orders=new Orders();
         orders.setOrderId(orderId);
+        //1 为删除状态 0 为未删除状态
         orders.setDeleteStatus(1);
+        int i = ordersMapper.updateByPrimaryKeySelective(orders);
+        if (i>0){
+            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+    }
+
+    @Override
+    public ResultVo confirmOrderById(String orderId,String status) {
+        Orders orders=new Orders();
+        orders.setOrderId(orderId);
+        orders.setStatus(status);
         int i = ordersMapper.updateByPrimaryKeySelective(orders);
         if (i>0){
             return new ResultVo(StatusCode.STATUS_OK,"success",null);

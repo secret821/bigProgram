@@ -125,4 +125,10 @@ public class ProductCommentsVo {
      * 头像
      */
     private String userImg;
+
+
+    /**
+     * 商品图片
+     */
+    private  String productImg;
 }

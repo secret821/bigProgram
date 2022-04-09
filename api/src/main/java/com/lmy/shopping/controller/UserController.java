@@ -1,6 +1,9 @@
 package com.lmy.shopping.controller;
 
+import com.lmy.shopping.entity.ProductComments;
 import com.lmy.shopping.entity.Users;
+import com.lmy.shopping.service.ProductCommentService;
+import com.lmy.shopping.service.impl.ProductCommentServiceImpl;
 import com.lmy.shopping.service.impl.UserServiceImpl;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
@@ -56,4 +59,19 @@ public class UserController {
     public ResultVo userTokenCheck(@RequestHeader("token")String token){
         return new ResultVo(StatusCode.STATUS_OK,"success",null);
     }
+
+    @ApiOperation("用户详细信息查询接口")
+    @GetMapping("/userInfo")
+    public ResultVo userTokenCheck(String userId,@RequestHeader("token")String token){
+        ResultVo resultVo = userService.userInfo(userId);
+        return resultVo;
+    }
+
+    @ApiOperation("用户信息更新接口")
+    @PostMapping("/updateUserInfo")
+    public ResultVo UpdateUserInfo(@RequestBody Users user,@RequestHeader("token")String token){
+        ResultVo resultVo = userService.updateUser(user);
+        return resultVo;
+    }
+
 }

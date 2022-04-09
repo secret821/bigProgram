@@ -1,5 +1,6 @@
 package com.lmy.shopping.service;
 
+import com.lmy.shopping.entity.Users;
 import com.lmy.shopping.vo.ResultVo;
 
 /**
@@ -19,7 +20,7 @@ public interface UserService {
      * @param password  密码
      * @return
      */
-    public ResultVo checkUser(String name, String password);
+     ResultVo checkUser(String name, String password);
 
     /**
      * 用户注册
@@ -27,5 +28,17 @@ public interface UserService {
      * @param password  密码
      * @return
      */
-    public ResultVo userRegist(String name, String password);
+     ResultVo userRegist(String name, String password);
+
+    /**
+     * 用户信息查询
+     * @param uid
+     * @return
+     */
+     ResultVo userInfo(String uid);
+
+    /**
+     * 更新用户信息
+     */
+    ResultVo updateUser(Users user);
 }

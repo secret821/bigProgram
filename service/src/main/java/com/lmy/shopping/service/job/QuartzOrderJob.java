@@ -57,7 +57,8 @@ public class QuartzOrderJob {
                     //如果确实未支付 则取消订单：
                     //向微信支付平台发送请求，关闭当前订单的支付链接
                     Map<String, String> map = wxPay.closeOrder(params);
-                    orderService.closeOrder(orders1.getOrderId());
+                    //1 为超时取消
+                    orderService.closeOrder(orders1.getOrderId(),1);
                 }
 
             } catch (Exception e) {

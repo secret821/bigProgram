@@ -21,4 +21,12 @@ public interface ProductCommentsMapper extends GeneralDAO<ProductComments> {
             @Param("start") int start,
             @Param("limit") int limit,
             @Param("product_id") String product_id);
+
+
+
+    List<ProductCommentsVo> findProductCommentsByUid(
+            @Param("start") int start,
+            @Param("limit") int limit,
+            @Param("userId") String userId);
+
 }

@@ -1,5 +1,6 @@
 package com.lmy.shopping.service;
 
+import com.lmy.shopping.entity.ProductComments;
 import com.lmy.shopping.vo.ResultVo;
 
 /**
@@ -25,4 +26,19 @@ public interface ProductCommentService {
      * @return
      */
     ResultVo ListProductCommentsNum(String product_id);
+
+    /**
+     * 查询用户评价
+     * @param userId
+     * @return
+     */
+
+    ResultVo ListUserComment(int pageNum,int limit,String userId);
+
+    /**
+     * 用户评论
+     * @param productComments
+     * @return
+     */
+    ResultVo addProductComment(ProductComments productComments);
 }

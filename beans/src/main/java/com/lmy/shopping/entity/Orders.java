@@ -30,33 +30,6 @@ public class Orders {
     @Column(name = "receiver_name")
     private String receiverName;
 
-    @Override
-    public String toString() {
-        return "Orders{" +
-                "orderId='" + orderId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", untitled='" + untitled + '\'' +
-                ", receiverName='" + receiverName + '\'' +
-                ", receiverMobile='" + receiverMobile + '\'' +
-                ", receiverAddress='" + receiverAddress + '\'' +
-                ", totalAmount=" + totalAmount +
-                ", actualAmount=" + actualAmount +
-                ", payType=" + payType +
-                ", orderRemark='" + orderRemark + '\'' +
-                ", status='" + status + '\'' +
-                ", deliveryType='" + deliveryType + '\'' +
-                ", deliveryFlowId='" + deliveryFlowId + '\'' +
-                ", orderFreight=" + orderFreight +
-                ", deleteStatus=" + deleteStatus +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", payTime=" + payTime +
-                ", deliveryTime=" + deliveryTime +
-                ", flishTime=" + flishTime +
-                ", cancelTime=" + cancelTime +
-                ", closeType=" + closeType +
-                '}';
-    }
 
     /**
      * 收货人手机号快照
@@ -122,9 +95,7 @@ public class Orders {
     private BigDecimal orderFreight;
 
     /**
-     * 逻辑删除状态 1: 删除 0:未
-
-删除
+     * 逻辑删除状态 1: 删除 0:未删除
      */
     @Column(name = "delete_status")
     private Integer deleteStatus;

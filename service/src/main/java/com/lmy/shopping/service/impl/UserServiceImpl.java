@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import tk.mybatis.mapper.entity.Example;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,12 +43,12 @@ public class UserServiceImpl implements UserService {
     public ResultVo userRegist(String name, String password) {
         //根据用户名查询对应user
         synchronized (this) {
-            Example example=new Example(Users.class);
+            Example example = new Example(Users.class);
             Example.Criteria criteria = example.createCriteria();
-            criteria.andEqualTo("username",name);
+            criteria.andEqualTo("username", name);
             List<Users> users = userMapper.selectByExample(example);
 
-            if (users.size()== 0) {
+            if (users.size() == 0) {
                 //用户名不存在,将获取的密码加密
                 String md5Pwd = MD5Utils.md5(password);
                 Users user = new Users();
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 return new ResultVo(StatusCode.REGISTER_ALREADY_EXISTS, "当前用户名已被注册!", null);
             }
-    }
+        }
     }
 
     @Override
@@ -76,15 +77,15 @@ public class UserServiceImpl implements UserService {
         criteria.andEqualTo("username", username);
         List<Users> users = userMapper.selectByExample(example);
 
-        if (users.size()==0){
-            return new ResultVo(StatusCode.LOGIN_ALREADY_EXISTS,"登录失败，用户名不存在,请重试！",null);
-        }else {
+        if (users.size() == 0) {
+            return new ResultVo(StatusCode.LOGIN_ALREADY_EXISTS, "登录失败，用户名不存在,请重试！", null);
+        } else {
             String md5Pwd = MD5Utils.md5(password);
-            if(md5Pwd.equals(users.get(0).getPassword())){
+            if (md5Pwd.equals(users.get(0).getPassword())) {
                 //登录成功，携带token返回前端
                 /*String token= Base64Utils.encode(username+"lmy1018");*/
-                JwtBuilder builder= Jwts.builder();
-                HashMap<String,Object> map = new HashMap<>();
+                JwtBuilder builder = Jwts.builder();
+                HashMap<String, Object> map = new HashMap<>();
                 //主题，就是token中携带的数据
                 String token = builder.setSubject(username)
                         //设置token的生成时间
@@ -94,16 +95,43 @@ public class UserServiceImpl implements UserService {
                         //map中可以存放用户的角色权限信息
                         .setClaims(map)
                         //设置token过期时间
-                        .setExpiration(new Date(System.currentTimeMillis() + 4*60*60*1000))
+                        .setExpiration(new Date(System.currentTimeMillis() + 4 * 60 * 60 * 1000))
                         //设置加密方式和加密密码
                         .signWith(SignatureAlgorithm.HS256, "LY&&LMY")
                         .compact();
 
-                return new ResultVo(StatusCode.LOGIN_SUCCESS,token,users.get(0));
-          }else {
-                return new ResultVo(StatusCode.LOGIN_PASSWORD_MIS,"登录失败，密码错误,请重试！",null);
+                return new ResultVo(StatusCode.LOGIN_SUCCESS, token, users.get(0));
+            } else {
+                return new ResultVo(StatusCode.LOGIN_PASSWORD_MIS, "登录失败，密码错误,请重试！", null);
             }
         }
     }
 
+    @Override
+    public ResultVo userInfo(String uid) {
+        Users users = userMapper.selectByPrimaryKey(uid);
+        return new ResultVo(StatusCode.STATUS_OK, "success", users);
+    }
+
+    @Override
+    public ResultVo updateUser(Users user) {
+        Example example = new Example(Users.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username", user.getUsername());
+        List<Users> users1 = userMapper.selectByExample(example);
+        Users users = userMapper.selectByPrimaryKey(user.getUserId());
+        user.setUserModtime(new Date());
+        if (users != null) {
+            if (users1.size() == 0) {
+                userMapper.updateByPrimaryKeySelective(user);
+                return new ResultVo(StatusCode.STATUS_OK, "修改成功！", null);
+            } else if (users1.size() == 1 && users1.get(0).getUserId() == user.getUserId()) {
+                userMapper.updateByPrimaryKeySelective(user);
+                return new ResultVo(StatusCode.STATUS_OK, "修改成功！", null);
+            } else {
+                return new ResultVo(StatusCode.STATUS_FAIL, "改用户名已经被使用", null);
+            }
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL, "出錯了", null);
+    }
 }
