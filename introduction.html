@@ -58,10 +58,21 @@
                 <div class="topMessage home">
                     <div class="menu-hd"><a href="index.html" target="_top" class="h">商城首页</a></div>
                 </div>
+<<<<<<< HEAD
                 <div class="topMessage my-shangcheng">
                     <div class="menu-hd MyShangcheng"><a href="#" target="_top"><i
                                 class="am-icon-user am-icon-fw"></i>个人中心</a>
                     </div>
+=======
+            </div>
+        </ul>
+        <ul class="message-r">
+            <div class="topMessage home">
+                <div class="menu-hd"><a href="index.html" target="_top" class="h">商城首页</a></div>
+            </div>
+            <div class="topMessage my-shangcheng">
+                <div class="menu-hd MyShangcheng"><a href="user-center.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
+>>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
                 </div>
                 <div class="topMessage mini-cart">
                     <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
@@ -596,7 +607,28 @@
                         </div>
                         <div class="clear"></div>
 
+<<<<<<< HEAD
                         <!--分页 -->
+=======
+                <div class="am-tab-panel am-fade">
+                    <div class="like">
+                        <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
+                           <template v-for="r2 in randProduct2">
+                            <li>
+                                <div class="i-pic limit">
+                                    <img :src="'static/pimgs/'+r2.productImgs[0].url" width="214.5" height="214.5"/>
+                                    <p>{{r2.productName}}</p>
+                                    <p class="price fl">
+                                        <b>銷量</b>
+                                        <strong>{{r2.soldNum}}</strong>
+                                    </p>
+                                </div>
+                            </li>
+                           </template>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+>>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
 
                         <div class="clear"></div>
 
@@ -848,11 +880,12 @@
             ],
             productComments: [],
             pageNum: 1,
-            limit: 2,
+            limit: 5,
             pageCount: 0,
             count: 0,
             productParams: {},
             randProduct: [],
+            randProduct2:[],
             commentNum: {},
             skuProps: {},
             currentSku: {},
@@ -908,10 +941,48 @@
     <script type="text/javascript">
         var baseUrl = "http://localhost:8080/";
 
+<<<<<<< HEAD
         var layer;
         layui.use('layer', function () {
             layer = layui.layer;
         });
+=======
+                }
+            });
+            /*随机查询推荐商品*/
+            axios.get(baseUrl + "product/randProduct/3").then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.randProduct = result.data.randProduct;
+                }
+            })
+
+
+            /*随机查询推荐商品*/
+            axios.get(baseUrl + "product/randProduct/12").then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.randProduct2 = result.data.randProduct;
+                }
+            })
+        },
+        updated: function () {
+            //每次重新渲染之后执行
+            //====>初始化放大镜效果
+            $(".bigImage").imagezoom();
+            $("#thumblist li a").click(function () {
+                $(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
+                $(".bigImage").attr('src', $(this).find("img").attr("mid"));
+                $(".bigImage").attr('rel', $(this).find("img").attr("big"));
+            });
+        },
+        methods: {
+            changeSku: function (event) {
+                //获取点击的套餐的索引
+                this.currentIndex = event.srcElement.dataset.index;
+                var str = this.productSkus[this.currentIndex].untitled;
+                this.skuProps = eval("(" + str + ")");
+>>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
 
         var vm = new Vue({
             el: "#container",
@@ -1120,11 +1191,65 @@
                     });
                 }
             },
+<<<<<<< HEAD
             watch: {
                 skuProps: function () {
                     this.currentSku = {};
                     for (var key in this.skuProps) {
                         this.currentSku[key] = this.skuProps[key][0];
+=======
+            addShoppingCart: function () {
+                //套参属性转换成字符串
+                var propStr = "";
+                for (var key in this.currentSku) {
+                    propStr += key + ":" + this.currentSku[key] + ";";
+                }
+                //从cookie获取userId
+                var uid = getCookieValue("userId");
+                // console.log(this.currentIndex,'this.currentIndex--->')
+                //购物车信息
+                var cart = {
+                    "cartId": "",
+                    "cartNum": this.num,
+                    "productId": this.productId,
+                    "productPrice": this.productSkus[this.currentIndex].sellPrice,
+                    "skuId": this.productSkus[this.currentIndex].skuId,
+                    "skuProps": propStr,
+                    "userId": uid
+                };
+                //从cookie中获取token
+                var token = getCookieValue("token");
+                //添加购物车
+                var url5 = baseUrl + "shoppingCart/add";
+                axios({
+                    url: url5,
+                    method: "post",
+                    headers: {
+                        token: token
+                    },
+                    data: cart
+                }).then(res => {
+                    if (res.data.code == 10000) {
+                        //加购成功
+                        layer.msg("添加购物车成功！")
+                    } else if (res.data.code == 99999) {
+                        //加购失败
+                        layer.msg("添加购物车失败！")
+                    } else {
+
+                        var message = "";
+
+                        if (res.data.code == 10011) {
+                            //用户未登录
+                            message = "您还未登录，请先登录";
+                        } else if (res.data.code == 10009) {
+                            //登录过期·
+                            message = "该账号已过期，请重新登录";
+                        }
+                        var loginUrl = "login.html?tips=" + message + "&returnUrl=introduction.html&pid=" + this.productId + "&num=" + this.num + "&sid="
+                            + this.currentIndex;
+                        window.location.href = encodeURI(loginUrl);
+>>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
                     }
                     console.log(this.currentSku);
                 }

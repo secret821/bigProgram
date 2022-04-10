@@ -12,77 +12,151 @@
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.js"></script>
 </head>
 
 <body>
-<!-- 水平表单 -->
-<div class="container">
-    <form action="#" class="form-horizontal" role="form">
+<div id="app">
+    <!-- 水平表单 -->
+    <div class="container">
+        <form action="#" class="form-horizontal" role="form">
 
-        <!-- 表单控件组 姓名输入 -->
-        <div class="form-group">
-            <label for="uName" class="control-label col-md-2 col-md-offset-3">用戶名:</label>
-            <div class="col-xs-pull-6">
-                <input type="text" id="uName" class="form-control" style="width: 40%;">
-            </div>
-        </div>
-
-        <!-- 表单控件组 密码输入 -->
-        <div class="form-group">
-
-				<span><label for="realName" class="control-label col-md-2 col-md-offset-3">真实姓名:</label>
-				<span class="col-xs-pull-6">
-					<input type="password" id="realName" class="form-control" style="width: 40%;">
-				</span></span>
-        </div>
-        <div class="form-group">
-            <label for="mobile" class="control-label col-md-2 col-md-offset-3">电话号码:</label>
-            <div class="col-xs-pull-6">
-                <input type="password" id="mobile" class="form-control" style="width: 40%;">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="control-label col-md-2 col-md-offset-3">电子邮箱:</label>
-            <div class="col-xs-pull-6">
-                <input type="password" id="email" class="form-control" style="width: 40%;">
-            </div>
-        </div>
-        <!-- 表单控件组 性别单选框 -->
-        <div class="form-group">
-            <label class="control-label col-md-2 col-md-offset-3">性别:</label>
-            <div class="col-md-3">
-                <div class="radio-inline">
-                    <label for=""><input type="radio" name="sex">男</label>
-                </div>
-                <div class="radio-inline">
-                    <label for=""><input type="radio" name="sex" id="">女</label>
+            <!-- 表单控件组 姓名输入 -->
+            <div class="form-group">
+                <label for="uName" class="control-label col-md-2 col-md-offset-3">用戶名:</label>
+                <div class="col-xs-pull-6">
+                    <input type="text" id="uName" class="form-control" style="width: 40%;" v-model="user.username">
                 </div>
             </div>
-        </div>
-        <!-- 表单控件组 按钮 -->
-        <div class="form-group">
-            <div class="col-md-1 col-md-offset-5">
-                <button type="submit" class="btn btn-success">保存</button>
+
+            <!-- 表单控件组 密码输入 -->
+            <div class="form-group">
+
+                <div><label for="realName" class="control-label col-md-2 col-md-offset-3">昵称:</label>
+                    <div class="col-xs-pull-6">
+                        <input type="text" id="nickname" class="form-control" style="width: 40%;" v-model="user.nickname">
+                    </div></div>
             </div>
-        </div>
-    </form>
+            <!-- 表单控件组 密码输入 -->
+            <div class="form-group">
+
+				<div><label for="realName" class="control-label col-md-2 col-md-offset-3">真实姓名:</label>
+				<div class="col-xs-pull-6">
+					<input type="text" id="realName" class="form-control" style="width: 40%;" v-model="user.realname">
+				</div></div>
+            </div>
+            <div class="form-group">
+                <label for="mobile" class="control-label col-md-2 col-md-offset-3"
+                       >电话号码:</label>
+                <div class="col-xs-pull-6">
+                    <input type="text" id="mobile" class="form-control" style="width: 40%;" v-model="user.userMobile">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label col-md-2 col-md-offset-3">电子邮箱:</label>
+                <div class="col-xs-pull-6">
+                    <input type="text" id="email" class="form-control" style="width: 40%;" v-model="user.userEmail">
+                </div>
+            </div>
+            <!-- 表单控件组 性别单选框 -->
+            <div class="form-group">
+                <label class="control-label col-md-2 col-md-offset-3">性别:</label>
+                <div class="col-md-3">
+                    <div class="radio-inline">
+                        <label for=""><input type="radio" name="sex" :checked="user.userSex==1" @click="changeSex(1)">男</label>
+                    </div>
+                    <div class="radio-inline">
+                        <label for=""><input type="radio" name="sex" id="" :checked="user.userSex==0" @click="changeSex(0)">女</label>
+                    </div>
+                </div>
+            </div>
+            <!-- 表单控件组 按钮 -->
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-5">
+                    <button class="btn btn-success" @click="submit">保存</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
 </div>
-</div>
+
 <script type="text/javascript" src="static/js/cookie_utils.js"></script>
 <script type="text/javascript" src="static/js/axios.min.js"></script>
 <script type="text/javascript" src="static/js/vue.js"></script>
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
     var baseUrl = "http://localhost:8080/";
     var vm = new Vue({
         el: "#app",
-        data: {},
-        created: function () {
 
+        data: {
+            token:"",
+            userId:"",
+            user: {
+                "nickname": "",
+                "password": "",
+                "realname": "",
+                "userBirth": "",
+                "userEmail": "",
+                "userId": 0,
+                "userImg": "",
+                "userMobile": "",
+                "userModtime": "",
+                "userRegtime": "",
+                "userSex": "",
+                "username": ""
+            },
         },
-        methods: {},
+        created: function () {
+            this.token = getCookieValue("token");
+            this.userId = getCookieValue("userId");
+            axios({
+                url: baseUrl + "user/userInfo",
+                methods: "get",
+                headers: {
+                    token: this.token
+                },
+                params: {
+                    userId:this.userId
+                }
+            }).then(res => {
+                if (res.data.code == 10000) {
+                    this.user = res.data.data;
+                }
+            })
+        },
+        methods: {
+            changeSex:function (sex){
+                this.user.userSex=sex;
+            },
+            submit:function (){
+              axios({
+                  url:baseUrl+"user/updateUserInfo",
+                  method: "post",
+                  headers: {
+                      token: this.token
+                  },
+                  data: this.user
+              }).then(res=>{
+                if (res.data.code==10000){
+                    layer.msg("修改成功！！")
+                }else if(res.data.code==99999){
+                    layer.msg("该用户名已被使用，请重新输入！！")
+                }
+              });
+
+            }
+        },
     })
 </script>
 </body>
