@@ -2,18 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>商品页面</title>
 
-    <link href="static/css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="static/css/amazeui.css" rel="stylesheet" type="text/css" />
-    <link href="static/css/demo.css" rel="stylesheet" type="text/css" />
-    <link type="text/css" href="static/css/optstyle.css" rel="stylesheet" />
-    <link type="text/css" href="static/css/style.css" rel="stylesheet" />
-    <link type="text/css" href="./static/css/index.css" rel="stylesheet" />
+    <link href="static/css/admin.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/amazeui.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/demo.css" rel="stylesheet" type="text/css"/>
+    <link type="text/css" href="static/css/optstyle.css" rel="stylesheet"/>
+    <link type="text/css" href="static/css/style.css" rel="stylesheet"/>
+    <link type="text/css" href="./static/css/index.css" rel="stylesheet"/>
 
     <!--  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
     <script type="text/javascript" src="static/js/jquery-1.7.min.js"></script>
@@ -39,31 +39,19 @@
 
 
 <body>
-    <div id="container">
+<div id="container">
 
-        <!--顶部导航条 -->
-        <div class="am-container header">
-            <ul class="message-l">
-                <div class="topMessage">
-                    <div class="menu-hd" v-if="isLogin">
-                        {{username}},欢迎您
-                    </div>
-                    <div class="menu-hd" v-else>
-                        亲，请<a href="login.html" target="_top" class="h">登录</a>
-                        <a href="#" target="_top">免费注册</a>
-                    </div>
+    <!--顶部导航条 -->
+    <div class="am-container header">
+        <ul class="message-l">
+            <div class="topMessage">
+                <div class="menu-hd" v-if="isLogin">
+                    {{username}},欢迎您
                 </div>
-            </ul>
-            <ul class="message-r">
-                <div class="topMessage home">
-                    <div class="menu-hd"><a href="index.html" target="_top" class="h">商城首页</a></div>
+                <div class="menu-hd" v-else>
+                    亲，请<a href="login.html" target="_top" class="h">登录</a>
+                    <a href="#" target="_top">免费注册</a>
                 </div>
-<<<<<<< HEAD
-                <div class="topMessage my-shangcheng">
-                    <div class="menu-hd MyShangcheng"><a href="#" target="_top"><i
-                                class="am-icon-user am-icon-fw"></i>个人中心</a>
-                    </div>
-=======
             </div>
         </ul>
         <ul class="message-r">
@@ -72,775 +60,747 @@
             </div>
             <div class="topMessage my-shangcheng">
                 <div class="menu-hd MyShangcheng"><a href="user-center.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
->>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
                 </div>
-                <div class="topMessage mini-cart">
-                    <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
-                                class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum"
-                                class="h" v-if="isLogin">{{shopCartsCount}}</strong></a>
-                    </div>
-                </div>
-                <div class="topMessage favorite">
-                    <div class="menu-hd"><a href="#" target="_top"><i
-                                class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a>
-                    </div>
-                </div>
-            </ul>
-        </div>
-
-        <!--悬浮搜索框-->
-
-        <div class="nav white">
-            <div class="logo"><img src="static/images/logo.png" /></div>
-            <div class="logoBig">
-                <li><img src="static/images/logo.png" style="width: 200px;height: 130px;overflow: hidden;" /></li>
             </div>
-            <div class="search-bar pr">
-                <a name="index_none_header_sysc" href="#"></a>
-                <form>
-                    <input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索"
-                        autocomplete="off">
-                    <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
-                </form>
+            <div class="topMessage mini-cart">
+                <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
+                        class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum"
+                                                                                              class="h" v-if="isLogin">{{shopCartsCount}}</strong></a>
+                </div>
+            </div>
+            <div class="topMessage favorite">
+                <div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a>
+                </div>
+            </div>
+        </ul>
+    </div>
+
+    <!--悬浮搜索框-->
+
+    <div class="nav white">
+        <div class="logo"><img src="static/images/logo.png"/></div>
+        <div class="logoBig">
+            <li><img src="static/images/logo.png" style="width: 200px;height: 130px;overflow: hidden;"/></li>
+        </div>
+        <div class="search-bar pr">
+            <a name="index_none_header_sysc" href="#"></a>
+            <form>
+                <input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
+                <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+            </form>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <b class="line"></b>
+    <div class="listMain">
+
+        <!--分类-->
+        <div class="nav-table">
+            <div class="long-title"><span class="all-goods">全部分类</span></div>
+            <div class="nav-cont">
+                <ul>
+                    <li class="index"><a href="index.html">首页</a></li>
+                    <li class="qc"><a href="#">闪购</a></li>
+                    <li class="qc"><a href="#">限时抢</a></li>
+                    <li class="qc"><a href="#">团购</a></li>
+                    <li class="qc last"><a href="#">大包装</a></li>
+                </ul>
+                <div class="nav-extra">
+                    <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
+                    <i class="am-icon-angle-right" style="padding-left: 10px;"></i>
+                </div>
             </div>
         </div>
+        <ol class="am-breadcrumb am-breadcrumb-slash">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="#">分类</a></li>
+            <li class="am-active">内容</li>
+        </ol>
 
-        <div class="clear"></div>
-        <b class="line"></b>
-        <div class="listMain">
-
-            <!--分类-->
-            <div class="nav-table">
-                <div class="long-title"><span class="all-goods">全部分类</span></div>
-                <div class="nav-cont">
-                    <ul>
-                        <li class="index"><a href="index.html">首页</a></li>
-                        <li class="qc"><a href="#">闪购</a></li>
-                        <li class="qc"><a href="#">限时抢</a></li>
-                        <li class="qc"><a href="#">团购</a></li>
-                        <li class="qc last"><a href="#">大包装</a></li>
+        <div class="scoll">
+            <section class="slider">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li>
+                            <img src="static/images/01.jpg" title="pic"/>
+                        </li>
+                        <li>
+                            <img src="static/images/02.jpg"/>
+                        </li>
+                        <li>
+                            <img src="static/images/03.jpg"/>
+                        </li>
                     </ul>
-                    <div class="nav-extra">
-                        <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
-                        <i class="am-icon-angle-right" style="padding-left: 10px;"></i>
-                    </div>
                 </div>
-            </div>
-            <ol class="am-breadcrumb am-breadcrumb-slash">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="#">分类</a></li>
-                <li class="am-active">内容</li>
-            </ol>
+            </section>
+        </div>
 
-            <div class="scoll">
-                <section class="slider">
-                    <div class="flexslider">
-                        <ul class="slides">
-                            <li>
-                                <img src="static/images/01.jpg" title="pic" />
-                            </li>
-                            <li>
-                                <img src="static/images/02.jpg" />
-                            </li>
-                            <li>
-                                <img src="static/images/03.jpg" />
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
+        <!--放大镜-->
 
-            <!--放大镜-->
+        <div class="item-inform">
+            <div class="clearfixLeft" id="clearcontent">
 
-            <div class="item-inform">
-                <div class="clearfixLeft" id="clearcontent">
+                <div class="box">
 
-                    <div class="box">
-
-                        <template v-if="productImgs.length>0">
-                            <div class="tb-booth tb-pic tb-s310">
-                                <a :href="'static/pimgs/'+productImgs[0].url">
-                                    <img :src="'static/pimgs/'+productImgs[0].url" alt="细节展示放大镜特效"
-                                        :rel="'static/pimgs/'+productImgs[0].url" class="bigImage" /></a>
-                            </div>
-                        </template>
-                        <ul class="tb-thumb" id="thumblist">
-                            <template v-for="(img,index) in productImgs">
-                                <li :class="{'tb-selected':index==0}">
-                                    <div class="tb-pic tb-s40">
-                                        <a href="#"><img :src="'static/pimgs/'+img.url" :mid="'static/pimgs/'+img.url"
-                                                :big="'static/pimgs/'+img.url"></a>
-                                    </div>
-                                </li>
-                            </template>
-                        </ul>
-                    </div>
-
-                    <div class="clear"></div>
-                </div>
-
-                <div class="clearfixRight">
-
-                    <!--规格属性-->
-                    <!--名称-->
-                    <div class="tb-detail-hd">
-                        <h1>{{product.productName}}</h1>
-                    </div>
-                    <div class="tb-detail-list">
-                        <!--价格-->
-                        <div class="tb-detail-price">
-                            <li class="price iteminfo_price">
-                                <dt>促销价</dt>
-                                <dd><em>¥</em><b class="sys_item_price">{{productSkus[currentIndex].sellPrice}}</b></dd>
-                            </li>
-                            <li class="price iteminfo_mktprice">
-                                <dt>原价</dt>
-                                <dd><em>¥</em><b
-                                        class="sys_item_mktprice">{{productSkus[currentIndex].originalPrice}}</b>
-                                </dd>
-                            </li>
-                            <div class="clear"></div>
+                    <template v-if="productImgs.length>0">
+                        <div class="tb-booth tb-pic tb-s310">
+                            <a :href="'static/pimgs/'+productImgs[0].url">
+                                <img :src="'static/pimgs/'+productImgs[0].url" alt="细节展示放大镜特效"
+                                     :rel="'static/pimgs/'+productImgs[0].url" class="bigImage"/></a>
                         </div>
+                    </template>
+                    <ul class="tb-thumb" id="thumblist">
+                        <template v-for="(img,index) in productImgs">
+                            <li :class="{'tb-selected':index==0}">
+                                <div class="tb-pic tb-s40">
+                                    <a href="#"><img :src="'static/pimgs/'+img.url" :mid="'static/pimgs/'+img.url"
+                                                     :big="'static/pimgs/'+img.url"></a>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
 
-                        <!--地址-->
-                        <dl class="iteminfo_parameter freight">
-                            <dt>配送至</dt>
-                            <div class="iteminfo_freprice">
-                                <div class="am-form-content address">
-                                    <select data-am-selected>
-                                        <option value="a">浙江省</option>
-                                        <option value="b">湖北省</option>
-                                    </select>
-                                    <select data-am-selected>
-                                        <option value="a">温州市</option>
-                                        <option value="b">武汉市</option>
-                                    </select>
-                                    <select data-am-selected>
-                                        <option value="a">瑞安区</option>
-                                        <option value="b">洪山区</option>
-                                    </select>
-                                </div>
-                                <div class="pay-logis">
-                                    快递<b class="sys_item_freprice">10</b>元
-                                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="clearfixRight">
+
+                <!--规格属性-->
+                <!--名称-->
+                <div class="tb-detail-hd">
+                    <h1>{{product.productName}}</h1>
+                </div>
+                <div class="tb-detail-list">
+                    <!--价格-->
+                    <div class="tb-detail-price">
+                        <li class="price iteminfo_price">
+                            <dt>促销价</dt>
+                            <dd><em>¥</em><b class="sys_item_price">{{productSkus[currentIndex].sellPrice}}</b></dd>
+                        </li>
+                        <li class="price iteminfo_mktprice">
+                            <dt>原价</dt>
+                            <dd><em>¥</em><b class="sys_item_mktprice">{{productSkus[currentIndex].originalPrice}}</b>
+                            </dd>
+                        </li>
+                        <div class="clear"></div>
+                    </div>
+
+                    <!--地址-->
+                    <dl class="iteminfo_parameter freight">
+                        <dt>配送至</dt>
+                        <div class="iteminfo_freprice">
+                            <div class="am-form-content address">
+                                <select data-am-selected>
+                                    <option value="a">浙江省</option>
+                                    <option value="b">湖北省</option>
+                                </select>
+                                <select data-am-selected>
+                                    <option value="a">温州市</option>
+                                    <option value="b">武汉市</option>
+                                </select>
+                                <select data-am-selected>
+                                    <option value="a">瑞安区</option>
+                                    <option value="b">洪山区</option>
+                                </select>
                             </div>
-                        </dl>
-                        <div class="clear"></div>
+                            <div class="pay-logis">
+                                快递<b class="sys_item_freprice">10</b>元
+                            </div>
+                        </div>
+                    </dl>
+                    <div class="clear"></div>
 
-                        <!--销量-->
-                        <ul class="tm-ind-panel">
-                            <li class="tm-ind-item tm-ind-sellCount canClick">
-                                <div class="tm-indcon"><span class="tm-label">月销量</span><span
-                                        class="tm-count">1015</span>
+                    <!--销量-->
+                    <ul class="tm-ind-panel">
+                        <li class="tm-ind-item tm-ind-sellCount canClick">
+                            <div class="tm-indcon"><span class="tm-label">月销量</span><span class="tm-count">1015</span>
+                            </div>
+                        </li>
+                        <li class="tm-ind-item tm-ind-sumCount canClick">
+                            <div class="tm-indcon"><span class="tm-label">累计销量</span><span
+                                    class="tm-count">{{product.soldNum}}</span>
+                            </div>
+                        </li>
+                        <li class="tm-ind-item tm-ind-reviewCount canClick tm-line3">
+                            <div class="tm-indcon"><span class="tm-label">累计评价</span><span class="tm-count">640</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+
+                    <!--各种规格-->
+                    <div class="iteminfo_parameter sys_item_specpara">
+                        <dt class="theme-login">
+                            <div class="cart-title">可选规格<span class="am-icon-angle-right"></span></div>
+                        </dt>
+                        <dd>
+                            <!--操作页面-->
+
+                            <div class="theme-popover-mask"></div>
+
+                            <div class="theme-popover">
+                                <div class="theme-span"></div>
+                                <div class="theme-poptit">
+                                    <a href="javascript:;" title="关闭" class="close">×</a>
                                 </div>
-                            </li>
-                            <li class="tm-ind-item tm-ind-sumCount canClick">
-                                <div class="tm-indcon"><span class="tm-label">累计销量</span><span
-                                        class="tm-count">{{product.soldNum}}</span>
-                                </div>
-                            </li>
-                            <li class="tm-ind-item tm-ind-reviewCount canClick tm-line3">
-                                <div class="tm-indcon"><span class="tm-label">累计评价</span><span
-                                        class="tm-count">640</span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="clear"></div>
+                                <div class="theme-popbod dform">
+                                    <form class="theme-signin" name="loginform" action="" method="post">
 
-                        <!--各种规格-->
-                        <div class="iteminfo_parameter sys_item_specpara">
-                            <dt class="theme-login">
-                                <div class="cart-title">可选规格<span class="am-icon-angle-right"></span></div>
-                            </dt>
-                            <dd>
-                                <!--操作页面-->
+                                        <div class="theme-signin-left">
+                                            <!--显示商品套餐名选项（当套餐数量>1时显示）-->
+                                            <div v-if="productSkus.length > 1" class="theme-options">
+                                                <div class="cart-title">套餐</div>
+                                                <ul>
+                                                    <template v-for="(sku,index) in productSkus">
+                                                        <!--如果当前套餐是正在显示的套餐，则添加选中效果-->
+                                                        <li v-if="index==currentIndex" class="sku-line selected"
+                                                            :data-index="index" @click="changeSku">
+                                                            {{sku.skuName}}<i></i></li>
+                                                        <!--否则不添加选中效果-->
+                                                        <li v-else class="sku-line" :data-index="index"
+                                                            @click="changeSku">{{sku.skuName}}<i></i></li>
+                                                    </template>
+                                                </ul>
+                                            </div>
 
-                                <div class="theme-popover-mask"></div>
-
-                                <div class="theme-popover">
-                                    <div class="theme-span"></div>
-                                    <div class="theme-poptit">
-                                        <a href="javascript:;" title="关闭" class="close">×</a>
-                                    </div>
-                                    <div class="theme-popbod dform">
-                                        <form class="theme-signin" name="loginform" action="" method="post">
-
-                                            <div class="theme-signin-left">
-                                                <!--显示商品套餐名选项（当套餐数量>1时显示）-->
-                                                <div v-if="productSkus.length > 1" class="theme-options">
-                                                    <div class="cart-title">套餐</div>
+                                            <!--显示当前套餐下的属性  skuProps  对象/Map-->
+                                            <div id="skuprops">
+                                                <div v-for="(value,key) in skuProps" class="theme-options">
+                                                    <div class="cart-title">{{key}}</div>
                                                     <ul>
-                                                        <template v-for="(sku,index) in productSkus">
-                                                            <!--如果当前套餐是正在显示的套餐，则添加选中效果-->
-                                                            <li v-if="index==currentIndex" class="sku-line selected"
-                                                                :data-index="index" @click="changeSku">
-                                                                {{sku.skuName}}<i></i></li>
-                                                            <!--否则不添加选中效果-->
-                                                            <li v-else class="sku-line" :data-index="index"
-                                                                @click="changeSku">{{sku.skuName}}<i></i></li>
+                                                        <template v-for="(v,index) in value">
+                                                            <li :class="{'sku-line':true,'selected':index==0}"
+                                                                :name="key"
+                                                                :data-key="key" :data-v="v" @click="changeProps">{{v}}
+                                                            </li>
                                                         </template>
                                                     </ul>
                                                 </div>
+                                            </div>
 
-                                                <!--显示当前套餐下的属性  skuProps  对象/Map-->
-                                                <div id="skuprops">
-                                                    <div v-for="(value,key) in skuProps" class="theme-options">
-                                                        <div class="cart-title">{{key}}</div>
-                                                        <ul>
-                                                            <template v-for="(v,index) in value">
-                                                                <li :class="{'sku-line':true,'selected':index==0}"
-                                                                    :name="key" :data-key="key" :data-v="v"
-                                                                    @click="changeProps">{{v}}
-                                                                </li>
-                                                            </template>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                            <div class="theme-options">
+                                                <div class="cart-title number">数量</div>
+                        <dd>
+                            <input id="min" class="am-btn am-btn-default" style="text-align: center;font-weight: bolder"
+                                   type="button" value="-" @click="changeNum(-1)"/>
+                            <input id="text_box" type="text" v-model="num" style="width:35px;text-align: center"
+                                   disabled/>
+                            <input id="add" class="am-btn am-btn-default" type="button"
+                                   style="text-align: center;font-weight: bolder" value="+" @click="changeNum(1)"/>
+                            <span id="stock1" class="tb-hidden">库存<span
+                                    class="stock">{{productSkus[currentIndex].stock}}</span>件</span>
+                        </dd>
+                    </div>
+                </div>
+                <div class="clear"></div>
 
-                                                <div class="theme-options">
-                                                    <div class="cart-title number">数量</div>
-                            <dd>
-                                <input id="min" class="am-btn am-btn-default"
-                                    style="text-align: center;font-weight: bolder" type="button" value="-"
-                                    @click="changeNum(-1)" />
-                                <input id="text_box" type="text" v-model="num" style="width:35px;text-align: center"
-                                    disabled />
-                                <input id="add" class="am-btn am-btn-default" type="button"
-                                    style="text-align: center;font-weight: bolder" value="+" @click="changeNum(1)" />
-                                <span id="stock1" class="tb-hidden">库存<span
-                                        class="stock">{{productSkus[currentIndex].stock}}</span>件</span>
-                            </dd>
+                <div class="btn-op">
+                    <div class="btn am-btn am-btn-warning">确认</div>
+                    <div class="btn close am-btn am-btn-warning">取消</div>
+                </div>
+            </div>
+            <div class="theme-signin-right">
+                <div class="img-info">
+                    <img src="static/images/songzi.jpg"/>
+                </div>
+                <div class="text-info">
+                    <span class="J_Price price-now">¥39.00</span>
+                    <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                </div>
+            </div>
+
+            </form>
+        </div>
+    </div>
+
+    </dd>
+    </dl>
+    <div class="clear"></div>
+    <!--活动	-->
+    <div class="shopPromotion gold">
+        <div class="hot">
+            <dt class="tb-metatit">店铺优惠</dt>
+            <div class="gold-list">
+                <p>当前套餐享{{productSkus[currentIndex].discounts * 10}}折优惠
+                    <!--<span>点击领券<i class="am-icon-sort-down"></i></span>--></p>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="coupon">
+            <dt class="tb-metatit">优惠券</dt>
+            <div class="gold-list">
+                <ul>
+                    <li>125减5</li>
+                    <li>198减10</li>
+                    <li>298减20</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pay">
+    <div class="pay-opt">
+        <a href="index.html"><span class="am-icon-home am-icon-fw">首页</span></a>
+        <a><span class="am-icon-heart am-icon-fw">收藏</span></a>
+
+    </div>
+    <li>
+        <div class="clearfix tb-btn tb-btn-buy theme-login">
+            <a id="LikBuy" title="点此按钮到下一步确认购买信息" href="#">立即购买</a>
+        </div>
+    </li>
+    <li>
+        <div class="clearfix tb-btn tb-btn-basket theme-login">
+            <a id="LikBasket" title="加入购物车" @click="addShoppingCart"><i></i>加入购物车</a>
+        </div>
+    </li>
+</div>
+
+</div>
+
+<div class="clear"></div>
+
+</div>
+
+<div class="clear"></div>
+
+<!-- introduce-->
+
+<div class="introduce">
+    <div class="browse">
+        <div class="mc">
+            <ul>
+                <div class="mt">
+                    <h2>精品推荐</h2>
+                </div>
+
+                <template v-for="(randPro,index) in randProduct">
+                    <li class="first">
+                        <div class="p-img">
+                            <a href="#"> <img class="" :src="'static/pimgs/'+randPro.productImgs[0].url"> </a>
+                        </div>
+                        <div class="p-name"><a href="#">
+                            {{randPro.productName}}
+                        </a>
+                        </div>
+                        <div class="p-price"><strong>销量：{{randPro.soldNum}}</strong></div>
+                    </li>
+                </template>
+
+            </ul>
+        </div>
+    </div>
+    <div class="introduceMain">
+        <div class="am-tabs" data-am-tabs>
+            <ul class="am-avg-sm-3 am-tabs-nav am-nav am-nav-tabs">
+                <li class="am-active">
+                    <a href="#">
+
+                        <span class="index-needs-dt-txt">宝贝详情</span></a>
+
+                </li>
+
+                <li>
+                    <a href="#">
+
+                        <span class="index-needs-dt-txt">全部评价</span></a>
+
+                </li>
+
+                <li>
+                    <a href="#">
+
+                        <span class="index-needs-dt-txt">猜你喜欢</span></a>
+                </li>
+            </ul>
+
+            <div class="am-tabs-bd">
+
+                <div class="am-tab-panel am-fade am-in am-active">
+                    <div class="J_Brand">
+
+                        <div class="attr-list-hd tm-clear">
+                            <h4>产品参数：</h4></div>
+                        <div class="clear"></div>
+                        <ul id="J_AttrUL">
+                            <li title="">产地:&nbsp;{{productParams.productPlace}}</li>
+                            <li title="">保质期:&nbsp;{{productParams.footPeriod}}</li>
+                            <li title="">品牌:&nbsp;{{productParams.brand}}</li>
+                            <li title="">生产厂商:&nbsp;{{productParams.factoryName}}</li>
+                            <li title="">生产地址:&nbsp;{{productParams.factoryAddress}}</li>
+                            <li title="">包装方式:&nbsp;{{productParams.packagingMethod}}</li>
+                            <li title="">规格重量:&nbsp;{{productParams.weight}}</li>
+                            <li title="">储存方式：&nbsp;{{productParams.storageMethod}}</li>
+                            <li title="">食用方式：&nbsp;{{productParams.eatMethod}}</li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="details">
+                        <div class="details">
+                            <div class="attr-list-hd after-market-hd">
+                                <h4>商品细节</h4>
+                            </div>
+                            <div class="twlistNews">
+                                <span v-html="product.content"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="clear"></div>
 
-                    <div class="btn-op">
-                        <div class="btn am-btn am-btn-warning">确认</div>
-                        <div class="btn close am-btn am-btn-warning">取消</div>
-                    </div>
-                </div>
-                <div class="theme-signin-right">
-                    <div class="img-info">
-                        <img src="static/images/songzi.jpg" />
-                    </div>
-                    <div class="text-info">
-                        <span class="J_Price price-now">¥39.00</span>
-                        <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
-                    </div>
                 </div>
 
-                </form>
-            </div>
-        </div>
+                <div class="am-tab-panel am-fade">
 
-        </dd>
-        </dl>
-        <div class="clear"></div>
-        <!--活动	-->
-        <div class="shopPromotion gold">
-            <div class="hot">
-                <dt class="tb-metatit">店铺优惠</dt>
-                <div class="gold-list">
-                    <p>当前套餐享{{productSkus[currentIndex].discounts * 10}}折优惠
-                        <!--<span>点击领券<i class="am-icon-sort-down"></i></span>-->
-                    </p>
-                </div>
-            </div>
-            <div class="clear"></div>
-            <div class="coupon">
-                <dt class="tb-metatit">优惠券</dt>
-                <div class="gold-list">
-                    <ul>
-                        <li>125减5</li>
-                        <li>198减10</li>
-                        <li>298减20</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="pay">
-        <div class="pay-opt">
-            <a href="index.html"><span class="am-icon-home am-icon-fw">首页</span></a>
-            <a><span class="am-icon-heart am-icon-fw">收藏</span></a>
-
-        </div>
-        <li>
-            <div class="clearfix tb-btn tb-btn-buy theme-login">
-                <a id="LikBuy" title="点此按钮到下一步确认购买信息" href="#">立即购买</a>
-            </div>
-        </li>
-        <li>
-            <div class="clearfix tb-btn tb-btn-basket theme-login">
-                <a id="LikBasket" title="加入购物车" @click="addShoppingCart"><i></i>加入购物车</a>
-            </div>
-        </li>
-    </div>
-
-    </div>
-
-    <div class="clear"></div>
-
-    </div>
-
-    <div class="clear"></div>
-
-    <!-- introduce-->
-
-    <div class="introduce">
-        <div class="browse">
-            <div class="mc">
-                <ul>
-                    <div class="mt">
-                        <h2>精品推荐</h2>
+                    <div class="actor-new">
+                        <div class="rate">
+                            <strong>{{commentNum.percentValue}}<span></span></strong><br> <span>好评度</span>
+                        </div>
+                        <dl>
+                            <dt>买家印象</dt>
+                            <dd class="p-bfc">
+                                <q class="comm-tags"><span>彰显档次</span><em></em></q>
+                                <q class="comm-tags"><span>分量十足</span><em></em></q>
+                                <q class="comm-tags"><span>新鲜</span><em></em></q>
+                                <q class="comm-tags"><span>味道不错</span><em></em></q>
+                                <q class="comm-tags"><span>保质时间长</span><em></em></q>
+                                <q class="comm-tags"><span>口感好</span><em></em></q>
+                                <q class="comm-tags"><span>商品不错</span><em></em></q>
+                                <q class="comm-tags"><span>可口美味</span><em></em></q>
+                                <q class="comm-tags"><span>价格便宜</span><em></em></q>
+                                <q class="comm-tags"><span>特价买的</span><em></em></q>
+                                <q class="comm-tags"><span>家人喜欢</span><em></em></q>
+                            </dd>
+                        </dl>
                     </div>
+                    <div class="clear"></div>
+                    <div class="tb-r-filter-bar">
+                        <ul class=" tb-taglist am-avg-sm-4">
+                            <li class="tb-taglist-li tb-taglist-li-current">
+                                <div class="comment-info">
+                                    <span>全部评价</span>
+                                    <span class="tb-tbcr-num">{{commentNum.count}}</span>
+                                </div>
+                            </li>
 
-                    <template v-for="(randPro,index) in randProduct">
-                        <li class="first">
-                            <div class="p-img">
-                                <a href="#"> <img class="" :src="'static/pimgs/'+randPro.productImgs[0].url"> </a>
-                            </div>
-                            <div class="p-name"><a href="#">
-                                    {{randPro.productName}}
+                            <li class="tb-taglist-li tb-taglist-li-1">
+                                <div class="comment-info">
+                                    <span>好评</span>
+                                    <span class="tb-tbcr-num">{{commentNum.good}}</span>
+                                </div>
+                            </li>
+
+                            <li class="tb-taglist-li tb-taglist-li-0">
+                                <div class="comment-info">
+                                    <span>中评</span>
+                                    <span class="tb-tbcr-num">{{commentNum.medium}}</span>
+                                </div>
+                            </li>
+
+                            <li class="tb-taglist-li tb-taglist-li--1">
+                                <div class="comment-info">
+                                    <span>差评</span>
+                                    <span class="tb-tbcr-num">{{commentNum.bad}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+
+                    <ul class="am-comments-list am-comments-list-flip">
+                        <template v-for="comment in productComments">
+                            <li class="am-comment">
+                                <!-- 评论容器 -->
+                                <a href="">
+                                    <img class="am-comment-avatar" :src="'static/'+comment.userImg"/>
+                                    <!-- 评论者头像 -->
                                 </a>
-                            </div>
-                            <div class="p-price"><strong>销量：{{randPro.soldNum}}</strong></div>
-                        </li>
-                    </template>
 
-                </ul>
-            </div>
-        </div>
-        <div class="introduceMain">
-            <div class="am-tabs" data-am-tabs>
-                <ul class="am-avg-sm-3 am-tabs-nav am-nav am-nav-tabs">
-                    <li class="am-active">
-                        <a href="#">
+                                <div class="am-comment-main">
+                                    <!-- 评论内容容器 -->
+                                    <header class="am-comment-hd">
+                                        <!--<h3 class="am-comment-title">评论标题</h3>-->
+                                        <div class="am-comment-meta">
+                                            <!-- 评论元数据 -->
+                                            <a href="#link-to-user" class="am-comment-author">
+                                                {{comment.username.substring(0, 2) + '*****' +
+                                            comment.username.substring(comment.username.length - 1) }}
+                                                <span v-if="comment.isAnonymous == 1">(匿名)</span>
+                                                <span v-else>({{comment.nickname}})</span>
+                                            </a>
+                                            <!-- 评论者 -->
+                                            评论于
+                                            <time datetime="">{{comment.sepcName.substring(0, 10)}}</time>
+                                        </div>
+                                    </header>
 
-                            <span class="index-needs-dt-txt">宝贝详情</span></a>
+                                    <div class="am-comment-bd">
+                                        <div class="tb-rev-item " data-id="">
+                                            <div class="J_TbcRate_ReviewContent tb-tbcr-content ">
+                                                {{comment.commContent}}
+                                            </div>
+                                        </div>
 
-                    </li>
-
-                    <li>
-                        <a href="#">
-
-                            <span class="index-needs-dt-txt">全部评价</span></a>
-
-                    </li>
-
-                    <li>
-                        <a href="#">
-
-                            <span class="index-needs-dt-txt">猜你喜欢</span></a>
-                    </li>
-                </ul>
-
-                <div class="am-tabs-bd">
-
-                    <div class="am-tab-panel am-fade am-in am-active">
-                        <div class="J_Brand">
-
-                            <div class="attr-list-hd tm-clear">
-                                <h4>产品参数：</h4>
-                            </div>
-                            <div class="clear"></div>
-                            <ul id="J_AttrUL">
-                                <li title="">产地:&nbsp;{{productParams.productPlace}}</li>
-                                <li title="">保质期:&nbsp;{{productParams.footPeriod}}</li>
-                                <li title="">品牌:&nbsp;{{productParams.brand}}</li>
-                                <li title="">生产厂商:&nbsp;{{productParams.factoryName}}</li>
-                                <li title="">生产地址:&nbsp;{{productParams.factoryAddress}}</li>
-                                <li title="">包装方式:&nbsp;{{productParams.packagingMethod}}</li>
-                                <li title="">规格重量:&nbsp;{{productParams.weight}}</li>
-                                <li title="">储存方式：&nbsp;{{productParams.storageMethod}}</li>
-                                <li title="">食用方式：&nbsp;{{productParams.eatMethod}}</li>
-                            </ul>
-                            <div class="clear"></div>
-                        </div>
-
-                        <div class="details">
-                            <div class="details">
-                                <div class="attr-list-hd after-market-hd">
-                                    <h4>商品细节</h4>
+                                    </div>
+                                    <!-- 评论内容 -->
                                 </div>
-                                <div class="twlistNews">
-                                    <span v-html="product.content"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
+                            </li>
+                        </template>
+                    </ul>
 
+                    <div class="clear"></div>
+                    <!--分页-->
+                    <el-pagination background layout="prev, pager, next" :current-page="pageNum"
+                                   :page-size="limit" :total="count" @current-change="pager">
+
+                    </el-pagination>
+
+                    <div class="clear"></div>
+
+                    <div class="tb-reviewsft">
+                        <div class="tb-rate-alert type-attention">购买前请查看该商品的 <a href="#" target="_blank">购物保障</a>，明确您的售后保障权益。
+                        </div>
                     </div>
 
-                    <div class="am-tab-panel am-fade">
+                </div>
 
-                        <div class="actor-new">
-                            <div class="rate">
-                                <strong>{{commentNum.percentValue}}<span></span></strong><br> <span>好评度</span>
-                            </div>
-                            <dl>
-                                <dt>买家印象</dt>
-                                <dd class="p-bfc">
-                                    <q class="comm-tags"><span>彰显档次</span><em></em></q>
-                                    <q class="comm-tags"><span>分量十足</span><em></em></q>
-                                    <q class="comm-tags"><span>新鲜</span><em></em></q>
-                                    <q class="comm-tags"><span>味道不错</span><em></em></q>
-                                    <q class="comm-tags"><span>保质时间长</span><em></em></q>
-                                    <q class="comm-tags"><span>口感好</span><em></em></q>
-                                    <q class="comm-tags"><span>商品不错</span><em></em></q>
-                                    <q class="comm-tags"><span>可口美味</span><em></em></q>
-                                    <q class="comm-tags"><span>价格便宜</span><em></em></q>
-                                    <q class="comm-tags"><span>特价买的</span><em></em></q>
-                                    <q class="comm-tags"><span>家人喜欢</span><em></em></q>
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="tb-r-filter-bar">
-                            <ul class=" tb-taglist am-avg-sm-4">
-                                <li class="tb-taglist-li tb-taglist-li-current">
-                                    <div class="comment-info">
-                                        <span>全部评价</span>
-                                        <span class="tb-tbcr-num">{{commentNum.count}}</span>
-                                    </div>
-                                </li>
-
-                                <li class="tb-taglist-li tb-taglist-li-1">
-                                    <div class="comment-info">
-                                        <span>好评</span>
-                                        <span class="tb-tbcr-num">{{commentNum.good}}</span>
-                                    </div>
-                                </li>
-
-                                <li class="tb-taglist-li tb-taglist-li-0">
-                                    <div class="comment-info">
-                                        <span>中评</span>
-                                        <span class="tb-tbcr-num">{{commentNum.medium}}</span>
-                                    </div>
-                                </li>
-
-                                <li class="tb-taglist-li tb-taglist-li--1">
-                                    <div class="comment-info">
-                                        <span>差评</span>
-                                        <span class="tb-tbcr-num">{{commentNum.bad}}</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="clear"></div>
-
-                        <ul class="am-comments-list am-comments-list-flip">
-                            <template v-for="comment in productComments">
-                                <li class="am-comment">
-                                    <!-- 评论容器 -->
-                                    <a href="">
-                                        <img class="am-comment-avatar" :src="'static/'+comment.userImg" />
-                                        <!-- 评论者头像 -->
-                                    </a>
-
-                                    <div class="am-comment-main">
-                                        <!-- 评论内容容器 -->
-                                        <header class="am-comment-hd">
-                                            <!--<h3 class="am-comment-title">评论标题</h3>-->
-                                            <div class="am-comment-meta">
-                                                <!-- 评论元数据 -->
-                                                <a href="#link-to-user" class="am-comment-author">
-                                                    {{comment.username.substring(0, 2) + '*****' +
-                                                    comment.username.substring(comment.username.length - 1) }}
-                                                    <span v-if="comment.isAnonymous == 1">(匿名)</span>
-                                                    <span v-else>({{comment.nickname}})</span>
-                                                </a>
-                                                <!-- 评论者 -->
-                                                评论于
-                                                <time datetime="">{{comment.sepcName.substring(0, 10)}}</time>
-                                            </div>
-                                        </header>
-
-                                        <div class="am-comment-bd">
-                                            <div class="tb-rev-item " data-id="">
-                                                <div class="J_TbcRate_ReviewContent tb-tbcr-content ">
-                                                    {{comment.commContent}}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- 评论内容 -->
+                <div class="am-tab-panel am-fade">
+                    <div class="like">
+                        <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
+                            <template v-for="r2 in randProduct2">
+                                <li>
+                                    <div class="i-pic limit">
+                                        <img :src="'static/pimgs/'+r2.productImgs[0].url" width="214.5" height="214.5"/>
+                                        <p>{{r2.productName}}</p>
+                                        <p class="price fl">
+                                            <b>銷量</b>
+                                            <strong>{{r2.soldNum}}</strong>
+                                        </p>
                                     </div>
                                 </li>
                             </template>
                         </ul>
-
-                        <div class="clear"></div>
-                        <!--分页-->
-                        <el-pagination background layout="prev, pager, next" :current-page="pageNum" :page-size="limit"
-                            :total="count" @current-change="pager">
-
-                        </el-pagination>
-
-                        <div class="clear"></div>
-
-                        <div class="tb-reviewsft">
-                            <div class="tb-rate-alert type-attention">购买前请查看该商品的 <a href="#"
-                                    target="_blank">购物保障</a>，明确您的售后保障权益。
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="am-tab-panel am-fade">
-                        <div class="like">
-                            <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
-                                <li>
-                                    <div class="i-pic limit">
-                                        <img src="static/images/imgsearch1.jpg" />
-                                        <p>【良品铺子_开口松子】零食坚果特产炒货
-                                            <span>东北红松子奶油味</span>
-                                        </p>
-                                        <p class="price fl">
-                                            <b>¥</b>
-                                            <strong>298.00</strong>
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="clear"></div>
-
-<<<<<<< HEAD
-                        <!--分页 -->
-=======
-                <div class="am-tab-panel am-fade">
-                    <div class="like">
-                        <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
-                           <template v-for="r2 in randProduct2">
-                            <li>
-                                <div class="i-pic limit">
-                                    <img :src="'static/pimgs/'+r2.productImgs[0].url" width="214.5" height="214.5"/>
-                                    <p>{{r2.productName}}</p>
-                                    <p class="price fl">
-                                        <b>銷量</b>
-                                        <strong>{{r2.soldNum}}</strong>
-                                    </p>
-                                </div>
-                            </li>
-                           </template>
-                        </ul>
                     </div>
                     <div class="clear"></div>
->>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
 
-                        <div class="clear"></div>
+                    <!--分页 -->
 
-                    </div>
+                    <div class="clear"></div>
 
                 </div>
 
             </div>
 
-            <div class="clear"></div>
-
-            <div class="footer">
-                <div class="footer-hd">
-                    <p>
-                        <a href="#">黑心优选</a>
-                        <b>|</b>
-                        <a href="#">商城首页</a>
-                        <b>|</b>
-                        <a href="#">支付宝</a>
-                        <b>|</b>
-                        <a href="#">物流</a>
-                    </p>
-                </div>
-                <div class="footer-bd">
-                    <p>
-                        <a href="#">关于我们</a>
-                        <a href="#">合作伙伴</a>
-                        <a href="#">联系我们</a>
-                        <a href="#">网站地图</a>
-                        <em>©L15970677836@163.com 版权所有</em>
-                    </p>
-                </div>
-            </div>
         </div>
 
-    </div>
-    </div>
-    <!--菜单 -->
-    <div class=tip>
-        <div id="sidebar">
-            <div id="wrap">
-                <div id="prof" class="item">
-                    <a href="#">
-                        <span class="setting"></span>
-                    </a>
-                    <div class="ibar_login_box status_login">
-                        <div class="avatar_box">
-                            <p class="avatar_imgbox"><img src="static/images/no-img_mid_.jpg" /></p>
-                            <ul class="user_info">
-                                <li>用户名：{{username}}</li>
-                                <li>级&nbsp;别：普通会员</li>
-                            </ul>
-                        </div>
-                        <div class="login_btnbox">
-                            <a href="#" class="login_order">我的订单</a>
-                            <a href="#" class="login_favorite">我的收藏</a>
-                        </div>
-                        <i class="icon_arrow_white"></i>
-                    </div>
+        <div class="clear"></div>
 
-                </div>
-                <div id="shopCart " class="item ">
-                    <a href="shopcart.html ">
-                        <span class="message "></span>
-                    </a>
-                    <p>
-                        购物车
-                    </p>
-                    <p class="cart_num">{{shopCartsCount}}</p>
-                </div>
-                <div id="asset " class="item ">
-                    <a href="# ">
-                        <span class="view "></span>
-                    </a>
-                    <div class="mp_tooltip ">
-                        我的资产
-                        <i class="icon_arrow_right_black "></i>
-                    </div>
-                </div>
-
-                <div id="foot " class="item ">
-                    <a href="# ">
-                        <span class="zuji "></span>
-                    </a>
-                    <div class="mp_tooltip ">
-                        我的足迹
-                        <i class="icon_arrow_right_black "></i>
-                    </div>
-                </div>
-
-                <div id="brand " class="item ">
-                    <a href="#">
-                        <span class="wdsc "><img src="static/images/wdsc.png " /></span>
-                    </a>
-                    <div class="mp_tooltip ">
-                        我的收藏
-                        <i class="icon_arrow_right_black "></i>
-                    </div>
-                </div>
-
-                <div id="broadcast " class="item ">
-                    <a href="# ">
-                        <span class="chongzhi "><img src="static/images/chongzhi.png " /></span>
-                    </a>
-                    <div class="mp_tooltip ">
-                        我要充值
-                        <i class="icon_arrow_right_black "></i>
-                    </div>
-                </div>
-
-                <div class="quick_toggle">
-                    <li class="qtitem">
-                        <a href="#"><span class="kfzx"></span></a>
-                        <div class="mp_tooltip">客服中心<i class="icon_arrow_right_black"></i></div>
-                    </li>
-                    <!--二维码 -->
-                    <li class="qtitem">
-                        <a href="#none"><span class="mpbtn_qrcode"></span></a>
-                        <div class="mp_qrcode" style="display:none;"><img src="static/images/weixin_code_145.png" /><i
-                                class="icon_arrow_white"></i></div>
-                    </li>
-                    <li class="qtitem">
-                        <a href="#top" class="return_top"><span class="top"></span></a>
-                    </li>
-                </div>
-
-                <!--回到顶部 -->
-                <div id="quick_links_pop" class="quick_links_pop hide"></div>
+        <div class="footer">
+            <div class="footer-hd">
+                <p>
+                    <a href="#">黑心优选</a>
+                    <b>|</b>
+                    <a href="#">商城首页</a>
+                    <b>|</b>
+                    <a href="#">支付宝</a>
+                    <b>|</b>
+                    <a href="#">物流</a>
+                </p>
+            </div>
+            <div class="footer-bd">
+                <p>
+                    <a href="#">关于我们</a>
+                    <a href="#">合作伙伴</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">网站地图</a>
+                    <em>©L15970677836@163.com 版权所有</em>
+                </p>
             </div>
         </div>
     </div>
 
-    <div id="prof-content" class="nav-content">
-        <div class="nav-con-close">
-            <i class="am-icon-angle-right am-icon-fw"></i>
-        </div>
-        <div>
-            我
-        </div>
-    </div>
-    <div id="shopCart-content" class="nav-content">
-        <div class="nav-con-close">
-            <i class="am-icon-angle-right am-icon-fw"></i>
-        </div>
-        <div>
-            购物车
-        </div>
-    </div>
-    <div id="asset-content" class="nav-content">
-        <div class="nav-con-close">
-            <i class="am-icon-angle-right am-icon-fw"></i>
-        </div>
-        <div>
-            资产
-        </div>
+</div>
+</div>
+<!--菜单 -->
+<div class=tip>
+    <div id="sidebar">
+        <div id="wrap">
+            <div id="prof" class="item">
+                <a href="#">
+                    <span class="setting"></span>
+                </a>
+                <div class="ibar_login_box status_login">
+                    <div class="avatar_box">
+                        <p class="avatar_imgbox"><img src="static/images/no-img_mid_.jpg"/></p>
+                        <ul class="user_info">
+                            <li>用户名：{{username}}</li>
+                            <li>级&nbsp;别：普通会员</li>
+                        </ul>
+                    </div>
+                    <div class="login_btnbox">
+                        <a href="#" class="login_order">我的订单</a>
+                        <a href="#" class="login_favorite">我的收藏</a>
+                    </div>
+                    <i class="icon_arrow_white"></i>
+                </div>
 
-        <div class="ia-head-list">
-            <a href="#" target="_blank" class="pl">
-                <div class="num">0</div>
-                <div class="text">优惠券</div>
-            </a>
-            <a href="#" target="_blank" class="pl">
-                <div class="num">0</div>
-                <div class="text">红包</div>
-            </a>
-            <a href="#" target="_blank" class="pl money">
-                <div class="num">￥0</div>
-                <div class="text">余额</div>
-            </a>
-        </div>
+            </div>
+            <div id="shopCart " class="item ">
+                <a href="shopcart.html ">
+                    <span class="message "></span>
+                </a>
+                <p>
+                    购物车
+                </p>
+                <p class="cart_num">{{shopCartsCount}}</p>
+            </div>
+            <div id="asset " class="item ">
+                <a href="# ">
+                    <span class="view "></span>
+                </a>
+                <div class="mp_tooltip ">
+                    我的资产
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
 
+            <div id="foot " class="item ">
+                <a href="# ">
+                    <span class="zuji "></span>
+                </a>
+                <div class="mp_tooltip ">
+                    我的足迹
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+
+            <div id="brand " class="item ">
+                <a href="#">
+                    <span class="wdsc "><img src="static/images/wdsc.png "/></span>
+                </a>
+                <div class="mp_tooltip ">
+                    我的收藏
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+
+            <div id="broadcast " class="item ">
+                <a href="# ">
+                    <span class="chongzhi "><img src="static/images/chongzhi.png "/></span>
+                </a>
+                <div class="mp_tooltip ">
+                    我要充值
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+
+            <div class="quick_toggle">
+                <li class="qtitem">
+                    <a href="#"><span class="kfzx"></span></a>
+                    <div class="mp_tooltip">客服中心<i class="icon_arrow_right_black"></i></div>
+                </li>
+                <!--二维码 -->
+                <li class="qtitem">
+                    <a href="#none"><span class="mpbtn_qrcode"></span></a>
+                    <div class="mp_qrcode" style="display:none;"><img src="static/images/weixin_code_145.png"/><i
+                            class="icon_arrow_white"></i></div>
+                </li>
+                <li class="qtitem">
+                    <a href="#top" class="return_top"><span class="top"></span></a>
+                </li>
+            </div>
+
+            <!--回到顶部 -->
+            <div id="quick_links_pop" class="quick_links_pop hide"></div>
+        </div>
     </div>
-    <div id="foot-content" class="nav-content">
-        <div class="nav-con-close">
-            <i class="am-icon-angle-right am-icon-fw"></i>
-        </div>
-        <div>
-            足迹
-        </div>
+</div>
+
+<div id="prof-content" class="nav-content">
+    <div class="nav-con-close">
+        <i class="am-icon-angle-right am-icon-fw"></i>
     </div>
-    <div id="brand-content" class="nav-content">
-        <div class="nav-con-close">
-            <i class="am-icon-angle-right am-icon-fw"></i>
-        </div>
-        <div>
-            收藏
-        </div>
+    <div>
+        我
     </div>
-    <div id="broadcast-content" class="nav-content">
-        <div class="nav-con-close">
-            <i class="am-icon-angle-right am-icon-fw"></i>
-        </div>
-        <div>
-            充值
-        </div>
+</div>
+<div id="shopCart-content" class="nav-content">
+    <div class="nav-con-close">
+        <i class="am-icon-angle-right am-icon-fw"></i>
     </div>
+    <div>
+        购物车
     </div>
-    <script type="text/javascript" src="static/js/vue.js"></script>
-    <!-- 引入组件库 -->
-    <script type="text/javascript" src="static/js/element-ui.js"></script>
-    <script type="text/javascript" src="static/js/cookie_utils.js"></script>
-    <script type="text/javascript" src="static/js/axios.min.js"></script>
-    <script type="text/javascript" src="static/js/utils.js"></script>
-    <script type="text/javascript">
-        $(function () {
+</div>
+<div id="asset-content" class="nav-content">
+    <div class="nav-con-close">
+        <i class="am-icon-angle-right am-icon-fw"></i>
+    </div>
+    <div>
+        资产
+    </div>
+
+    <div class="ia-head-list">
+        <a href="#" target="_blank" class="pl">
+            <div class="num">0</div>
+            <div class="text">优惠券</div>
+        </a>
+        <a href="#" target="_blank" class="pl">
+            <div class="num">0</div>
+            <div class="text">红包</div>
+        </a>
+        <a href="#" target="_blank" class="pl money">
+            <div class="num">￥0</div>
+            <div class="text">余额</div>
+        </a>
+    </div>
+
+</div>
+<div id="foot-content" class="nav-content">
+    <div class="nav-con-close">
+        <i class="am-icon-angle-right am-icon-fw"></i>
+    </div>
+    <div>
+        足迹
+    </div>
+</div>
+<div id="brand-content" class="nav-content">
+    <div class="nav-con-close">
+        <i class="am-icon-angle-right am-icon-fw"></i>
+    </div>
+    <div>
+        收藏
+    </div>
+</div>
+<div id="broadcast-content" class="nav-content">
+    <div class="nav-con-close">
+        <i class="am-icon-angle-right am-icon-fw"></i>
+    </div>
+    <div>
+        充值
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="static/js/vue.js"></script>
+<!-- 引入组件库 -->
+<script type="text/javascript" src="static/js/element-ui.js"></script>
+<script type="text/javascript" src="static/js/cookie_utils.js"></script>
+<script type="text/javascript" src="static/js/axios.min.js"></script>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript">
+    $(function () {
+    });
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
         });
-    //     $(window).load(function () {
-    //         $('.flexslider').flexslider({
-    //             animation: "slide",
-    //             start: function (slider) {
-    //                 $('body').removeClass('loading');
-    // });
+    });
 </script>
 <script type="text/javascript">
     var baseUrl = "http://localhost:8080/";
@@ -935,18 +895,26 @@
                     this.productParams = result.data.productParams[0];
                 }
             });
-        }
-    })
-    </script>
-    <script type="text/javascript">
-        var baseUrl = "http://localhost:8080/";
+            /*商品评论请求*/
+            axios.get(baseUrl + "product/comments/" + this.productId, {
+                params: {
+                    pageNum: this.pageNum,
+                    limit: this.limit
+                }
+            }).then(res => {
+                let pageHelper = res.data.data;
+                if (res.data.code = 10000) {
+                    this.productComments = pageHelper.list;
+                    this.pageCount = pageHelper.pageCount;
+                    this.count = pageHelper.count;
+                }
+            });
+            /*评价分布情况请求*/
+            axios.get(baseUrl + "product/commentNum/" + this.productId).then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.commentNum = result.data;
 
-<<<<<<< HEAD
-        var layer;
-        layui.use('layer', function () {
-            layer = layui.layer;
-        });
-=======
                 }
             });
             /*随机查询推荐商品*/
@@ -982,78 +950,10 @@
                 this.currentIndex = event.srcElement.dataset.index;
                 var str = this.productSkus[this.currentIndex].untitled;
                 this.skuProps = eval("(" + str + ")");
->>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
 
-        var vm = new Vue({
-            el: "#container",
-            data: {
-                username: "",
-                userImg: "",
-                isLogin: false,
-                productId: "",
-                currentIndex: "0",
-                product: {
-                    productName: "",
-                },
-                productImgs: [],
-                productSkus: [],
-                productComments: [],
-                pageNum: 1,
-                limit: 2,
-                pageCount: 0,
-                count: 0,
-                productParams: {},
-                randProduct: [],
-                commentNum: {},
-                skuProps: {},
-                currentSku: {},
-                num: 1,
-                token: "",
-                shopCartsCount: 0,
             },
-
-            created: function () {
-                this.productId = getUrlParam("pid");
-                this.currentIndex = getUrlParam("sid") != null ? getUrlParam("sid") : 0;
-                this.num = getUrlParam("num") != null ? getUrlParam("num") : 1;
-                var token = getCookieValue("token");
-                if (token != null && token != "") {
-                    this.isLogin = true;
-                    this.username = getCookieValue("username");
-                    this.userImg = getCookieValue("userImg");
-                    var userId = getCookieValue("userId");
-                    axios({
-                        url: baseUrl + "shoppingCart/countByUid/" + userId,
-                        methods: "get",
-                        headers: {
-                            token: token
-                        }
-                    }).then(res => {
-                        if (res.data.code = 10000) {
-                            this.shopCartsCount = res.data.data;
-                        }
-
-                    })
-                }
-                /*商品的细节请求*/
-                axios.get(baseUrl + "product/detail-info/" + this.productId).then(res => {
-                    let result = res.data;
-                    if (result.code = 10000) {
-                        this.product = result.data.product[0];
-                        this.productImgs = result.data.productImgs;
-                        this.productSkus = result.data.productSkus;
-                        var proStr = this.productSkus[0].untitled;
-                        this.skuProps = eval("(" + proStr + ")");
-                    }
-                });
-                /*商品基本参数请求*/
-                axios.get(baseUrl + "product/param-info/" + this.productId).then(res => {
-                    let result = res.data;
-                    if (result.code = 10000) {
-                        this.productParams = result.data.productParams[0];
-                    }
-                });
-                /*商品评论请求*/
+            pager: function (currentPage) {
+                this.pageNum = currentPage;
                 axios.get(baseUrl + "product/comments/" + this.productId, {
                     params: {
                         pageNum: this.pageNum,
@@ -1067,137 +967,24 @@
                         this.count = pageHelper.count;
                     }
                 });
-                /*评价分布情况请求*/
-                axios.get(baseUrl + "product/commentNum/" + this.productId).then(res => {
-                    let result = res.data;
-                    if (result.code = 10000) {
-                        this.commentNum = result.data;
-
-                    }
-                });
-                /*随机查询推荐商品*/
-                axios.get(baseUrl + "product/randProduct/3").then(res => {
-                    let result = res.data;
-                    if (result.code = 10000) {
-                        this.randProduct = result.data.randProduct;
-                    }
-                })
             },
-            updated: function () {
-                //每次重新渲染之后执行
-                //====>初始化放大镜效果
-                $(".bigImage").imagezoom();
-                $("#thumblist li a").click(function () {
-                    $(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
-                    $(".bigImage").attr('src', $(this).find("img").attr("mid"));
-                    $(".bigImage").attr('rel', $(this).find("img").attr("big"));
-                });
+            changeProps: function (event) {
+                var key = event.srcElement.dataset.key;
+                var v = event.srcElement.dataset.v;
+                this.currentSku[key] = v;
+                console.log(this.currentSku);
+                //选择效果：
+                $("li[name='" + key + "']").removeClass("selected");
+                //让点击的选项有选中效果
+                $("li[name='" + key + "'][data-v='" + v + "']").addClass("selected");
             },
-            methods: {
-                changeSku: function (event) {
-                    //获取点击的套餐的索引
-                    this.currentIndex = event.srcElement.dataset.index;
-                    var str = this.productSkus[this.currentIndex].untitled;
-                    this.skuProps = eval("(" + str + ")");
-
-                },
-                pager: function (currentPage) {
-                    this.pageNum = currentPage;
-                    axios.get(baseUrl + "product/comments/" + this.productId, {
-                        params: {
-                            pageNum: this.pageNum,
-                            limit: this.limit
-                        }
-                    }).then(res => {
-                        let pageHelper = res.data.data;
-                        if (res.data.code = 10000) {
-                            this.productComments = pageHelper.list;
-                            this.pageCount = pageHelper.pageCount;
-                            this.count = pageHelper.count;
-                        }
-                    });
-                },
-                changeProps: function (event) {
-                    var key = event.srcElement.dataset.key;
-                    var v = event.srcElement.dataset.v;
-                    this.currentSku[key] = v;
-                    console.log(this.currentSku);
-                    //选择效果：
-                    $("li[name='" + key + "']").removeClass("selected");
-                    //让点击的选项有选中效果
-                    $("li[name='" + key + "'][data-v='" + v + "']").addClass("selected");
-                },
-                changeNum: function (m) {
-                    if (m == -1 && this.num > 1) {
-                        this.num = this.num - 1;
-                    } else if (m == 1 && this.num < this.productSkus[this.currentIndex].stock) {
-                        this.num = parseInt(this.num) + 1;
-                    }
-                },
-                addShoppingCart: function () {
-                    //套参属性转换成字符串
-                    var propStr = "";
-                    for (var key in this.currentSku) {
-                        propStr += key + ":" + this.currentSku[key] + ";";
-                    }
-                    //从cookie获取userId
-                    var uid = getCookieValue("userId");
-                    // console.log(this.currentIndex,'this.currentIndex--->')
-                    //购物车信息
-                    var cart = {
-                        "cartId": "",
-                        "cartNum": this.num,
-                        "productId": this.productId,
-                        "productPrice": this.productSkus[this.currentIndex].sellPrice,
-                        "skuId": this.productSkus[this.currentIndex].skuId,
-                        "skuProps": propStr,
-                        "userId": uid
-                    };
-                    //从cookie中获取token
-                    var token = getCookieValue("token");
-                    //添加购物车
-                    var url5 = baseUrl + "shoppingCart/add";
-                    axios({
-                        url: url5,
-                        method: "post",
-                        headers: {
-                            token: token
-                        },
-                        data: cart
-                    }).then(res => {
-                        console.log(res.data);
-                        if (res.data.code == 10000) {
-                            
-                            //加购成功
-                            layer.msg("添加购物车成功！")
-                        } else if (res.data.code == 99999) {
-                            //加购失败
-                            layer.msg("添加购物车失败！")
-                        } else {
-
-                            var message = "";
-
-                            if (res.data.code == 10011) {
-                                //用户未登录
-                                message = "您还未登录，请先登录";
-                            } else if (res.data.code == 10009) {
-                                //登录过期·
-                                message = "该账号已过期，请重新登录";
-                            }
-                            var loginUrl = "login.html?tips=" + message + "&returnUrl=introduction.html&pid=" + this.productId + "&num=" + this.num + "&sid="
-                                + this.currentIndex;
-                            window.location.href = encodeURI(loginUrl);
-                        }
-                    });
+            changeNum: function (m) {
+                if (m == -1 && this.num > 1) {
+                    this.num = this.num - 1;
+                } else if (m == 1 && this.num < this.productSkus[this.currentIndex].stock) {
+                    this.num = parseInt(this.num) + 1;
                 }
             },
-<<<<<<< HEAD
-            watch: {
-                skuProps: function () {
-                    this.currentSku = {};
-                    for (var key in this.skuProps) {
-                        this.currentSku[key] = this.skuProps[key][0];
-=======
             addShoppingCart: function () {
                 //套参属性转换成字符串
                 var propStr = "";
@@ -1249,13 +1036,20 @@
                         var loginUrl = "login.html?tips=" + message + "&returnUrl=introduction.html&pid=" + this.productId + "&num=" + this.num + "&sid="
                             + this.currentIndex;
                         window.location.href = encodeURI(loginUrl);
->>>>>>> 87e035e0e3440c68ca56292394079b1be355d68c
                     }
-                    console.log(this.currentSku);
+                });
+            }
+        },
+        watch: {
+            skuProps: function () {
+                this.currentSku = {};
+                for (var key in this.skuProps) {
+                    this.currentSku[key] = this.skuProps[key][0];
                 }
             }
-        })
-    </script>
+        }
+    })
+</script>
 
 </body>
 
