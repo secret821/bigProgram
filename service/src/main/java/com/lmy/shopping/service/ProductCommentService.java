@@ -41,4 +41,13 @@ public interface ProductCommentService {
      * @return
      */
     ResultVo addProductComment(ProductComments productComments);
+
+
+    /**
+     * 修改 用户评论显示状态 1 表示显示 0表示不显示
+     * @param commentId
+     * @param status
+     * @return
+     */
+    ResultVo updateCommentStatus(String commentId, int status);
 }
