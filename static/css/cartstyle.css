@@ -9,7 +9,7 @@ body, button, input, select, textarea {
 
 .cart-table-th .th-chk { font-size: 12px; text-align: left; height: 50px;line-height: 50px;}
 .th-chk, .td-chk {width:40px;}
-.cart-table-th .th-chk .select-all {position: absolute;left: 0px; top: 0px; width: 80px;height:50px;line-height: 50px;}
+.cart-table-th .th-chk .select-all {position: absolute;left: 10px;  width: 80px;height:50px;line-height: 50px;}
 .cart-table-th .th-chk .select-all span{ position:absolute;top:2px;}
 
 /*信息标题*/
@@ -96,7 +96,7 @@ body, button, input, select, textarea {
 #cartTable {background: #fff;}
 .bundle.bundle-last{border: #f5f5f5 1px solid;}
 .cart-table-th, .td-sum{display: block;}
-.th.th-op,.list-change{display: none;}
+.th.th-op,.list-change{display: block;}
 
 .item-content{overflow: visible;height:115px ;}
 .bundle-hd{border-bottom: #CCC 1px dotted;padding:5px 0px;height:auto;overflow: hidden;background:#eee;} 

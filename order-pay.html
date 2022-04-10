@@ -13,8 +13,10 @@
     <link href="static/css/demo.css" rel="stylesheet" type="text/css" />
     <link href="static/css/cartstyle.css" rel="stylesheet" type="text/css" />
     <link href="static/css/optstyle.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/alert.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script data-main="js/main.js" src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script>
     <script type="text/javascript" src="static/js/qrcode.min.js"></script>
 
 </head>
@@ -143,8 +145,6 @@
                     }
                 });
             },1000);
-
-
         },
         created: function () {
             var token = getCookieValue("token");
