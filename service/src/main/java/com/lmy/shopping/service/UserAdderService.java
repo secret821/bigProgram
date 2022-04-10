@@ -13,5 +13,7 @@ public interface UserAdderService {
 
     ResultVo selectUserAdder(int userId);
 
-    ResultVo  updataUserAdder(String uid,String addrId);
+    ResultVo  updateDefault(String uid,String addrId);
+
+    ResultVo updateAdderStatus(String addrId,int status);
 }

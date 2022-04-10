@@ -8,6 +8,7 @@ import com.lmy.shopping.utils.Base64Utils;
 import com.lmy.shopping.utils.MD5Utils;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
+import com.sun.org.apache.bcel.internal.generic.I2F;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -108,12 +109,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResultVo checkMangerLogin(String username, String password) {
+        if ("admin".equals(username)&&"12345".equals(password)){
+            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+    }
+
+    @Override
     public ResultVo userInfo(String uid) {
         Users users = userMapper.selectByPrimaryKey(uid);
         return new ResultVo(StatusCode.STATUS_OK, "success", users);
     }
 
-    @Override
+    @Override   
     public ResultVo updateUser(Users user) {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();

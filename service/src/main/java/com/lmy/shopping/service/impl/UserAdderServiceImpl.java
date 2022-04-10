@@ -37,7 +37,7 @@ public class UserAdderServiceImpl implements UserAdderService {
 
     @Transactional
     @Override
-    public ResultVo updataUserAdder(String uid, String addrId) {
+    public ResultVo updateDefault(String uid, String addrId) {
         Example example = new Example(UserAddr.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("userId", uid)
@@ -57,5 +57,16 @@ public class UserAdderServiceImpl implements UserAdderService {
             return new ResultVo(StatusCode.STATUS_OK,"success",null);
         }
        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+    }
+
+    @Override
+    public ResultVo updateAdderStatus(String addrId, int status) {
+        UserAddr userAddr = userAddrMapper.selectByPrimaryKey(addrId);
+        userAddr.setStatus(status);
+        int i = userAddrMapper.updateByPrimaryKeySelective(userAddr);
+        if (i>0){
+            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
     }
 }

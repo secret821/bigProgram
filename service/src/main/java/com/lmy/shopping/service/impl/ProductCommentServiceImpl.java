@@ -109,4 +109,19 @@ public class ProductCommentServiceImpl implements ProductCommentService {
         }
         return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
     }
+
+
+    @Override
+    public ResultVo updateCommentStatus(String commentId,int status) {
+        ProductComments productComments = productCommentsMapper.selectByPrimaryKey(commentId);
+        productComments.setIsShow(status);
+        int i = productCommentsMapper.updateByPrimaryKeySelective(productComments);
+        if (i>0){
+            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        }else {
+            return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+        }
+
+
+    }
 }

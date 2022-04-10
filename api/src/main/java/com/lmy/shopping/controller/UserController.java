@@ -41,6 +41,16 @@ public class UserController {
         ResultVo resultVo = userService.checkUser(username, password);
         return resultVo;
     }
+    @ApiOperation("管理员登录接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "string", name = "username", value = "用户名", required = true),
+            @ApiImplicitParam(dataType = "string", name = "password", value = "用户密码", required = true)
+    })
+    @GetMapping(value = "/mlogin")
+    public ResultVo checkMangerLogin(String username, String password) {
+        ResultVo resultVo = userService.checkMangerLogin(username, password);
+        return resultVo;
+    }
 
     @ApiOperation("用户注册接口")
     @ApiImplicitParams({

@@ -45,10 +45,23 @@ public class UserAdderController {
             @ApiImplicitParam(dataType = "String", name = "userId", value = "用戶Id", required = true),
             @ApiImplicitParam(dataType = "String", name = "addrId", value = "地址Id", required = true),
     })
-    @GetMapping(value = "/updataStatus")
-    public ResultVo updataAddr(String userId,String addrId,@RequestHeader("token") String token) {
-        ResultVo resultVo = userAdderService.updataUserAdder(userId,addrId);
+    @GetMapping(value = "/updateDefult")
+    public ResultVo updateDefault(String userId,String addrId,@RequestHeader("token") String token) {
+        ResultVo resultVo = userAdderService.updateDefault(userId,addrId);
         return resultVo;
     }
+
+    @ApiOperation("修改地址")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String", name = "addrId", value = "用戶Id", required = true),
+            @ApiImplicitParam(dataType = "int", name = "status", value = "状态", required = true)
+    })
+    @GetMapping(value = "/updateStatus")
+    public ResultVo updateStatus(String addrId,int status,@RequestHeader("token") String token) {
+        ResultVo resultVo = userAdderService.updateAdderStatus(addrId,status);
+        return resultVo;
+    }
+
+
 
 }

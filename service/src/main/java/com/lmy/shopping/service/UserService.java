@@ -22,6 +22,14 @@ public interface UserService {
      */
      ResultVo checkUser(String name, String password);
 
+
+    /**
+     * 管理员登录校验
+     * @param name
+     * @param password
+     * @return
+     */
+    ResultVo checkMangerLogin(String name, String password);
     /**
      * 用户注册
      * @param name 用户名

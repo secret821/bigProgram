@@ -1,12 +1,11 @@
 package com.lmy.shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -20,6 +19,8 @@ public class ProductCommentsVo {
      * ID
      */
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String commId;
 
     /**
@@ -82,7 +83,7 @@ public class ProductCommentsVo {
     /**
      * 评价时间 可为空
      */
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     private Date sepcName;
 
     /**
@@ -102,7 +103,6 @@ public class ProductCommentsVo {
     /**
      * 回复时间
      */
-    @Column(name = "reply_time")
     private Date replyTime;
 
     /**
