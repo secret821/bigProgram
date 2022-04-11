@@ -156,6 +156,7 @@
             this.token = getCookieValue("token");
             this.userId = getCookieValue("userId");
             axios({
+                method:"get",
                 url: baseUrl + "order/statusCount/" + this.userId,
                 headers: {
                     token: this.token
