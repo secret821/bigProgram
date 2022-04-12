@@ -46,6 +46,12 @@ public interface UserService {
      ResultVo userInfo(String uid);
 
     /**
+     * 用户信息查询
+     * @return
+     */
+
+    ResultVo ListUsersInfo(int pageNum,int limit,String username);
+    /**
      * 更新用户信息
      */
     ResultVo updateUser(Users user);

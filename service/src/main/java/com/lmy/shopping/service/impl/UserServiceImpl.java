@@ -1,11 +1,13 @@
 package com.lmy.shopping.service.impl;
 
 
+import com.lmy.shopping.entity.ProductCommentsVo;
 import com.lmy.shopping.entity.Users;
 import com.lmy.shopping.mapper.UsersMapper;
 import com.lmy.shopping.service.UserService;
 import com.lmy.shopping.utils.Base64Utils;
 import com.lmy.shopping.utils.MD5Utils;
+import com.lmy.shopping.vo.PageHelper;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
 import com.sun.org.apache.bcel.internal.generic.I2F;
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserImg("img/default.png");
                 user.setUserRegtime(new Date());
                 user.setUserModtime(new Date());
+                user.setStatus(1);
                 //插入用户数据
                 int i = userMapper.insert(user);
                 if (i > 0) {
@@ -120,6 +123,23 @@ public class UserServiceImpl implements UserService {
     public ResultVo userInfo(String uid) {
         Users users = userMapper.selectByPrimaryKey(uid);
         return new ResultVo(StatusCode.STATUS_OK, "success", users);
+    }
+
+
+    @Override
+    public ResultVo ListUsersInfo(int pageNum,int limit,String username) {
+        HashMap<Object, Object> map = new HashMap<>();
+        Example example=new Example(Users.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("status",1);
+        if (username!=null && username!=""){
+            criteria.andLike("username",'%'+username+'%');
+        }
+        int count =userMapper.selectCountByExample(example);
+        int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
+        int start = (pageNum - 1) * limit;
+        List<Users> list = userMapper.ListUserInfo(start,limit,username);
+        return new ResultVo(StatusCode.STATUS_OK, "success", new PageHelper<Users>(count, pageCount, list));
     }
 
     @Override   

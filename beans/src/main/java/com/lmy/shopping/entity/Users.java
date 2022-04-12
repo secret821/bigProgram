@@ -78,6 +78,11 @@ public class Users {
     private Date userModtime;
 
     /**
+     * 账号状态
+     */
+    @Column(name = "status")
+    private  int status;
+    /**
      * 获取主键id 用户id
      *
      * @return user_id - 主键id 用户id
@@ -291,5 +296,13 @@ public class Users {
      */
     public void setUserModtime(Date userModtime) {
         this.userModtime = userModtime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
