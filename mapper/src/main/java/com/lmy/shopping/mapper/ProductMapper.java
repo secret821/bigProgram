@@ -32,4 +32,10 @@ public interface ProductMapper extends GeneralDAO<Product> {
             @Param("limit") int limit,
             @Param("keyWord") String keyWord,
             @Param("brand")String brand);
+
+
+    List<ProductVO> queryAllProduct(
+            @Param("start") int start,
+            @Param("limit") int limit,
+            @Param("keyWord") String keyWord);
 }

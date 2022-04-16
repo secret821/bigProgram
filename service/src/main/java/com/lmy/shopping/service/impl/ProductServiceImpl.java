@@ -80,10 +80,6 @@ public class ProductServiceImpl implements ProductService {
         return new ResultVo(StatusCode.STATUS_FAIL, "该商品不存在", null);
     }
 
-    @Override
-    public ResultVo ListProductRand(int root_category_id, int num) {
-        return null;
-    }
 
     @Override
     public ResultVo queryProductParams(int product_id) {
@@ -169,5 +165,12 @@ public class ProductServiceImpl implements ProductService {
     public ResultVo queryBrandByKeyWord(String keyWord) {
         List<String> strings = productMapper.queryBrandByKeyWord(keyWord);
         return new ResultVo(StatusCode.STATUS_OK,"success",strings);
+    }
+
+    @Override
+    public ResultVo ListAllProduct(String keyWord, int pageNum, int limit) {
+        int start=(pageNum-1)*limit;
+
+        return null;
     }
 }

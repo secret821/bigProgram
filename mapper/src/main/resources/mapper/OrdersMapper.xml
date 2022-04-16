@@ -75,6 +75,21 @@
         limit #{start},#{limit}
     </select>
 
+
+    <select id="queryOrderList2" resultMap="OrdersVoMap">
+        select
+        order_id,user_id,untitled,receiver_name, receiver_mobile,receiver_address,
+        total_amount, actual_amount,pay_type,order_remark,status,delivery_type,
+        delivery_flow_id,order_freight,delete_status,create_time,
+        update_time,pay_time,delivery_time, flish_time,cancel_time,close_type
+        from orders
+        where 1=1 and  delete_status=0
+        <if test="orderId!=null and orderId!=''">
+         and   order_id like "%"#{orderId,jdbcType=VARCHAR}"%"
+        </if>
+        limit #{start},#{limit}
+    </select>
+
     <select id="queryOrdersCount" resultMap="StatusCount">
         SELECT STATUS,
                COUNT(*) AS count

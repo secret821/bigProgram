@@ -55,4 +55,21 @@ public interface UserService {
      * 更新用户信息
      */
     ResultVo updateUser(Users user);
+
+
+    /**
+     * 修改用户状态
+     * @param status
+     * @return
+     */
+    ResultVo updateUser(int uid,int status);
+
+
+    /**
+     * 修改用户名
+     * @param uid
+     * @param username
+     * @return
+     */
+    ResultVo updateUserName(int uid,String username);
 }

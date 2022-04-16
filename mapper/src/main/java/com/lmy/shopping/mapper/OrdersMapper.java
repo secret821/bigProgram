@@ -15,5 +15,9 @@ public interface OrdersMapper extends GeneralDAO<Orders> {
                                   @Param("start")int start,
                                   @Param("limit")int limit);
 
+    List<OrdersVo> queryOrderList2(@Param("orderId")String orderId,
+                                   @Param("start")int start,
+                                   @Param("limit")int limit);
+
     List<StatusCount> queryOrdersCount(String uid);
 }

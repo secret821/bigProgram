@@ -69,7 +69,8 @@
         from product_comments pc
                  inner join users u
                             on u.user_id = pc.user_id
-        where pc.product_id = #{product_id} limit #{start}
+
+        where   pc.is_show = 1 and pc.product_id = #{product_id} limit #{start}
             , #{limit}
     </select>
 
@@ -101,6 +102,7 @@
                  inner join product_img pi on pc.product_id = pi.item_id
         where pc.user_id = #{userId}
           and pi.is_main = 1
+          and pc.is_show = 1
             limit #{start}
             , #{limit}
     </select>

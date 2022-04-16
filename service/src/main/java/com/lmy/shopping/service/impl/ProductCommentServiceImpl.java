@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 商品评论实现类
@@ -97,13 +98,17 @@ public class ProductCommentServiceImpl implements ProductCommentService {
 
     @Override
     public ResultVo addProductComment(ProductComments pm) {
+
+        String commentId = UUID.randomUUID().toString().replace("-", "");
         //设置评论时间
+        pm.setCommId(commentId);
+
         pm.setSepcName(new Date());
         //设置默认回复状态 未回复
         pm.setReplyStatus(0);
         //设置是否显示 默认显示
         pm.setIsShow(1);
-        int i = productCommentsMapper.insertUseGeneratedKeys(pm);
+        int i = productCommentsMapper.insert(pm);
         if (i > 0) {
             return new ResultVo(StatusCode.STATUS_OK, "success", null);
         }

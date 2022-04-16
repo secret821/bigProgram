@@ -131,7 +131,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void closeOrder(String orderId,int closeType) {
+    public void closeOrder(String orderId, int closeType) {
         synchronized (this) {
             //  1.修改当前订单：status=6 已关闭  close_type=1 超时未支付
             Orders cancleOrder = new Orders();
@@ -160,55 +160,72 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultVo queryOrdersList(String userId, String status, int pageNum, int limit) {
         //1.分页查询
-        int start = (pageNum-1)*limit;
+        int start = (pageNum - 1) * limit;
         List<OrdersVo> ordersVOS = ordersMapper.queryOrderList(userId, status, start, limit);
 
         //2.查询总记录数
         Example example = new Example(Orders.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId",userId)
-                .andEqualTo("deleteStatus",0);
-        if(status != null && !"".equals(status)){
-            criteria.andLike("status",status);
+        criteria.andEqualTo("userId", userId)
+                .andEqualTo("deleteStatus", 0);
+        if (status != null && !"".equals(status)) {
+            criteria.andLike("status", status);
         }
         int count = ordersMapper.selectCountByExample(example);
 
         //3.计算总页数
-        int pageCount = count%limit==0?count/limit:count/limit+1;
+        int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
 
         //4.封装数据
         PageHelper<OrdersVo> pageHelper = new PageHelper<>(count, pageCount, ordersVOS);
-        return new ResultVo(StatusCode.STATUS_OK,"success",pageHelper);
+        return new ResultVo(StatusCode.STATUS_OK, "success", pageHelper);
     }
 
     @Override
     public ResultVo queryOrdersCount(String userId) {
         List<StatusCount> statusCounts = ordersMapper.queryOrdersCount(userId);
-        return new ResultVo(StatusCode.STATUS_OK,"success",statusCounts);
+        return new ResultVo(StatusCode.STATUS_OK, "success", statusCounts);
     }
 
     @Override
     public ResultVo deleteOrderById(String orderId) {
-        Orders orders=new Orders();
+        Orders orders = new Orders();
         orders.setOrderId(orderId);
         //1 为删除状态 0 为未删除状态
         orders.setDeleteStatus(1);
         int i = ordersMapper.updateByPrimaryKeySelective(orders);
-        if (i>0){
-            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
         }
-        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
     }
 
     @Override
-    public ResultVo confirmOrderById(String orderId,String status) {
-        Orders orders=new Orders();
+    public ResultVo confirmOrderById(String orderId, String status) {
+        Orders orders = new Orders();
         orders.setOrderId(orderId);
         orders.setStatus(status);
+        orders.setUpdateTime(new Date());
         int i = ordersMapper.updateByPrimaryKeySelective(orders);
-        if (i>0){
-            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
         }
-        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
+    }
+
+    @Override
+    public ResultVo queryOrdersList2(String orderId, int pageNum, int limit) {
+        int start = (pageNum - 1) * limit;
+        List<OrdersVo> ordersVos = ordersMapper.queryOrderList2(orderId, start, limit);
+        Example example = new Example(Orders.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("deleteStatus",0);
+        if (orderId != null && orderId != "") {
+            criteria.andEqualTo("orderId", orderId);
+        }
+        int count = ordersMapper.selectCountByExample(example);
+        int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
+        PageHelper<OrdersVo> pageHelper = new PageHelper<>(count, pageCount, ordersVos);
+        return new ResultVo(StatusCode.STATUS_OK, "success", pageHelper);
     }
 }

@@ -21,12 +21,6 @@ public interface ProductService {
      */
     ResultVo ListBasicProInfo(int product_id);
 
-    /**
-     * 商品指定分类随机查询
-     * @param num 随机查询的数量
-     * @return
-     */
-    ResultVo ListProductRand(int root_category_id,int num);
 
     /**
      * 全商品随机查询
@@ -75,5 +69,11 @@ public interface ProductService {
      * @return
      */
     ResultVo queryBrandByKeyWord(String keyWord);
+
+
+    /**
+     *
+     */
+    ResultVo ListAllProduct(String keyWord,int pageNum,int limit);
 
 }

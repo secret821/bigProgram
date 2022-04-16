@@ -159,4 +159,23 @@
         WHERE pp.brand IS NOT NULL
           and p.product_name  like  "%"#{keyWord,jdbcType=VARCHAR}"%"
     </select>
+
+
+    <select id="queryAllProduct" resultMap="ProductVOMap">
+        select product_id,
+               product_name,
+               category_id,
+               root_category_id,
+               sold_num,
+               product_status,
+               content,
+               create_time,
+               update_time
+        from product
+        where 1=1
+        <if test="keyWord!=null and keyWord!=''">
+            keyWord like "%"#{keyWord,jdbcType=VARCHAR}"%"
+        </if>
+         LIMIT #{start},#{start}
+    </select>
 </mapper>

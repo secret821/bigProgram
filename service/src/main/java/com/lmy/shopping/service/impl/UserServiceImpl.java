@@ -131,7 +131,6 @@ public class UserServiceImpl implements UserService {
         HashMap<Object, Object> map = new HashMap<>();
         Example example=new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("status",1);
         if (username!=null && username!=""){
             criteria.andLike("username",'%'+username+'%');
         }
@@ -162,5 +161,37 @@ public class UserServiceImpl implements UserService {
             }
         }
         return new ResultVo(StatusCode.STATUS_FAIL, "出錯了", null);
+    }
+
+    @Override
+    public ResultVo updateUser(int uid,int status) {
+        Users users = userMapper.selectByPrimaryKey(uid);
+        users.setStatus(status);
+        int i = userMapper.updateByPrimaryKeySelective(users);
+        if (i>0){
+            return  new ResultVo(StatusCode.STATUS_OK,"success",null);
+        }
+        return  new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+    }
+
+
+    @Override
+    public ResultVo updateUserName(int uid,String name) {
+        Example example=new Example(Users.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username",name);
+        List<Users> users1 = userMapper.selectByExample(example);
+        if (users1.size()==0){
+            Users users = userMapper.selectByPrimaryKey(uid);
+            users.setUsername(name);
+            int i = userMapper.updateByPrimaryKeySelective(users);
+            if (i>0){
+                return  new ResultVo(StatusCode.STATUS_OK,"success",null);
+            }
+            return  new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+        }else {
+            return  new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+        }
+
     }
 }

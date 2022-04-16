@@ -72,8 +72,42 @@ public class UserController {
 
     @ApiOperation("用户详细信息查询接口")
     @GetMapping("/userInfo")
-    public ResultVo userTokenCheck(String userId,@RequestHeader("token")String token){
+    public ResultVo userInfo(String userId,@RequestHeader("token")String token){
         ResultVo resultVo = userService.userInfo(userId);
+        return resultVo;
+    }
+    @ApiOperation("用户信息展示接口")
+    @GetMapping("/usersInfo")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "当前页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true),
+            @ApiImplicitParam(dataType = "String",name = "username", value = "用户名",required = false)
+    })
+    public ResultVo ListUsersInfo(int pageNum,int limit,String username){
+        ResultVo resultVo = userService.ListUsersInfo(pageNum,limit,username);
+        return resultVo;
+    }
+
+
+    @ApiOperation("用户信息更新接口")
+    @GetMapping("/updateUserStatus")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "uid", value = "用户ID",required = true),
+            @ApiImplicitParam(dataType = "int",name = "status", value = "状态",required = true),
+    })
+    public ResultVo updateUserStatus(int uid,int status){
+        ResultVo resultVo = userService.updateUser(uid,status);
+        return resultVo;
+    }
+
+    @ApiOperation("用户名更新接口")
+    @PostMapping("/updateUserName")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "userId", value = "用户ID",required = true),
+            @ApiImplicitParam(dataType = "String",name = "username", value = "用户名",required = true),
+    })
+    public ResultVo updateUserName(int userId,String username){
+        ResultVo resultVo = userService.updateUserName(userId,username);
         return resultVo;
     }
 
