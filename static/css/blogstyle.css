@@ -27,7 +27,7 @@
     .header a,.footer a{color:#000000}
 	
 	.nav.white .logo{display:none;}  
-	.nav.white .logoBig{ display:block;float:left;height:56px;width:115px; margin:0px auto; margin-left:5%} 
+	.nav.white .logoBig{ display:block;float:left;height:115px;width:115px; margin:0px auto; margin-left:5%} 
 	.nav.white .logoBig img{width:100%;}
 	.my-cart { width: 46px;height: 46px;}
 	.search-bar {height: 51px;margin: 0px 50px 0 120px; padding-left:5%;}
@@ -94,7 +94,7 @@ color: #F5F5F2;font-size: 14px;cursor:pointer;}
 
 	   .nav.white{padding-left:0px; max-width:1000px; margin:0px auto;}
 	   .nav.white .logo{display:none;}
-	   .nav.white .logoBig { display:block; float:left;height:90px; width:200px; margin-left:0px;}
+	   .nav.white .logoBig { display:block; float:left;height:200px; width:200px; margin-left:0px;}
 	   .nav.white .logoBig li{float:left;}
 	   .search-bar{height:90px; padding: 20px 70px 0 230px; margin:auto;}
 	   

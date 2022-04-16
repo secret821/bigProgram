@@ -16,17 +16,16 @@
     <link href="static/css/cartstyle.css" rel="stylesheet" type="text/css">
     <link href="static/css/jsstyle.css" rel="stylesheet" type="text/css">
     <link href="static/css/lee.css" rel="stylesheet" type="text/css">
-
-
+    <script type="text/javascript" src="static/js/jquery.js"></script>
     <script type="text/javascript" src="static/js/vue.js"></script>
 
+    <script type="text/javascript" src="static/js/qrcode.min.js"></script>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script type="text/javascript" src="static/js/jquery.js"></script>
-    <script data-main="js/main.js" src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script>
-    <script type="text/javascript" src="static/js/qrcode.min.js"></script>
+
+
 </head>
 
 <body style="overflow: visible;">
@@ -96,7 +95,7 @@
                     </div>
                     <div class="clear"></div>
                     <ul>
-                        <span>
+                        <span style="">
                             <template v-for="(addr,index) in addrs">
                                 <li :class="{'user-addresslist':true, 'defaultAddr':index==addrIndex}"
                                     style="margin-top: 6px;" @click="chooseAddr" :data-index="index">
@@ -276,41 +275,42 @@
                                 </p>
                             </div>
                         </div>
+                        <!-- <el-button type="text" @click="doSubmit">点击打开 Dialog</el-button> -->
+
+                        <el-dialog style='text-align: left;' title="订单信息" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+                            <div style=" background: lightgrey; height: 600px; margin-top: 40px; padding: 15px;">
+                                <div style=" background: white; height: 540px; margin: auto; padding-left: 50px;">
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                    <h3>订单编号: {{orderInfo.orderId}}</h3>
+                                    <p>&nbsp;</p>
+                                    <h3>订单金额:￥ {{orderInfo.totalPrice}}</h3>
+                                    <hr/>
+                                    <div id="div1">
+                                        <div id="payQrcodeDiv" style="width: 200px; height: 200px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span slot="footer" class="dialog-footer">
+                                <el-button @click="dialogVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                            </span>
+                        </el-dialog>
                         <div id="holyshit269" class="submitOrder">
                             <div class="go-btn-wrap">
-                            <a id="J_Go" href="javascript:void(0);" tabindex="0" title="点击此按钮，提交订单"
-                               class="btn-go" @click="doSubmit">提交订单</a>
-                               
+                                <a id="J_Go" href="javascript:void(0);" tabindex="0" title="点击此按钮，提交订单" class="btn-go"
+                                    @click="doSubmit">提交订单</a>
+                            </div>
                         </div>
-                            <!-- <template>
-                                <el-button type="text" @click="open"
-                                    style="background-color: #f4922f; border-radius: 4px; border: none;width: 75px;margin-top: 6px;height: 45px; position: relative; top: 70px; left: -20px;">
-                                    <p style="color: #ffff;">提交订单</p>
-                                </el-button>
-                            </template> -->
-                            <!-- <el-button type="text" @click="dialogVisible = true" style="background-color: #f4922f; border-radius: 4px; border: none;width: 75px;margin-top: 6px;height: 45px; position: relative; top: 70px; left: -20px;">
-                                <p style="color: #ffff;">提交订单</p></el-button>
-
-                            <el-dialog title="订单" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-                                <h3>订单编号: {{orderInfo.orderId}}</h3>
-                                <p>&nbsp;</p>
-                                <h3>订单金额:￥ {{orderInfo.totalPrice}}</h3>
-                                <hr />
-                                <div id="div1">
-                                    <div id="payQrcodeDiv" style="width: 200px; height: 200px;"></div>
-                                </div>
-                                <span slot="footer" class="dialog-footer">
-                                    <el-button @click="dialogVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-                                </span>
-                            </el-dialog> -->
-                        </div>
-
-
                         <div class="clear"></div>
                     </div>
                 </div>
             </div>
+            <!-- <div id="div1">
+                <div id="payQrcodeDiv" style="width: 130px; height: 130px;margin-top: -324px; margin-left: 154px;">
+                </div>
+            </div> -->
             <div class="clear"></div>
         </div>
 
@@ -356,6 +356,8 @@
         var vm = new Vue({
             el: "#container",
             data: {
+                dialogVisible: false,
+                orderInfo: {},
                 cartIds: "",
                 addrs: [
                     {
@@ -371,7 +373,7 @@
                         "status": 0,
                         "commonAddr": 0,
                         "createTime": "",
-                        "updateTime": "",
+                        "updateTime": ""
                     },
                 ],
                 shopCarts: [],
@@ -382,38 +384,10 @@
                 userId: "",
                 orderRemark: "",
                 payType: 1,
-                "dialogVisible": false,
-                isLogin: false,
-                username: "",
-                orderInfo: {}
 
             },
             mounted: function () {
-                //渲染二维码
-                var qrcode = new QRCode($("#payQrcodeDiv")[0], {
-                    width: 200,
-                    height: 200
-                });
-                console.log(qrcode,'qrcode------>')
-                qrcode.makeCode(this.orderInfo.payUrl);
 
-                var oid = this.orderInfo.orderId;
-                var i = setInterval(function () {
-                    console.log("-----");
-                    var url = baseUrl + "order/status/" + oid;
-                    axios({
-                        url: url,
-                        method: "get",
-                        headers: {
-                            token: getCookieValue("token")
-                        }
-                    }).then((res) => {
-                        if (res.data.data == "2") {
-                            $("#div1").html("<label style='font-size:20px; color:green'>订单支付完成！</label>");
-                            clearInterval(i);
-                        }
-                    });
-                }, 1000);
             },
             created: function () {
                 var token = getCookieValue("token");
@@ -485,6 +459,35 @@
                 changePayType: function (m) {
                     this.payType = m;
                 },
+
+                showOrder: function(){
+                        //渲染二维码
+                    var qrcode = new QRCode($("#payQrcodeDiv")[0], {
+                        width: 200,
+                        height: 200
+                    });
+                    console.log(this.orderInfo,'this.orderInfo')
+                    qrcode.makeCode(this.orderInfo.payUrl);
+                    var oid = this.orderInfo.orderId;
+                    var i = setInterval(function () {
+                        console.log("-----");
+                        var url = baseUrl + "order/status/" + oid;
+                        axios({
+                            url: url,
+                            method: "get",
+                            headers: {
+                                token: getCookieValue("token")
+                            }
+                        }).then((res) => {
+                            if (res.data.data == "2") {
+                                $("#div1").html("<label style='font-size:20px; color:green'>订单支付完成！</label>");
+                                clearInterval(i);
+                            }
+                        });
+                    }, 1000);
+                },
+
+                
                 doSubmit: function () {
                     var cids = this.cartIds;
                     var address = this.addrs[this.addrIndex].province + " " + this.addrs[this.addrIndex].city + " "
@@ -513,8 +516,17 @@
                         if (res.data.code = 10000) {
                             var orderInfo = res.data.data;
                             orderInfo.totalPrice = this.totalPrice;
-                            localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
-                            window.location.href = "order-toPay.html";
+                            this.orderInfo = orderInfo;
+
+                    this.dialogVisible = true
+
+                            console.log(orderInfo)
+                            setTimeout(()=>{
+                                this.showOrder()
+
+                            },500)
+                            // localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
+                            // window.location.href = "order-toPay.html";
                         } else if (res.data.code == 10009 || res.data.code == 10010) {
                             window.location.href = "index.html";
                         } else {
