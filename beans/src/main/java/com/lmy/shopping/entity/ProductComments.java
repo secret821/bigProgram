@@ -1,9 +1,8 @@
 package com.lmy.shopping.entity;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 @Table(name = "product_comments")
 public class ProductComments {
     /**
@@ -11,6 +10,7 @@ public class ProductComments {
      */
     @Id
     @Column(name = "comm_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String commId;
 
     /**

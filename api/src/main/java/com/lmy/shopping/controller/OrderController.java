@@ -88,6 +88,21 @@ public class OrderController {
     }
 
 
+
+    @GetMapping("/listOrder")
+    @ApiOperation("管理员订单查询接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "string",name = "orderId", value = "订单ID",required = false),
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页条数",required = true)
+    })
+    public ResultVo listOrder(String orderId,int pageNum,int limit){
+        ResultVo resultVO = orderService.queryOrdersList2(orderId,pageNum, limit);
+        return resultVO;
+    }
+
+
+
     @GetMapping("/statusCount/{uid}")
     @ApiOperation("查询订单状态总数接口")
     public ResultVo queryStatusCount(@PathVariable("uid") String userId, @RequestHeader("token") String token) {
@@ -117,6 +132,14 @@ public class OrderController {
     @GetMapping("/confirmOrderById")
     @ApiOperation("修改订单状态")
     public ResultVo confirmOrderById(String orderId,String status, @RequestHeader("token") String token) {
+        ResultVo resultVo = orderService.confirmOrderById(orderId,status);
+        return resultVo;
+    }
+
+
+    @PutMapping("/confirmOrderStatus")
+    @ApiOperation("修改订单状态（模拟发货）")
+    public ResultVo confirmOrderById(String orderId,String status) {
         ResultVo resultVo = orderService.confirmOrderById(orderId,status);
         return resultVo;
     }
