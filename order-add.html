@@ -482,6 +482,9 @@
                             if (res.data.data == "2") {
                                 $("#div1").html("<label style='font-size:20px; color:green'>订单支付完成！</label>");
                                 clearInterval(i);
+                                window.setTimeout(function () {
+                                    window.location.href ="shopcart.html";
+                                },3000);
                             }
                         });
                     }, 1000);
@@ -519,14 +522,9 @@
                             this.orderInfo = orderInfo;
 
                     this.dialogVisible = true
-
-                            console.log(orderInfo)
                             setTimeout(()=>{
                                 this.showOrder()
-
                             },500)
-                            // localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
-                            // window.location.href = "order-toPay.html";
                         } else if (res.data.code == 10009 || res.data.code == 10010) {
                             window.location.href = "index.html";
                         } else {

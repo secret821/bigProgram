@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
+    <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <script src="static/manger/js/pintuer.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
+</head>
+<body>
+<div id="container">
+    <div class="panel admin-panel">
+        <div class="panel-head" id="add">
+            <strong><span class="icon-pencil-square-o">违规昵称修改</span></strong>
+        </div>
+
+        <div class="body-content">
+            <form method="post" class="form-x">
+                <input type="hidden" name="id" v-model="userId"/>
+                <div class="form-group">
+                    <div class="label"><label>修改昵称:</label></div>
+                    <div class="field">
+                        <input type="text" class="input w50" name="userName" data-validate="required:请输入名称"
+                               v-model="username"/>
+                        <div class="tips"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label"></div>
+                    <div class="field">
+                        <button class="button bg-main icon-check-square-o" @click="submit">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript" src="static/js/cookie_utils.js"></script>
+<script type="text/javascript" src="static/js/vue.js"></script>
+<script type="text/javascript" src="static/js/axios.min.js"></script>
+<script>
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+        el: "#container",
+        data: {
+            userId: 0,
+            username: ""
+        },
+        created: function () {
+            this.userId = getUrlParam("userId");
+            this.username = getUrlParam("username");
+        },
+        methods: {
+            submit: function () {
+                debugger
+                axios({
+                    url: baseUrl + "user/updateUserName",
+                    method: "post",
+                    params: {
+                        userId: this.userId,
+                        username: this.username
+                    }
+                }).then(res => {
+                    if (res.data.code==10000) {
+                        layer.msg("修改成功");
+                        window.location.href = "mUser.html";
+                    } else if(res.data.code==99999) {
+                        layer.msg("该用户已被使用");
+                    }
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>

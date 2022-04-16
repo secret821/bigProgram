@@ -8,9 +8,11 @@
     <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
     <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
     <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
-
-    <script src="static/manger/js/jquery.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/javascript" src="static/js/jquery.js"></script>
     <script src="static/manger/js/pintuer.js"></script>
+    <link   rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
 </head>
 
 <body>
@@ -36,7 +38,8 @@
                 <th>邮箱</th>
                 <th>性别</th>
                 <th>真实姓名</th>
-                <th>地址</th>
+                <th>状态</th>
+                <th>操作</th>
             </tr>
 
             <template v-for="(user,index) in users">
@@ -49,13 +52,23 @@
                     <td>{{user.userEmail}}</td>
                     <td>
                         <span v-if="user.userSex==1">男</span>
-                        <span v-else>女</span>
+                        <span v-else-if="user.userSex==0">女</span>
                     </td>
                     <td>{{user.realname}}</td>
                     <td>
+                        <span v-if="user.status==1">活跃</span>
+                        <span v-else-if="user.status==0"  style="color: red"> 已禁用</span>
+                    </td>
+                    <td>
                         <div class="button-group">
-                            <a class="button border-main" href=""><span class="icon-edit">违规昵称修改</span></a>
-                            <a class="button border-red" href=""><span class="icon-trash-o">删除</span></a>
+                            <a class="button border-main" :data-id="user.userId" :data-name="user.username"  @click="gotoUp">
+                                <div class="icon-edit" :data-id="user.userId" :data-name="user.username">违规昵称修改</div>
+                            </a>
+
+                            <a class="button border-red" href="">
+                                <div v-if="user.status==1" class="icon-trash-o" :data-id="user.userId" @click="updateUser(0)">禁用</div>
+                                <div v-else-if="user.status==0"class="icon-recycle" :data-id="user.userId" @click="updateUser(1)">启用</div>
+                            </a>
                         </div>
                     </td>
                 </tr>
@@ -76,32 +89,39 @@
 <script type="text/javascript" src="static/js/utils.js"></script>
 <script type="text/javascript" src="static/js/cookie_utils.js"></script>
 <script type="text/javascript" src="static/js/vue.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <script type="text/javascript" src="static/js/element-ui.js"></script>
 <script type="text/javascript" src="static/js/axios.min.js"></script>
+
 <script>
+
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
+
     var baseUrl = "http://localhost:8080/";
     var vm = new Vue({
         el: "#container",
         data: {
             users: [],
             pageNum: 1,
-            limit: 8,
+            limit: 7,
             pageCount: 0,
             count: 0,
-            username:"pai"
+            username:""
         },
         created: function () {
             axios({
-                methods: "get",
                 url: baseUrl + "user/usersInfo",
+                methods: "get",
                 params: {
                     pageNum: this.pageNum,
                     limit: this.limit,
                 }
             }).then(res => {
                 let pageHelper = res.data.data;
-                if (res.data.code == 10000) {
+                if (res.data.code = 10000) {
                     this.users = pageHelper.list;
                     this.pageCount = pageHelper.pageCount;
                     this.count = pageHelper.count;
@@ -127,11 +147,10 @@
                     }
                 });
             },
-
             searchUser:function (){
                 axios({
-                    methods: "get",
                     url: baseUrl + "user/usersInfo",
+                    methods: "get",
                     params: {
                         pageNum: this.pageNum,
                         limit: this.limit,
@@ -139,13 +158,36 @@
                     }
                 }).then(res => {
                     let pageHelper = res.data.data;
-                    if (res.data.code == 10000) {
+                    if (res.data.code = 10000) {
                         this.users = pageHelper.list;
                         this.pageCount = pageHelper.pageCount;
                         this.count = pageHelper.count;
                     }
                 });
+            },
+            updateUser:function (status){
+                var userId = event.srcElement.dataset.id;
+                axios({
+                    url:baseUrl+"user/updateUserStatus",
+                    methods:"get",
+                    params:{
+                        uid:userId,
+                        status:status
+                    }
+                }).then(res=>{
+                    if (res.data.code = 10000) {
+                        layer.msg("状态修改成功！");
+                        location.reload();
+                    }
+                })
+            },
+            gotoUp:function (){
+                var userId = event.srcElement.dataset.id;
+                var username = event.srcElement.dataset.name;
+                window.location.href = "updateName.html?userId="+userId+"&username="+username;
+
             }
+
         }
     })
 </script>
