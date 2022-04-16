@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>管理员登录</title>
+    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
+    <script src="static/manger/js/jquery.js"></script>
+    <script src="static/manger/js/pintuer.js"></script>
+</head>
+
+<body>
+<div id="container">
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height: 150px;"></div>
+            <div class="media media-y margin-big-bottom"></div>
+            <form action="" method="post">
+                <div class="panel login-box">
+                    <div class="text-c  enter margin-big padding-big-top"><h1>管理员登录</h1></div>
+                    <div class="panel-body" style="padding: 30px;padding-bottom: 10px; padding-top: 10px;">
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input type="text" class="input input-big" name="userName" VALUE="admin" v-model="username" placeholder="登录账号" data-validate="required:请填写账号" />
+                                <span class="icon icon-user margin-small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input type="password" class="input input-big" name="passWord"  value="12345" v-model="password" placeholder="登录密码" data-validate="required:请填写密码" />
+                                <span class="icon icon-key margin-small"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 30px;">
+                        <input type="button" class="button button-block bg-main text-big input-big" value="登录"  @click="login"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript" src="static/js/cookie_utils.js"></script>
+<script type="text/javascript" src="static/js/vue.js"></script>
+<script type="text/javascript" src="static/js/axios.min.js"></script>
+<script>
+    var baseUrl = "http://localhost:8080/";
+    var vm=new Vue({
+        el: "#container",
+        data:{
+            username:"",
+            password:"",
+        },
+        methods:{
+            login:function (){
+              axios({
+                  methods:"",
+                  url:baseUrl+"/user/mlogin",
+                  params:{
+                    username:this.username,
+                    password:this.password,
+                  }
+              }).then(res=>{
+                    if (res.data.code==10000){
+                        window.location.href="mIndex.html";
+                    }
+              })
+            }
+        }
+
+    })
+</script>
+</body>
+
+</html>
