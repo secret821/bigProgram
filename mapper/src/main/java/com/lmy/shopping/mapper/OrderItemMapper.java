@@ -10,4 +10,5 @@ import java.util.List;
 public interface OrderItemMapper extends GeneralDAO<OrderItem> {
 
      List<OrderItem> listOrderItemsByOrderId(String orderId);
+
 }

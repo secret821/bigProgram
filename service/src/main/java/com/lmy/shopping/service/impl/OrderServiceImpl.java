@@ -228,4 +228,12 @@ public class OrderServiceImpl implements OrderService {
         PageHelper<OrdersVo> pageHelper = new PageHelper<>(count, pageCount, ordersVos);
         return new ResultVo(StatusCode.STATUS_OK, "success", pageHelper);
     }
+
+
+    @Override
+    public ResultVo queryOrderItem(String orderId) {
+        List<OrderItem> orderItems = orderItemMapper.listOrderItemsByOrderId(orderId);
+
+        return new ResultVo(StatusCode.STATUS_OK,"success",orderItems);
+    }
 }

@@ -41,6 +41,6 @@ public interface OrderService {
     ResultVo confirmOrderById(String orderId,String status);
 
 
-
+    ResultVo queryOrderItem(String orderId);
 
 }

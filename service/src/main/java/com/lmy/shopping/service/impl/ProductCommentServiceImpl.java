@@ -96,6 +96,26 @@ public class ProductCommentServiceImpl implements ProductCommentService {
         return new ResultVo(StatusCode.STATUS_OK, "查询成功！", new PageHelper<ProductCommentsVo>(count, pageCount, list));
     }
 
+
+    @Override
+    public ResultVo ListUserComment2(int pageNum, int limit, String product_id) {
+        HashMap<Object, Object> map = new HashMap<>();
+        Example example = new Example(ProductComments.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("isShow", 1);
+        if (product_id!=null&&product_id!=""){
+            criteria.andEqualTo("productId", product_id);
+        }
+        //统计评论总数
+        int count = productCommentsMapper.selectCountByExample(example);
+        int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
+        int start = (pageNum - 1) * limit;
+        List<ProductCommentsVo> list = productCommentsMapper.findAllProductComments2(start, limit, product_id);
+        return new ResultVo(StatusCode.STATUS_OK, "查询成功！", new PageHelper<ProductCommentsVo>(count, pageCount, list));
+    }
+
+
+
     @Override
     public ResultVo addProductComment(ProductComments pm) {
 

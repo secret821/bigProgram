@@ -21,6 +21,14 @@ public interface ProductCommentService {
     ResultVo ListProductComments(int pageNum,int limit,String product_id);
 
     /**
+     *
+     * @param pageNum    页码
+     * @param limit      每页条数
+     * @param product_id 商品id 可为空
+     * @return
+     */
+    ResultVo ListUserComment2(int pageNum,int limit,String product_id);
+    /**
      * 统计评价 类型 总数
      * @param product_id
      * @return

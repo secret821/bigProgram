@@ -70,8 +70,41 @@
                  inner join users u
                             on u.user_id = pc.user_id
 
-        where   pc.is_show = 1 and pc.product_id = #{product_id} limit #{start}
+        where pc.is_show = 1
+          and pc.product_id = #{product_id} limit #{start}
             , #{limit}
+    </select>
+
+
+    <select id="findAllProductComments2" resultMap="ProductCommentsMap">
+        select u.user_id,
+        u.username,
+        u.nickname,
+        u.user_img,
+        pc.comm_id,
+        pc.product_id,
+        pc.product_name,
+        pc.order_item_id,
+        pc.user_id,
+        pc.is_anonymous,
+        pc.comm_type,
+        pc.comm_level,
+        pc.comm_content,
+        pc.comm_imgs,
+        pc.sepc_name,
+        pc.reply_status,
+        pc.reply_content,
+        pc.reply_time,
+        pc.is_show
+        from product_comments pc
+        inner join users u
+        on u.user_id = pc.user_id
+
+        where 1=1
+        <if test="product_id!=null and product_id!=''">
+            and pc.product_id = #{product_id}
+        </if>
+        limit #{start}, #{limit}
     </select>
 
 

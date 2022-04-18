@@ -102,6 +102,16 @@ public class OrderController {
     }
 
 
+    @GetMapping("/listOrderItem")
+    @ApiOperation("订单快照查询接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "string",name = "orderId", value = "订单ID",required = true),
+    })
+    public ResultVo listOrderItem(String orderId){
+        ResultVo resultVO = orderService.queryOrderItem(orderId);
+        return resultVO;
+    }
+
 
     @GetMapping("/statusCount/{uid}")
     @ApiOperation("查询订单状态总数接口")

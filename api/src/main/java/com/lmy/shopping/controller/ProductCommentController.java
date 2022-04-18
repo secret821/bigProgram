@@ -37,6 +37,21 @@ public class ProductCommentController {
     }
 
 
+
+    @ApiOperation("管理員评论展示接口")
+    @GetMapping("/listComment")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "当前页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true),
+            @ApiImplicitParam(dataType = "String",name = "pid", value = "商品id",required = false)
+    })
+    public ResultVo UserComments(String pid,int pageNum,int limit) {
+        ResultVo resultVo = productCommentService.ListUserComment2(pageNum,limit,pid);
+        return resultVo;
+    }
+
+
+
     @ApiOperation("修改用户评论状态接口")
     @PutMapping("/updateCommentStatus")
     @ApiImplicitParams({
