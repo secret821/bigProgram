@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script type="text/javascript" src="static/js/jquery.js"></script>
     <script src="static/manger/js/pintuer.js"></script>
-    <link   rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
     <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
 </head>
 
@@ -56,18 +56,24 @@
                     </td>
                     <td>{{user.realname}}</td>
                     <td>
-                        <span v-if="user.status==1">活跃</span>
-                        <span v-else-if="user.status==0"  style="color: red"> 已禁用</span>
+                        <span v-if="user.status==1" style="color: green">活跃</span>
+                        <span v-else-if="user.status==0" style="color: red"> 已禁用</span>
                     </td>
                     <td>
                         <div class="button-group">
-                            <a class="button border-main" :data-id="user.userId" :data-name="user.username"  @click="gotoUp">
+                            <a class="button border-main" :data-id="user.userId" :data-name="user.username"
+                               @click="gotoUp">
                                 <div class="icon-edit" :data-id="user.userId" :data-name="user.username">违规昵称修改</div>
                             </a>
 
-                            <a class="button border-red" href="">
-                                <div v-if="user.status==1" class="icon-trash-o" :data-id="user.userId" @click="updateUser(0)">禁用</div>
-                                <div v-else-if="user.status==0"class="icon-recycle" :data-id="user.userId" @click="updateUser(1)">启用</div>
+                            <a class="button border-red" v-if="user.status==1" :data-id="user.userId"
+                               @click="updateUser(0)">
+                                <div class="icon-trash-o">禁用</div>
+
+                            </a>
+                            <a class="button border-green" v-else-if="user.status==0" :data-id="user.userId"
+                               @click="updateUser(1)">
+                                <div class="icon-recycle">启用</div>
                             </a>
                         </div>
                     </td>
@@ -89,7 +95,7 @@
 <script type="text/javascript" src="static/js/utils.js"></script>
 <script type="text/javascript" src="static/js/cookie_utils.js"></script>
 <script type="text/javascript" src="static/js/vue.js"></script>
-<script type="text/javascript" src="static/js/element-ui.js"></script>
+<script type="text/javascript" src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script type="text/javascript" src="static/js/axios.min.js"></script>
 
 <script>
@@ -109,7 +115,7 @@
             limit: 7,
             pageCount: 0,
             count: 0,
-            username:""
+            username: ""
         },
         created: function () {
             axios({
@@ -147,7 +153,7 @@
                     }
                 });
             },
-            searchUser:function (){
+            searchUser: function () {
                 axios({
                     url: baseUrl + "user/usersInfo",
                     methods: "get",
@@ -165,26 +171,26 @@
                     }
                 });
             },
-            updateUser:function (status){
+            updateUser: function (status) {
                 var userId = event.srcElement.dataset.id;
                 axios({
-                    url:baseUrl+"user/updateUserStatus",
-                    methods:"get",
-                    params:{
-                        uid:userId,
-                        status:status
+                    url: baseUrl + "user/updateUserStatus",
+                    methods: "get",
+                    params: {
+                        uid: userId,
+                        status: status
                     }
-                }).then(res=>{
+                }).then(res => {
                     if (res.data.code = 10000) {
                         layer.msg("状态修改成功！");
                         location.reload();
                     }
                 })
             },
-            gotoUp:function (){
+            gotoUp: function () {
                 var userId = event.srcElement.dataset.id;
                 var username = event.srcElement.dataset.name;
-                window.location.href = "updateName.html?userId="+userId+"&username="+username;
+                window.location.href = "updateName.html?userId=" + userId + "&username=" + username;
 
             }
 
