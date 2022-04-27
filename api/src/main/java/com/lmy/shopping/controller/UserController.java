@@ -1,9 +1,7 @@
 package com.lmy.shopping.controller;
 
-import com.lmy.shopping.entity.ProductComments;
+
 import com.lmy.shopping.entity.Users;
-import com.lmy.shopping.service.ProductCommentService;
-import com.lmy.shopping.service.impl.ProductCommentServiceImpl;
 import com.lmy.shopping.service.impl.UserServiceImpl;
 import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;

@@ -126,4 +126,17 @@ public class ProductController {
         ResultVo resultVo=categoryService.queryCategory(cid);
         return resultVo;
     }
+
+
+    @ApiOperation("根据商品关键字查询接口")
+    @GetMapping(value = "queryProduct")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int",name = "pageNum", value = "当前页码",required = true),
+            @ApiImplicitParam(dataType = "int",name = "limit", value = "每页显示条数",required = true),
+            @ApiImplicitParam(dataType = "String",name = "keyWord", value = "关键词",required = false)
+    })
+    public ResultVo ListProduct(String keyWord,int pageNum,int limit){
+        ResultVo resultVo=productService.queryProduct(keyWord,pageNum,limit);
+        return resultVo;
+    }
 }

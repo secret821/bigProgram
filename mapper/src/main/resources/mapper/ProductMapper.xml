@@ -53,6 +53,26 @@
 
     </resultMap>
 
+
+    <resultMap id="ProductVOMap3" type="com.lmy.shopping.entity.ProductVO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="root_category_id" jdbcType="INTEGER" property="rootCategoryId"/>
+        <result column="sold_num" jdbcType="INTEGER" property="soldNum"/>
+        <result column="product_status" jdbcType="INTEGER" property="productStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="categoryName" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="categoryFirstName" jdbcType="VARCHAR" property="categoryFirstName"/>
+        <result column="url" jdbcType="VARCHAR" property="imgUrl"/>
+    </resultMap>
+
+
     <select id="queryProduct" resultMap="ProductVOMap">
         select product_id,
                product_name,
@@ -113,7 +133,7 @@
         WHERE
         p.category_id = #{cid}
         <if test="brand!=null and brand!=''">
-        and pa.brand=#{brand}
+            and pa.brand=#{brand}
         </if>
         limit #{start}, #{limit}
     </select>
@@ -133,7 +153,7 @@
         product p
         LEFT JOIN product_params pa ON pa.product_id = p.product_id
         WHERE
-        p.product_name like  "%"#{keyWord,jdbcType=VARCHAR}"%"
+        p.product_name like "%"#{keyWord,jdbcType=VARCHAR}"%"
         <if test="brand!=null and brand!=''">
             and pa.brand=#{brand}
         </if>
@@ -157,25 +177,31 @@
              product p
              on pp.product_id = p.product_id
         WHERE pp.brand IS NOT NULL
-          and p.product_name  like  "%"#{keyWord,jdbcType=VARCHAR}"%"
+          and p.product_name like "%"#{keyWord,jdbcType=VARCHAR}"%"
     </select>
 
 
-    <select id="queryAllProduct" resultMap="ProductVOMap">
-        select product_id,
-               product_name,
-               category_id,
-               root_category_id,
-               sold_num,
-               product_status,
-               content,
-               create_time,
-               update_time
-        from product
-        where 1=1
+    <select id="queryAllProduct" resultMap="ProductVOMap3">
+        select p.product_id,
+        p.product_name,
+        c1.category_name as categoryName,
+        c2.category_name as categoryFirstName,
+        pi.url,
+        p.category_id,
+        p.root_category_id,
+        p.sold_num,
+        p.product_status,
+        p.content,
+        p.create_time,
+        p.update_time
+        from product p
+        inner join category c1 on  c1.category_id=p.category_id
+        inner join category c2 on c2.category_id=p.root_category_id
+        INNER JOIN product_img pi ON p.product_id= pi.item_id
+        where 1=1 and pi.is_main=1
         <if test="keyWord!=null and keyWord!=''">
-            keyWord like "%"#{keyWord,jdbcType=VARCHAR}"%"
+         and   product_name like "%"#{keyWord,jdbcType=VARCHAR}"%"
         </if>
-         LIMIT #{start},#{start}
+        LIMIT #{start},#{limit}
     </select>
 </mapper>

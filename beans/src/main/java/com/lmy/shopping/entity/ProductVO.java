@@ -95,5 +95,21 @@ public class ProductVO {
      */
     private List<ProductSku> productSkus;
 
+    /**
+     * 商品分类名称
+     */
+
+    private  String categoryName;
+
+    /**
+     * 商品一级分类名称
+     */
+    private  String categoryFirstName;
+
+    /**
+     * 商品图片
+     */
+    private  String imgUrl;
+
 }
 

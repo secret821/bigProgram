@@ -63,7 +63,16 @@ public class ProductCommentController {
         return resultVo;
     }
 
-
+    @ApiOperation("管理员修改用户评论状态接口")
+    @GetMapping("/mupdateCommentStatus")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String",name = "commentId", value = "评论Id",required = true),
+            @ApiImplicitParam(dataType = "int",name = "status", value = "显示状态",required = true)
+    })
+    public ResultVo UserComments(String commentId, int status) {
+        ResultVo resultVo = productCommentService.updateCommentStatus(commentId,status);
+        return resultVo;
+    }
     @ApiOperation("用户评论接口")
     @PostMapping("/addComment")
     public ResultVo UserComments(@RequestBody ProductComments productComments, @RequestHeader("token") String token) {

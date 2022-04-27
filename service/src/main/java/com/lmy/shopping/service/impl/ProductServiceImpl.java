@@ -168,9 +168,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResultVo ListAllProduct(String keyWord, int pageNum, int limit) {
+    public ResultVo queryProduct(String keyWord, int pageNum, int limit) {
+        Example example=new Example(Product.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (keyWord!=null&&keyWord!=""){
+            criteria.andLike("productName",'%'+keyWord+'%');
+        }
         int start=(pageNum-1)*limit;
-
-        return null;
+        List<ProductVO> productVOS = productMapper.queryAllProduct(start,limit,keyWord);
+        int count = productMapper.selectCountByExample(example);
+        int pageCount=count%limit==0 ? count/limit:count/limit+1;
+        PageHelper<ProductVO> productVOPageHelper = new PageHelper<>(count, pageCount, productVOS);
+        return new ResultVo(StatusCode.STATUS_OK,"success",productVOPageHelper);
     }
 }

@@ -63,6 +63,18 @@ public interface ProductService {
      */
     ResultVo queryProductByKeyWord(String keyWord,int pageNum, int limit,String brand);
 
+
+    /**
+     * 管理员查询
+     * @param keyWord
+     * @param pageNum
+     * @param limit
+     * @return
+     */
+    ResultVo queryProduct(String keyWord,int pageNum, int limit);
+
+
+
     /**
      * 根据关键字查询的商品的品牌
      * @param keyWord
@@ -71,9 +83,5 @@ public interface ProductService {
     ResultVo queryBrandByKeyWord(String keyWord);
 
 
-    /**
-     *
-     */
-    ResultVo ListAllProduct(String keyWord,int pageNum,int limit);
 
 }
