@@ -82,6 +82,12 @@ public class Users {
      */
     @Column(name = "status")
     private  int status;
+
+    /**
+     * 账号角色
+     */
+    @Column(name = "role")
+    private  int role;
     /**
      * 获取主键id 用户id
      *
@@ -304,5 +310,13 @@ public class Users {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }

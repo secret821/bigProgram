@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserRegtime(new Date());
                 user.setUserModtime(new Date());
                 user.setStatus(1);
+                user.setRole(1);
                 //插入用户数据
                 int i = userMapper.insert(user);
                 if (i > 0) {
@@ -79,6 +80,7 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username", username);
+        criteria.andEqualTo("role", 1);
         List<Users> users = userMapper.selectByExample(example);
 
         if (users.size() == 0) {
@@ -113,10 +115,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResultVo checkMangerLogin(String username, String password) {
-        if ("admin".equals(username)&&"12345".equals(password)){
-            return new ResultVo(StatusCode.STATUS_OK,"success",null);
+        Example example = new Example(Users.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username", username);
+        criteria.andEqualTo("role", 0);
+        List<Users> users = userMapper.selectByExample(example);
+        if (users.size() == 0) {
+            return new ResultVo(StatusCode.LOGIN_ALREADY_EXISTS, "登录失败，用户名不存在,请重试！", null);
+        } else {
+            String md5Pwd = MD5Utils.md5(password);
+            if (md5Pwd.equals(users.get(0).getPassword())) {
+                return new ResultVo(StatusCode.LOGIN_SUCCESS, "登录成功", null);
+            }else {
+                return new ResultVo(StatusCode.LOGIN_PASSWORD_MIS, "密码错误", null);
+            }
         }
-        return new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
     }
 
     @Override
