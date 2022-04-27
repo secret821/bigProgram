@@ -23,6 +23,7 @@
                 <div class="panel login-box">
                     <div class="text-c  enter margin-big padding-big-top"><h1>管理员登录</h1></div>
                     <div class="panel-body" style="padding: 30px;padding-bottom: 10px; padding-top: 10px;">
+                        <h5 :style="colorStyle" id="tips">{{tips}}&nbsp;</h5>
                         <div class="form-group">
                             <div class="field field-icon-right">
                                 <input type="text" class="input input-big" name="userName" VALUE="admin" v-model="username" placeholder="登录账号" data-validate="required:请填写账号" />
@@ -56,6 +57,8 @@
         data:{
             username:"",
             password:"",
+            colorStyle: "color:red",
+            tips: "",
         },
         methods:{
             login:function (){
@@ -68,7 +71,10 @@
                   }
               }).then(res=>{
                     if (res.data.code==10000){
-                        window.location.href="mIndex.html";
+
+                       /* window.location.href="mIndex.html";*/
+                    }else {
+                        this.tips=res.data.msg;
                     }
               })
             }
