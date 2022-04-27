@@ -70,7 +70,7 @@
                     password:this.password,
                   }
               }).then(res=>{
-                    if (res.data.code==10000){
+                    if (res.data.code==10001){
                         window.location.href="mIndex.html";
                     }else {
                         this.tips=res.data.msg;
