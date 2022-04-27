@@ -56,12 +56,14 @@
                 <td>
                     <a v-if="comment.isShow==1" class="button  border-red" :data-id="comment.commId"
                        @click="updateComment(0)">
-                        <div class="icon-trash-o">禁言</div>
+                        <div class="icon-trash-o" :data-id="comment.commId"
+                             @click="updateComment(0)">禁言</div>
                     </a>
 
                     <a v-else-if="comment.isShow==0" class="button  border-green" :data-id="comment.commId"
                        @click="updateComment(1)">
-                        <div class="icon-recycle">启用</div>
+                        <div class="icon-recycle" :data-id="comment.commId"
+                             @click="updateComment(1)">启用</div>
                     </a>
 
 
@@ -137,7 +139,21 @@
                 });
             },
             updateComment: function (status) {
-
+                var commentId = event.srcElement.dataset.id;
+                console.log(commentId);
+                axios({
+                    url: baseUrl + "productCom/mupdateCommentStatus",
+                    methods: "get",
+                    params: {
+                        commentId: commentId,
+                        status: status,
+                    }
+                }).then(res => {
+                    if (res.data.code = 10000) {
+                        layer.msg("状态修改成功！");
+                        location.reload();
+                    }
+                })
             },
             searchComment:function (){
                 axios.get(baseUrl + "productCom/listComment",
