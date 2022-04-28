@@ -22,4 +22,10 @@
         select img_url,img_bg_color,prod_id,category_id,index_type,create_time,update_time
          from index_img where status=1 order by seq asc;
     </select>
+
+
+  <select id="listImage" resultMap="BaseResultMap">
+    select img_id,img_url,img_bg_color,prod_id,category_id,index_type,create_time,update_time,seq,status
+    from index_img where 1=1 order by seq asc;
+  </select>
 </mapper>

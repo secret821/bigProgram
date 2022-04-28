@@ -79,17 +79,17 @@ public class UserServiceImpl implements UserService {
     public ResultVo checkUser(String username, String password) {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("username", username);
-        criteria.andEqualTo("role", 1);
+        criteria.andEqualTo("username", username)
+                .andEqualTo("role", 1);
         List<Users> users = userMapper.selectByExample(example);
-
         if (users.size() == 0) {
             return new ResultVo(StatusCode.LOGIN_ALREADY_EXISTS, "登录失败，用户名不存在,请重试！", null);
+        } else if (users.get(0).getStatus() == 0) {
+            return new ResultVo(StatusCode.STATUS_FAIL, "登录失败，该账号已被禁用，请联系管理员！", null);
         } else {
             String md5Pwd = MD5Utils.md5(password);
             if (md5Pwd.equals(users.get(0).getPassword())) {
                 //登录成功，携带token返回前端
-                /*String token= Base64Utils.encode(username+"lmy1018");*/
                 JwtBuilder builder = Jwts.builder();
                 HashMap<String, Object> map = new HashMap<>();
                 //主题，就是token中携带的数据
@@ -118,7 +118,6 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username", username);
-        criteria.andEqualTo("role", 0);
         List<Users> users = userMapper.selectByExample(example);
         if (users.size() == 0) {
             return new ResultVo(StatusCode.LOGIN_ALREADY_EXISTS, "登录失败，用户名不存在,请重试！", null);
@@ -126,7 +125,7 @@ public class UserServiceImpl implements UserService {
             String md5Pwd = MD5Utils.md5(password);
             if (md5Pwd.equals(users.get(0).getPassword())) {
                 return new ResultVo(StatusCode.LOGIN_SUCCESS, "登录成功", null);
-            }else {
+            } else {
                 return new ResultVo(StatusCode.LOGIN_PASSWORD_MIS, "密码错误", null);
             }
         }
@@ -138,23 +137,22 @@ public class UserServiceImpl implements UserService {
         return new ResultVo(StatusCode.STATUS_OK, "success", users);
     }
 
-
     @Override
-    public ResultVo ListUsersInfo(int pageNum,int limit,String username) {
+    public ResultVo ListUsersInfo(int pageNum, int limit, String username) {
         HashMap<Object, Object> map = new HashMap<>();
-        Example example=new Example(Users.class);
+        Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        if (username!=null && username!=""){
-            criteria.andLike("username",'%'+username+'%');
+        if (username != null && username != "") {
+            criteria.andLike("username", '%' + username + '%');
         }
-        int count =userMapper.selectCountByExample(example);
+        int count = userMapper.selectCountByExample(example);
         int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
         int start = (pageNum - 1) * limit;
-        List<Users> list = userMapper.ListUserInfo(start,limit,username);
+        List<Users> list = userMapper.ListUserInfo(start, limit, username);
         return new ResultVo(StatusCode.STATUS_OK, "success", new PageHelper<Users>(count, pageCount, list));
     }
 
-    @Override   
+    @Override
     public ResultVo updateUser(Users user) {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
@@ -177,33 +175,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVo updateUser(int uid,int status) {
+    public ResultVo updateUser(int uid, int status) {
         Users users = userMapper.selectByPrimaryKey(uid);
         users.setStatus(status);
         int i = userMapper.updateByPrimaryKeySelective(users);
-        if (i>0){
-            return  new ResultVo(StatusCode.STATUS_OK,"success",null);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
         }
-        return  new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
     }
 
 
     @Override
-    public ResultVo updateUserName(int uid,String name) {
-        Example example=new Example(Users.class);
+    public ResultVo updateUserName(int uid, String name) {
+        Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("username",name);
+        criteria.andEqualTo("username", name);
         List<Users> users1 = userMapper.selectByExample(example);
-        if (users1.size()==0){
+        if (users1.size() == 0) {
             Users users = userMapper.selectByPrimaryKey(uid);
             users.setUsername(name);
             int i = userMapper.updateByPrimaryKeySelective(users);
-            if (i>0){
-                return  new ResultVo(StatusCode.STATUS_OK,"success",null);
+            if (i > 0) {
+                return new ResultVo(StatusCode.STATUS_OK, "success", null);
             }
-            return  new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
-        }else {
-            return  new ResultVo(StatusCode.STATUS_FAIL,"fail",null);
+            return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
+        } else {
+            return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
         }
 
     }

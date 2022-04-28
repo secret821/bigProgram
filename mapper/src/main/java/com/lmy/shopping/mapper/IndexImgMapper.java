@@ -8,4 +8,6 @@ import java.util.List;
 public interface IndexImgMapper extends GeneralDAO<IndexImg> {
 
     List<IndexImg> listIndexImage();
+
+    List<IndexImg> listImage();
  }

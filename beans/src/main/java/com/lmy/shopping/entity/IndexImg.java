@@ -1,5 +1,7 @@
 package com.lmy.shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -62,12 +64,14 @@ public class IndexImg {
      * 创建时间 创建时间
      */
     @Column(name = "create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:MM:SS")
     private Date createTime;
 
     /**
      * 更新时间 更新
      */
     @Column(name = "update_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:MM:SS")
     private Date updateTime;
 
     /**

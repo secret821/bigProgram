@@ -3,6 +3,7 @@ package com.lmy.shopping.service.impl;
 import com.lmy.shopping.entity.CategoryVO;
 import com.lmy.shopping.entity.IndexImg;
 import com.lmy.shopping.entity.ProductVO;
+import com.lmy.shopping.entity.Users;
 import com.lmy.shopping.mapper.CategoryMapper;
 import com.lmy.shopping.mapper.IndexImgMapper;
 import com.lmy.shopping.mapper.ProductMapper;
@@ -55,4 +56,34 @@ public class IndexServiceImpl implements IndexService {
     }
 
 
+    @Override
+    public ResultVo ListImg() {
+        HashMap<String, Object> indexMap = new HashMap<>();
+        List<IndexImg> indexImgs = indexImgMapper.listImage();
+        if (indexImgs.size()==0){
+            return new ResultVo(StatusCode.STATUS_FAIL,"后台图片查询出现错误",null);
+        }else {
+            indexMap.put("indexImgs",indexImgs);
+            return new ResultVo(StatusCode.STATUS_OK,"success",indexMap);
+        }
+    }
+
+    @Override
+    public ResultVo queryImgById(int imgId) {
+        HashMap<String, Object> indexMap = new HashMap<>();
+        IndexImg indexImg = indexImgMapper.selectByPrimaryKey(imgId);
+        indexMap.put("indexImg",indexImg);
+        return new ResultVo(StatusCode.STATUS_OK,"success",indexMap);
+    }
+
+    @Override
+    public ResultVo updateStatus(int imgId, int status) {
+        IndexImg indexImg = indexImgMapper.selectByPrimaryKey(imgId);
+        indexImg.setStatus(status);
+        int i = indexImgMapper.updateByPrimaryKeySelective(indexImg);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
+    }
 }

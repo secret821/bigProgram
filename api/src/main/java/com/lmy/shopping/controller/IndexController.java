@@ -36,6 +36,14 @@ public class IndexController {
         ResultVo resultVo = indexService.ListIndexImg();
         return resultVo;
     }
+
+    @ApiOperation("管理员查询")
+    @GetMapping(value = "img")
+    public ResultVo indexImage(){
+        ResultVo resultVo = indexService.ListImg();
+        return resultVo;
+    }
+
     @ApiOperation("分类菜单展示接口")
     @GetMapping(value = "categoryShow")
     public ResultVo indexCategory(){
@@ -46,6 +54,21 @@ public class IndexController {
     @GetMapping(value="categoryProShow")
     public  ResultVo indexFirstCategoryProTop6(){
         ResultVo resultVo=categoryService.listCategoriesPro();
+        return resultVo;
+    }
+
+    @ApiOperation("通过ID查询")
+    @GetMapping(value = "queryById")
+    public ResultVo queryImage(int imgId){
+        ResultVo resultVo = indexService.queryImgById(imgId);
+        return resultVo;
+    }
+
+
+    @ApiOperation("修改图片的状态")
+    @PutMapping(value = "updateImg")
+    public ResultVo update(int imgId,int status){
+        ResultVo resultVo = indexService.updateStatus(imgId,status);
         return resultVo;
     }
 }

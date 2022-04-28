@@ -29,4 +29,24 @@ public interface IndexService {
     ResultVo ListIndexCategory();
 
 
+    /**
+     * 管理员查查询
+     * @return
+     */
+    ResultVo ListImg();
+
+    /**
+     * id 查询
+     * @return
+     */
+    ResultVo queryImgById(int imgId);
+
+
+    /**
+     * 修改状态
+     * @param imgId
+     * @param status
+     * @return
+     */
+    ResultVo updateStatus(int imgId,int status);
 }
