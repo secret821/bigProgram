@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script src="static/manger/js/pintuer.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <div class="panel admin-panel">
+        <form action="" id="listform" method="post">
+            <div class="padding border-bottom">
+                <ul class="search" style="padding-left: 10px;">
+                    <li>
+                        <a class="button border-main icon-plus-square-o" href="">添加</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <table class="table table-hover text-center">
+            <tr>
+                <th>图片编号</th>
+                <th>图片</th>
+                <th>排序值</th>
+                <th>添加时间</th>
+                <th>更新时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+
+            <tr v-for="img in imgs">
+                <td>{{img.imgId}}</td>
+                <td><img :src="'static/images/'+img.imgUrl" width="300" height="150"/></td>
+                <td>{{img.seq}}</td>
+                <td>{{img.createTime}}</td>
+                <td>{{img.updateTime}}</td>
+                <td>
+                    <span v-if="img.status==1" style="color: green">已显示</span>
+                    <span v-else-if="img.status==0" style="color: red">已禁用</span>
+                </td>
+                <td>
+                    <a class="button border-main"><span class="icon-edit">修改</span> </a>
+
+                    <a class="button border-red" v-if="img.status==1" :data-id="img.imgId" @click="updateStatus(0)">
+                        <span class="icon-trash-o">禁用</span> </a>
+                    <a class="button border-green" v-if="img.status==0" :data-id="img.imgId" @click="updateStatus(1)">
+                        <span class="icon-recycle">启用</span> </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript" src="static/js/cookie_utils.js"></script>
+<script type="text/javascript" src="static/js/vue.js"></script>
+<script type="text/javascript" src="static/js/element-ui.js"></script>
+<script type="text/javascript" src="static/js/axios.min.js"></script>
+<script>
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            imgs: [],
+            imgId: "",
+        },
+        created() {
+            axios({
+                url: baseUrl + "index/img",
+                method: "get",
+            }).then(res => {
+                if (res.data.code = 10000) {
+                    this.imgs = res.data.data.indexImgs;
+                }
+            })
+        },
+        methods: {
+            updateStatus(status){
+                var imgId = event.srcElement.dataset.id;
+                axios({
+                    url:baseUrl+"index/updateImg",
+                    method: "put",
+                    params:{
+                        imgId:imgId,
+                        status:status,
+                    }
+                }).then(res=>{
+                    if(res.data.code=10000){
+                        layer.msg("状态修改成功！");
+                        location.reload();
+                    }
+                });
+            }
+        },
+
+    })
+</script>
+</body>
+</html>

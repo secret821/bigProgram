@@ -150,6 +150,8 @@
                                 }
                                 window.location.href = this.returnUrl;
                             }
+                        } else if (result.code == 99999) {
+                            vm.tips = result.msg;
                         } else {
                             vm.tips = "账号或密码错误";
                         }
