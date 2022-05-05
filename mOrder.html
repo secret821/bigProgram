@@ -37,6 +37,7 @@
                 <th>下单时间</th>
                 <th>总金额</th>
                 <th>下单用户</th>
+                <th>订单备注</th>
                 <th>订单状态</th>
                 <th>操作</th>
             </tr>
@@ -47,6 +48,10 @@
                 <td>{{order.createTime}}</td>
                 <td>{{order.actualAmount}}</td>
                 <td>{{order.receiverName}}</td>
+                <td>
+                    <span v-if="order.orderRemark==''">无</span>
+                    <span v-else>{{order.orderRemark}}</span>
+                </td>
                 <td style="color: red">
                     <p v-if="order.status==1">待付款</p>
                     <p v-if="order.status==2">待发货</p>

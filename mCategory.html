@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+    <title>后台</title>
+    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script src="static/manger/js/pintuer.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
+</head>
+
+<body>
+<div id="container">
+    <div class="panel admin-panel">
+        <div class="padding border-bottom">
+            <ul class="search" style="padding-left: 10px;">
+                <li>
+                    <a class="button border-main icon-plus-square-o" href="">新增一级类目</a>
+                </li>
+            </ul>
+        </div>
+        <table class="table table-hover text-center">
+            <tr>
+                <th>ID</th>
+                <th>类目名称</th>
+                <th>级别</th>
+                <th>口号</th>
+                <th>操作</th>
+            </tr>
+            <template v-for="category in categories">
+                <tr>
+                    <td>{{category.categoryId}}</td>
+                    <td>{{category.categoryName}}</td>
+                    <td>{{category.categoryLevel}}</td>
+                    <td>{{category.categorySlogan}}</td>
+                    <td>
+                        <div class="button-group">
+                            <a class="button border-main" :data-id="category.categoryId" @click="gotoCateGory"><span class="icon-edit">查看二级分类</span></a>
+                            <a class="button border-main" :data-id="category.categoryId"><span class="icon-edit">修改</span></a>
+                            <a class="button border-red" :data-id="category.categoryId"><span class="icon-trash-o">删除</span></a>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript" src="static/js/cookie_utils.js"></script>
+<script type="text/javascript" src="static/js/vue.js"></script>
+<script type="text/javascript" src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript" src="static/js/axios.min.js"></script>
+
+<script>
+
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
+
+    var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+        el: "#container",
+        data: {
+            categories:[],
+        },
+        created: function () {
+            axios({
+                url: baseUrl + "index/queryAllCategory",
+                method: "get",
+                params: {
+                    categoryLevel: 1,
+                    parent_id: 0
+                }
+            }).then(res => {
+                if (res.data.code = 10000) {
+                    this.categories = res.data.data;
+
+                }
+            });
+        },
+        methods: {
+            gotoCateGory: function () {
+                var categoryID = event.srcElement.dataset.id;
+                window.location.href = "mCategory2.html?parentId=" + categoryID ;
+
+            }
+
+        }
+    })
+</script>
+</body>
+
+</html>
