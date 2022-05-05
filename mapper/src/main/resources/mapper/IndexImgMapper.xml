@@ -28,4 +28,9 @@
     select img_id,img_url,img_bg_color,prod_id,category_id,index_type,create_time,update_time,seq,status
     from index_img where 1=1 order by seq asc;
   </select>
+
+
+  <select id="selectOneRow" resultSets="java.util.List" resultType="String">
+        SELECT DISTINCT(img_bg_color) from index_img
+  </select>
 </mapper>

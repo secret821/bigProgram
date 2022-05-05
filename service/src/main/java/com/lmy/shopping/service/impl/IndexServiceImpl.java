@@ -12,7 +12,9 @@ import com.lmy.shopping.vo.ResultVo;
 import com.lmy.shopping.vo.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,11 +41,11 @@ public class IndexServiceImpl implements IndexService {
     public ResultVo ListIndexImg() {
         HashMap<String, Object> indexMap = new HashMap<>();
         List<IndexImg> indexImgs = indexImgMapper.listIndexImage();
-        if (indexImgs.size()==0){
-            return new ResultVo(StatusCode.STATUS_FAIL,"后台图片查询出现错误",null);
-        }else {
-            indexMap.put("indexImgs",indexImgs);
-            return new ResultVo(StatusCode.STATUS_OK,"success",indexMap);
+        if (indexImgs.size() == 0) {
+            return new ResultVo(StatusCode.STATUS_FAIL, "后台图片查询出现错误", null);
+        } else {
+            indexMap.put("indexImgs", indexImgs);
+            return new ResultVo(StatusCode.STATUS_OK, "success", indexMap);
         }
     }
 
@@ -51,8 +53,8 @@ public class IndexServiceImpl implements IndexService {
     public ResultVo ListIndexCategory() {
         HashMap<String, Object> indexMap = new HashMap<>();
         List<CategoryVO> categoryVOS = categoryMapper.selectAllCategory();
-        indexMap.put("category",categoryVOS);
-        return new ResultVo(StatusCode.STATUS_OK,"success",indexMap);
+        indexMap.put("category", categoryVOS);
+        return new ResultVo(StatusCode.STATUS_OK, "success", indexMap);
     }
 
 
@@ -60,20 +62,18 @@ public class IndexServiceImpl implements IndexService {
     public ResultVo ListImg() {
         HashMap<String, Object> indexMap = new HashMap<>();
         List<IndexImg> indexImgs = indexImgMapper.listImage();
-        if (indexImgs.size()==0){
-            return new ResultVo(StatusCode.STATUS_FAIL,"后台图片查询出现错误",null);
-        }else {
-            indexMap.put("indexImgs",indexImgs);
-            return new ResultVo(StatusCode.STATUS_OK,"success",indexMap);
+        if (indexImgs.size() == 0) {
+            return new ResultVo(StatusCode.STATUS_FAIL, "后台图片查询出现错误", null);
+        } else {
+            indexMap.put("indexImgs", indexImgs);
+            return new ResultVo(StatusCode.STATUS_OK, "success", indexMap);
         }
     }
 
     @Override
     public ResultVo queryImgById(int imgId) {
-        HashMap<String, Object> indexMap = new HashMap<>();
         IndexImg indexImg = indexImgMapper.selectByPrimaryKey(imgId);
-        indexMap.put("indexImg",indexImg);
-        return new ResultVo(StatusCode.STATUS_OK,"success",indexMap);
+        return new ResultVo(StatusCode.STATUS_OK, "success", indexImg);
     }
 
     @Override
@@ -85,5 +85,29 @@ public class IndexServiceImpl implements IndexService {
             return new ResultVo(StatusCode.STATUS_OK, "success", null);
         }
         return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
+    }
+
+
+    @Override
+    public ResultVo updateImg(IndexImg indexImg) {
+        Example example = new Example(IndexImg.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("imgId", indexImg.getImgId());
+        IndexImg indexImg1 = indexImgMapper.selectOneByExample(example);
+        indexImg1.setSeq(indexImg.getSeq());
+        indexImg1.setImgUrl(indexImg.getImgUrl());
+        indexImg1.setUpdateTime(new Date());
+        int i = indexImgMapper.updateByPrimaryKeySelective(indexImg);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
+    }
+
+
+    @Override
+    public ResultVo queryStyle() {
+        List<String> strings = indexImgMapper.selectOneRow();
+        return new ResultVo(StatusCode.STATUS_OK, "success", strings);
     }
 }

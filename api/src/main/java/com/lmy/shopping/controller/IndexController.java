@@ -1,5 +1,6 @@
 package com.lmy.shopping.controller;
 
+import com.lmy.shopping.entity.IndexImg;
 import com.lmy.shopping.service.CategoryService;
 import com.lmy.shopping.service.IndexService;
 import com.lmy.shopping.vo.ResultVo;
@@ -64,11 +65,25 @@ public class IndexController {
         return resultVo;
     }
 
+    @ApiOperation("查询图片样式")
+    @GetMapping(value = "queryStyle")
+    public ResultVo queryStyle(){
+        ResultVo resultVo = indexService.queryStyle();
+        return resultVo;
+    }
 
     @ApiOperation("修改图片的状态")
-    @PutMapping(value = "updateImg")
-    public ResultVo update(int imgId,int status){
+    @PutMapping(value = "updateImgStatus")
+    public ResultVo updateStatus(int imgId,int status){
         ResultVo resultVo = indexService.updateStatus(imgId,status);
+        return resultVo;
+    }
+
+
+    @ApiOperation("修改图片")
+    @PutMapping(value = "updateImg")
+    public ResultVo updateImge(@RequestBody IndexImg indexImg){
+        ResultVo resultVo = indexService.updateImg(indexImg);
         return resultVo;
     }
 }

@@ -10,4 +10,6 @@ public interface IndexImgMapper extends GeneralDAO<IndexImg> {
     List<IndexImg> listIndexImage();
 
     List<IndexImg> listImage();
+
+    List<String> selectOneRow();
  }

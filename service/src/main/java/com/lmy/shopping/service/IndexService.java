@@ -28,7 +28,6 @@ public interface IndexService {
      */
     ResultVo ListIndexCategory();
 
-
     /**
      * 管理员查查询
      * @return
@@ -43,10 +42,25 @@ public interface IndexService {
 
 
     /**
+     * 查询样式
+     * @return
+     */
+    ResultVo queryStyle();
+
+    /**
      * 修改状态
      * @param imgId
      * @param status
      * @return
      */
     ResultVo updateStatus(int imgId,int status);
+
+
+    /**
+     * 轮播图修改
+     * @param indexImg
+     * @return
+     */
+
+    ResultVo updateImg(IndexImg indexImg);
 }
