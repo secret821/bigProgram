@@ -56,7 +56,6 @@ public class OrderController {
             } else {
                 return new ResultVo(StatusCode.STATUS_FAIL, "订单提交失败！", null);
             }
-
         } catch (SQLException e) {
             return new ResultVo(StatusCode.STATUS_FAIL, "订单提交失败！", null);
         } catch (Exception e) {

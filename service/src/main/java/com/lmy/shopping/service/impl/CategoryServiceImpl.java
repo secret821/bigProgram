@@ -52,7 +52,32 @@ public class CategoryServiceImpl implements CategoryService {
         criteria.andEqualTo("categoryLevel",categoryLevel)
                 .andEqualTo("parentId",parent_id);
         List<Category> categories = categoryMapper.selectByExample(example);
-
         return new ResultVo(StatusCode.STATUS_OK,"success",categories);
+    }
+
+    @Override
+    public ResultVo deleteCategory(int cid) {
+        Example example=new Example(Category.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("categoryId",cid);
+        int i = categoryMapper.deleteByExample(example);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
+    }
+
+    @Override
+    public ResultVo updateCategory(Integer cid, Category category) {
+        Category category1 = categoryMapper.selectByPrimaryKey(cid);
+        category1.setCategoryName(category.getCategoryName());
+        if (category.getCategorySlogan()!=null && category.getCategorySlogan()!=""){
+            category1.setCategorySlogan(category.getCategorySlogan());
+        }
+        int i = categoryMapper.updateByPrimaryKeySelective(category1);
+        if (i > 0) {
+            return new ResultVo(StatusCode.STATUS_OK, "success", null);
+        }
+        return new ResultVo(StatusCode.STATUS_FAIL, "fail", null);
     }
 }

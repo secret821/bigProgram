@@ -187,14 +187,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public ResultVo updateUserName(int uid, String name) {
+    public ResultVo updateUserName(int uid, String nickname) {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("username", name);
+        criteria.andEqualTo("nickname", nickname);
         List<Users> users1 = userMapper.selectByExample(example);
         if (users1.size() == 0) {
             Users users = userMapper.selectByPrimaryKey(uid);
-            users.setUsername(name);
+            users.setUsername(nickname);
             int i = userMapper.updateByPrimaryKeySelective(users);
             if (i > 0) {
                 return new ResultVo(StatusCode.STATUS_OK, "success", null);

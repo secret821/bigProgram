@@ -1,5 +1,6 @@
 package com.lmy.shopping.controller;
 
+import com.lmy.shopping.entity.Category;
 import com.lmy.shopping.entity.IndexImg;
 import com.lmy.shopping.service.CategoryService;
 import com.lmy.shopping.service.IndexService;
@@ -94,4 +95,25 @@ public class IndexController {
         return resultVo;
     }
 
+    @ApiOperation("查询分类通过Id")
+    @GetMapping(value = "queryCategory")
+    public ResultVo queryCateGoryById(int categoryId){
+        ResultVo resultVo = categoryService.queryCategory(categoryId);
+        return resultVo;
+    }
+
+
+    @ApiOperation("查询分类通过Id")
+    @DeleteMapping(value = "deleteCategory")
+    public ResultVo deleteCategoryById(int categoryId){
+        ResultVo resultVo = categoryService.deleteCategory(categoryId);
+        return resultVo;
+    }
+
+    @ApiOperation("修改分类信息")
+    @PutMapping(value = "updateCategory")
+    public ResultVo updateCategory(Integer categoryId, @RequestBody Category category){
+        ResultVo resultVo = categoryService.updateCategory(categoryId,category);
+        return resultVo;
+    }
 }

@@ -1,5 +1,6 @@
 package com.lmy.shopping.service;
 
+import com.lmy.shopping.entity.Category;
 import com.lmy.shopping.vo.ResultVo;
 
 /**
@@ -23,4 +24,20 @@ public interface CategoryService {
      * @return
      */
     ResultVo queryAllCategory(int categoryLevel,int parent_id);
+
+    /**
+     * 删除某分类
+     * @param cid
+     * @return
+     */
+
+    ResultVo deleteCategory(int cid);
+
+    /**
+     * 修改分类信息
+     * @param cid
+     * @param category
+     * @return
+     */
+    ResultVo updateCategory(Integer cid, Category category);
 }

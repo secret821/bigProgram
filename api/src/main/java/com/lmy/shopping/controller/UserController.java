@@ -74,6 +74,12 @@ public class UserController {
         ResultVo resultVo = userService.userInfo(userId);
         return resultVo;
     }
+    @ApiOperation("根据id查询用户")
+    @GetMapping("/userInfoById")
+    public ResultVo userInfoById(String userId){
+        ResultVo resultVo = userService.userInfo(userId);
+        return resultVo;
+    }
     @ApiOperation("用户信息展示接口")
     @GetMapping("/usersInfo")
     @ApiImplicitParams({
@@ -104,8 +110,8 @@ public class UserController {
             @ApiImplicitParam(dataType = "int",name = "userId", value = "用户ID",required = true),
             @ApiImplicitParam(dataType = "String",name = "username", value = "用户名",required = true),
     })
-    public ResultVo updateUserName(int userId,String username){
-        ResultVo resultVo = userService.updateUserName(userId,username);
+    public ResultVo updateUserName(int userId,String nickname){
+        ResultVo resultVo = userService.updateUserName(userId,nickname);
         return resultVo;
     }
 
