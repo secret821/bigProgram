@@ -37,6 +37,7 @@
                 <th>手机号码</th>
                 <th>邮箱</th>
                 <th>性别</th>
+                <th>昵称</th>
                 <th>真实姓名</th>
                 <th>状态</th>
                 <th>操作</th>
@@ -54,6 +55,7 @@
                         <span v-if="user.userSex==1">男</span>
                         <span v-else-if="user.userSex==0">女</span>
                     </td>
+                    <td>{{user.nickname}}</td>
                     <td>{{user.realname}}</td>
                     <td>
                         <span v-if="user.status==1" style="color: green">活跃</span>
@@ -61,9 +63,9 @@
                     </td>
                     <td>
                         <div class="button-group">
-                            <a class="button border-main" :data-id="user.userId" :data-name="user.username"
+                            <a class="button border-main" :data-id="user.userId"
                                @click="gotoUp">
-                                <div class="icon-edit" :data-id="user.userId" :data-name="user.username">违规昵称修改</div>
+                                <div class="icon-edit" :data-id="user.userId" >违规昵称修改</div>
                             </a>
 
                             <a class="button border-red" v-if="user.status==1" :data-id="user.userId"
@@ -191,8 +193,8 @@
             },
             gotoUp: function () {
                 var userId = event.srcElement.dataset.id;
-                var username = event.srcElement.dataset.name;
-                window.location.href = "updateName.html?userId=" + userId + "&username=" + username;
+                setCookieValue("userId",userId);
+                window.location.href = "updateName.html"
 
             }
 

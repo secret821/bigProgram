@@ -7,28 +7,32 @@
     <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
     <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
     <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
+    <script type="text/javascript" src="static/js/jquery.js"></script>
     <script src="static/manger/js/pintuer.js"></script>
-    <script type="text/javascript" src="static/js/jquery.min.js"></script>
-    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
     <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
 </head>
+
 <body>
-<div id="container">
+<div id="app">
     <div class="panel admin-panel">
         <div class="panel-head" id="add">
-            <strong><span class="icon-pencil-square-o">违规昵称修改</span></strong>
+            <strong><span class="icon-pencil-square-o">Edit</span></strong>
         </div>
 
         <div class="body-content">
-            <form method="post" class="form-x">
-                <input type="hidden" name="id" v-model="userId"/>
+            <form class="form-x" enctype="multipart/form-data">
+                <input type="hidden" name="id">
                 <div class="form-group">
-                    <div class="label"><label>修改昵称:</label></div>
+                    <div class="label"><label>类目名称:</label></div>
                     <div class="field">
-                        <input type="text" class="input w50"  data-validate="required:请输入名称"
-                               v-model="user.nickname"/>
+                        <input type="text" class="input w50" v-model="category.categoryName"/>
                         <div class="tips"></div>
                     </div>
+                </div>
+                <div class="form-group" v-if="category.categoryLevel==1">
+                    <div class="label"><label>口 号:</label></div>
+                    <input type="text" class="input w50" v-model="category.categorySlogan"/>
+                    <div class="tips"></div>
                 </div>
                 <div class="form-group">
                     <div class="label"></div>
@@ -45,48 +49,47 @@
 <script type="text/javascript" src="static/js/vue.js"></script>
 <script type="text/javascript" src="static/js/axios.min.js"></script>
 <script>
-    var layer;
-    layui.use('layer', function () {
-        layer = layui.layer;
-    });
     var baseUrl = "http://localhost:8080/";
     var vm = new Vue({
-        el: "#container",
+        el: "#app",
         data: {
-            userId: "",
-            user:{},
+            categoryID: "",
+            category: {},
         },
-        created: function () {
-            this.userId = getCookieValue("userId");
+
+        created() {
+            this.categoryID = getCookieValue("categoryID");
             axios({
-                url: baseUrl + "user/userInfoById",
+                url: baseUrl + "index/queryCategory",
                 method: "get",
                 params: {
-                    userId: this.userId,
+                    categoryId: this.categoryID,
                 }
             }).then(res => {
-                if (res.data.code=10000) {
-                    this.user=res.data.data;
+                if (res.data.code = 10000) {
+                    this.category = res.data.data;
                 }
-            })
+            });
         },
         methods: {
             submit: function () {
+                var category = {
+                    "categoryName": this.category.categoryName,
+                    "categorySlogan": this.category.categorySlogan,
+                };
                 axios({
-                    url: baseUrl + "user/updateUserName",
-                    method: "post",
+                    url: baseUrl + "index/updateCategory",
+                    method: "put",
                     params: {
-                        userId: this.user.userId,
-                        nickname: this.user.nickname
-                    }
+                        categoryId: this.categoryID,
+                    },
+                    data: category,
                 }).then(res => {
-                    if (res.data.code==10000) {
+                    if (res.data.code = 10000) {
                         layer.msg("修改成功");
-                    } else if(res.data.code==99999) {
-                        layer.msg("该用户已被使用");
                     }
                 })
-            }
+            },
         }
     })
 </script>
