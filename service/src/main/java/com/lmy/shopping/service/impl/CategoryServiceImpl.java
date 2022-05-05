@@ -43,4 +43,16 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories = categoryMapper.selectByExample(example);
         return new ResultVo(StatusCode.STATUS_OK,"success",categories.get(0));
     }
+
+
+    @Override
+    public ResultVo queryAllCategory(int categoryLevel,int parent_id) {
+        Example example=new Example(Category.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("categoryLevel",categoryLevel)
+                .andEqualTo("parentId",parent_id);
+        List<Category> categories = categoryMapper.selectByExample(example);
+
+        return new ResultVo(StatusCode.STATUS_OK,"success",categories);
+    }
 }

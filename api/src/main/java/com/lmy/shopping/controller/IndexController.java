@@ -86,4 +86,12 @@ public class IndexController {
         ResultVo resultVo = indexService.updateImg(indexImg);
         return resultVo;
     }
+
+    @ApiOperation("查询所有分类通过分类级别和上一级Id")
+    @GetMapping(value = "queryAllCategory")
+    public ResultVo queryCateGory(int categoryLevel,int parent_id){
+        ResultVo resultVo = categoryService.queryAllCategory(categoryLevel,parent_id);
+        return resultVo;
+    }
+
 }
