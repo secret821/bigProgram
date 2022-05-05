@@ -87,8 +87,9 @@
             <!--轮播 -->
             <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
                 <ul class="am-slides">
-                    <li v-for="(img,index) in indexImgs" :class="'banner'+(index+1)">
-                        <a><img :src="'static/images/'+img.imgUrl" /></a>
+                    <li v-for="(img,index) in indexImgs" :class="img.imgBgColor">
+                        <a><img :src="'static/images/'+img.imgUrl"/></a>
+                        <h1></h1>
                     </li>
                 </ul>
             </div>

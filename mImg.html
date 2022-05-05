@@ -48,7 +48,7 @@
                     <span v-else-if="img.status==0" style="color: red">已禁用</span>
                 </td>
                 <td>
-                    <a class="button border-main"><span class="icon-edit">修改</span> </a>
+                    <a class="button border-main" :data-id="img.imgId" @click="gotoUpdate"> <span class="icon-edit"> 修改</span> </a>
 
                     <a class="button border-red" v-if="img.status==1" :data-id="img.imgId" @click="updateStatus(0)">
                         <span class="icon-trash-o">禁用</span> </a>
@@ -90,7 +90,7 @@
             updateStatus(status){
                 var imgId = event.srcElement.dataset.id;
                 axios({
-                    url:baseUrl+"index/updateImg",
+                    url:baseUrl+"index/updateImgStatus",
                     method: "put",
                     params:{
                         imgId:imgId,
@@ -102,6 +102,10 @@
                         location.reload();
                     }
                 });
+            },
+            gotoUpdate:function (){
+                var ID = event.srcElement.dataset.id;
+                window.location.href = "updateImg.html?ID=" + ID ;
             }
         },
 

@@ -71,10 +71,10 @@
                         username: this.username
                     }
                 }).then(res => {
-                    if (res.data.code==10000) {
+                    if (res.data.code=10000) {
                         layer.msg("修改成功");
-                        window.location.href = "mUser.html";
-                    } else if(res.data.code==99999) {
+                       /* window.location.href = "mUser.html";*/
+                    } else if(res.data.code=99999) {
                         layer.msg("该用户已被使用");
                     }
                 })
