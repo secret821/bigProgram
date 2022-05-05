@@ -24,7 +24,7 @@
                     <li>
                         <input type="text" placeholder="请输入用户名" name="userName" class="input" v-model="username"
                                style="width: 250px;line-height: 17px;display: inline-block"/>
-                        <a class="button border-main icon-search" @click="searchUser">搜素</a>
+                        <a class="button border-main icon-search" @click="searchUser">搜索</a>
                     </li>
                 </ul>
             </div>
@@ -68,12 +68,14 @@
 
                             <a class="button border-red" v-if="user.status==1" :data-id="user.userId"
                                @click="updateUser(0)">
-                                <div class="icon-trash-o">禁用</div>
+                                <div class="icon-trash-o" :data-id="user.userId"
+                                     @click="updateUser(0)">禁用</div>
 
                             </a>
                             <a class="button border-green" v-else-if="user.status==0" :data-id="user.userId"
                                @click="updateUser(1)">
-                                <div class="icon-recycle">启用</div>
+                                <div class="icon-recycle" :data-id="user.userId"
+                                     @click="updateUser(1)">启用</div>
                             </a>
                         </div>
                     </td>
@@ -120,7 +122,7 @@
         created: function () {
             axios({
                 url: baseUrl + "user/usersInfo",
-                methods: "get",
+                method: "get",
                 params: {
                     pageNum: this.pageNum,
                     limit: this.limit,

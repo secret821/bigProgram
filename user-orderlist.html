@@ -71,7 +71,7 @@
                 <template v-for="(order,index) in orders">
                     <tr>
                         <td>{{index + 1}}</td>
-                        <td>{{order.untitled.substring(0, order.untitled.length - 1)}}</td>
+                        <!-- <td>{{order.untitled.substring(0, order.untitled.length - 1)}}</td> -->
                         <td>
                             <span v-if="order.status == '1'">待付款</span>
                             <span v-else-if="order.status == '2'">待发货</span>
@@ -150,9 +150,9 @@
             count5: 0,
             count6: 0,
             status: null,
-
         },
         created: function () {
+            console.log('这是订单页面')
             this.token = getCookieValue("token");
             this.userId = getCookieValue("userId");
             axios({

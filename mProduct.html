@@ -3,79 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
-  <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
-  <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
-  <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
+    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="static/manger/css/style.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/pintuer.css">
+    <link type="text/css" rel="stylesheet" href="static/manger/css/admin.css">
 
-  <script type="text/javascript" src="static/js/jquery.js"></script>
-  <script src="static/manger/js/pintuer.js"></script>
-  <script type="text/javascript" src="static/js/utils.js"></script>
-  <script type="text/javascript" src="static/js/cookie_utils.js"></script>
-  <script type="text/javascript" src="static/js/vue.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <script type="text/javascript" src="static/js/element-ui.js"></script>
-  <script type="text/javascript" src="static/js/axios.min.js"></script>
-  <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
-  <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script src="static/manger/js/pintuer.js"></script>
+    <script type="text/javascript" src="static/js/utils.js"></script>
+    <script type="text/javascript" src="static/js/cookie_utils.js"></script>
+    <script type="text/javascript" src="static/js/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/javascript" src="static/js/element-ui.js"></script>
+    <script type="text/javascript" src="static/js/axios.min.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
 </head>
 <body>
 <div id="container">
-  <div class="panel admin-panel">
-  <form action="" id="listform" method="post">
-    <div class="padding border-bottom">
-      <ul class="search" style="padding-left: 10px;">
-        <li>
-          <a class="button border-main icon-plus-square-o" href="">添加商品</a>
-        </li>
-        <li>
-          <input type="text" placeholder="请输入商品名称" name="name" class="input" value=""
-                 style="width: 250px;line-height: 17px;display: inline-block" />
-          <a href="javascript:void(0)" onclick="" class="button border-main icon-search">搜索</a>
-        </li>
-      </ul>
+    <div class="panel admin-panel">
+        <form action="" id="listform" method="post">
+            <div class="padding border-bottom">
+                <ul class="search" style="padding-left: 10px;">
+                    <li>
+                        <a class="button border-main icon-plus-square-o" href="">添加商品</a>
+                    </li>
+                    <li>
+                        <input type="text" placeholder="请输入商品名称"  class="input" v-model="keyWord"
+                               style="width: 250px;line-height: 17px;display: inline-block"/>
+                        <a @click="searchProduct" class="button border-main icon-search">搜索</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <table class="table table-hover text-center">
+            <tr>
+                <th>商品ID</th>
+                <th>商品主图</th>
+                <th>商品名称</th>
+                <th>商品一级分类</th>
+                <th>商品三级级分类</th>
+                <th>上架时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+
+            <tr v-for="product in products">
+                <td>{{product.productId}}</td>
+                <td><img :src="'static/pimgs/'+product.imgUrl" alt="" style="width: 100px;height: 100px;"></td>
+                <td>{{product.productName}}</td>
+                <td>{{product.categoryFirstName}}</td>
+                <td>{{product.categoryName}}</td>
+                <td>{{product.createTime}}</td>
+                <td>
+                    <span v-if="product.productStatus==1" style="color: green">在售</span>
+                    <span v-else-if="product.productStatus==0" style="color: red">已下架</span>
+                </td>
+                <td>
+                    <a class="button border-main" href=""><span class="icon-edit">修改</span> </a>
+                    <a class="button border-red" href=""><span class="icon-trash-o">下架</span> </a>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="8">
+                    <div class="pagelist">
+                        <el-pagination background layout="prev, pager, next" :current-page="pageNum"
+                                       :page-size="limit" :total="count" @current-change="pager">
+
+                        </el-pagination>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
-  </form>
-  <table class="table table-hover text-center">
-    <tr>
-      <th>商品名称</th>
-      <th>商品主图</th>
-      <th>商品价格</th>
-      <th>商品一级分类</th>
-      <th>商品三级级分类</th>
-      <th>操作</th>
-    </tr>
-
-      <tr>
-        <td></td>
-        <td><img src="" alt="" style="width: 100px;height: 100px;"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          <a class="button border-main" href=""><span class="icon-edit">修改</span> </a>
-          <a class="button border-red" href=""><span class="icon-trash-o">下架</span> </a>
-        </td>
-
-      </tr>
-
-    <tr>
-      <td colspan="8">
-        <div class="pagelist">
-
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
 </div>
 <script>
-  var vm=new Vue({
-    el:"#container",
-    data:{
-      products:[]
-    }
-  })
+    var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+        el: "#container",
+        data: {
+            pageNum: 1,
+            limit: 15,
+            pageCount: 0,
+            count: 0,
+            keyWord: "",
+            products: []
+        },
+        created: function () {
+            axios({
+                url: baseUrl + "product/queryProduct",
+                method: "get",
+                params: {
+                    pageNum: this.pageNum,
+                    limit: this.limit,
+                },
+            }).then(res => {
+                let pageHelper = res.data.data;
+                if (res.data.code = 10000) {
+                    this.products = pageHelper.list;
+                    this.pageCount = pageHelper.pageCount;
+                    this.count = pageHelper.count;
+                    console.log(this.products);
+                }
+            })
+        },
+        methods: {
+            pager: function (currentPage) {
+                this.pageNum = currentPage;
+                axios.get(baseUrl + "product/queryProduct",
+                    {
+                        params: {
+                            pageNum: this.pageNum,
+                            limit: this.limit,
+                            keyWord: this.keyWord,
+                        }
+                    }).then(res => {
+                    let pageHelper = res.data.data;
+                    if (res.data.code = 10000) {
+                        this.products = pageHelper.list;
+                        this.pageCount = pageHelper.pageCount;
+                        this.count = pageHelper.count;
+                    }
+                });
+            },
+            searchProduct: function () {
+                axios({
+                    url:baseUrl + "product/queryProduct",
+                    methods: "get",
+                    params: {
+                        pageNum: this.pageNum,
+                        limit: this.limit,
+                        keyWord: this.keyWord,
+                    }
+                }).then(res => {
+                    let pageHelper = res.data.data;
+                    if (res.data.code = 10000) {
+                        this.products = pageHelper.list;
+                        this.pageCount = pageHelper.pageCount;
+                        this.count = pageHelper.count;
+                    }
+                });
+            },
+        }
+    })
 </script>
 </body>
 </html>

@@ -203,13 +203,13 @@
 
                             <div class="mod-vip">
                                 <div class="m-baseinfo" v-if="isLogin">
-                                    <a href="person/index.html">
+                                    <a href="/user-center.html">
                                         <img :src="'static/'+userImg">
                                     </a>
                                     <em>
                                         Hi,<span class="s-name">{{username}}</span>
                                         <a href="#">
-                                            <p>点击更多优惠活动</p>
+                                            <p>点击进入个人中心</p>
                                         </a>
                                     </em>
                                 </div>
@@ -361,7 +361,7 @@
                                         <div class="sub-title ">
                                             销量：{{rc.products[0].soldNum}}
                                         </div>
-                                        <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                        <i class="am-icon-shopping-basket am-icon-md  seprate" @click="addShoppingCart"></i>
                                     </div>
                                     <a :href="'introduction.html?pid='+rc.products[0].productId"><img :src="'static/pimgs/'+rc.products[0].productImgs[0].url"/></a>
                                 </div>
@@ -644,6 +644,25 @@
             token: null,
             userId: null,
             keyWord:"",
+            currentIndex: "0",
+            num: 1,
+            productId: "",
+            productSkus: [
+            {
+                "skuId": "",
+                "productId": "",
+                "skuName": "",
+                "skuImg": "",
+                "untitled": "",
+                "originalPrice": 0,
+                "sellPrice": 0,
+                "discounts": 0,
+                "stock":0,
+                "createTime": "",
+                "updateTime": "",
+                "status": 1
+            },
+        ],
         },
 
         created: function () {
@@ -716,7 +735,17 @@
 
                 }
             })
-
+            /*商品的细节请求*/
+            axios.get(baseUrl + "product/detail-info/" + this.recommendCategories.categoryPic).then(res => {
+                let result = res.data;
+                if (result.code = 10000) {
+                    this.product = result.data.product[0];
+                    this.productImgs = result.data.productImgs;
+                    this.productSkus = result.data.productSkus;
+                    var proStr = this.productSkus[0].untitled;
+                    this.skuProps = eval("(" + proStr + ")");
+                }
+            });
         },
         methods: {
             signOut: function () {
@@ -728,6 +757,62 @@
             toSearch:function (){
                 var url="search.html?keyWord="+this.keyWord;
                 window.location.href=encodeURI(url);
+            },
+            addShoppingCart: function () {
+                debugger
+                console.log('添加购物车')
+                //套参属性转换成字符串
+                var propStr = "";
+                for (var key in this.currentSku) {
+                    propStr += key + ":" + this.currentSku[key] + ";";
+                }
+                //从cookie获取userId
+                var uid = getCookieValue("userId");
+                // console.log(this.currentIndex,'this.currentIndex--->')
+                //购物车信息
+                var cart = {
+                    "cartId": "",
+                    "cartNum": this.num,
+                    "productId": this.productId,
+                    "productPrice": this.productSkus[this.currentIndex].sellPrice,
+                    "skuId": this.productSkus[this.currentIndex].skuId,
+                    "skuProps": propStr,
+                    "userId": uid
+                };
+                //从cookie中获取token
+                var token = getCookieValue("token");
+                //添加购物车
+                var url5 = baseUrl + "shoppingCart/add";
+                axios({
+                    url: url5,
+                    method: "post",
+                    headers: {
+                        token: token
+                    },
+                    data: cart
+                }).then(res => {
+                    if (res.data.code == 10000) {
+                        //加购成功
+                        layer.msg("添加购物车成功！")
+                    } else if (res.data.code == 99999) {
+                        //加购失败
+                        layer.msg("添加购物车失败！")
+                    } else {
+
+                        var message = "";
+
+                        if (res.data.code == 10011) {
+                            //用户未登录
+                            message = "您还未登录，请先登录";
+                        } else if (res.data.code == 10009) {
+                            //登录过期·
+                            message = "该账号已过期，请重新登录";
+                        }
+                        var loginUrl = "login.html?tips=" + message + "&returnUrl=introduction.html&pid=" + this.productId + "&num=" + this.num + "&sid="
+                            + this.currentIndex;
+                        window.location.href = encodeURI(loginUrl);
+                    }
+                });
             }
         }
     });

@@ -17,17 +17,15 @@
     <link href="static/css/jsstyle.css" rel="stylesheet" type="text/css">
     <link href="static/css/lee.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script type="text/javascript" src="static/js/vue.js"></script>
 
-    <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
     <script type="text/javascript" src="static/js/jquery.min.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.js"></script>
 </head>
 
 <body style="overflow: visible;">
     <div id="app">
-        <div class="concent" style="margin-top: 35px; overflow: scroll;     height: 2980px;">
+        <div class="concent" style="margin-top: 35px; height: 2980px;">
             <div class="paycont" style="overflow: scroll; height: 100%;">
                 <div class="edit" v-if="showEdit">
                     <p style="display: inline-block;
@@ -54,14 +52,14 @@
                         *收货人姓名:<input type="text" v-model='aaa'></span>
                     <span>
                         &nbsp;&nbsp;&nbsp;&nbsp;*手机号码:<input type="text" v-model='aaa'></span>
-                    <span>
-                        <input type="checkbox">
+                    <span >
+                        <input type="checkbox"  @click='nowState'>
                         <p style="position: relative;
                             top: 3px;
                             left: -154px; display: inline;">设置为默认收货地址</p>
                     </span>
                     <span>
-                        <input type="button" onclick="submit" value="保存"
+                        <input type="button" @click="setCommonAddr" value="保存"
                             style="background-color: #5684ff; border-radius: 4px; border: none;width: 55px;margin-top: 6px;height: 35px; position: relative; top: 0px; left: 220px;"></span>
 
                 </div>
@@ -74,57 +72,63 @@
                     <ul>
                         <!-- <template v-for="(addr,index) in addrs">
                             <li style="margin-top: 6px;" :data-index="index"> -->
-                        <div class="address-left">
-                            <!-- <div class="user">
+                                <li class="address-left">
+                                    <!-- <div class="user">
                                         <span class="buy-address-detail">
                                             <span class="buy-phone">15222792222</span>
                                         </span>
                                     </div> -->
-                            <div class="default-address">
-                                <span class="buy-line-title buy-line-title-type" style="position: relative;top: -8px;
+                                    <div class="default-address">
+                                        <span class="buy-line-title buy-line-title-type" style="position: relative;top: -8px;
                                         left: 0px;">收货地址：</span>
-                                <div class="concent">
-                                    <div id="cartTable">
-                                        <div class="cart-table-th">
-                                            <div class="wp">
-                                                <div class="th th-chk">
-                                                    <div id="J_SelectAll1" class="select-all J_SelectAll"
-                                                        style="text-align:center">
-                                                        收货人
+                                        <div class="concent">
+                                            <div id="cartTable">
+                                                <div class="cart-table-th">
+                                                    <div class="wp">
+                                                        <div class="th th-chk">
+                                                            <div id="J_SelectAll1" class="select-all J_SelectAll"
+                                                                style="text-align:center">
+                                                                收货人
+                                                            </div>
+                                                        </div>
+                                                        <div class="th th-item">
+                                                            <div class="td-inner">所在地区
+                                                            </div>
+                                                        </div>
+                                                        <div class="th th-price">
+                                                            <div class="td-inner">详细地址
+                                                            </div>
+                                                        </div>
+                                                        <div class="th th-amount">
+                                                            <div class="td-inner">邮编
+                                                            </div>
+                                                        </div>
+                                                        <div class="th th-sum">
+                                                            <div class="td-inner">电话/手机</div>
+                                                        </div>
+                                                        <div class="th th-op">
+                                                            <div class="td-inner"
+                                                                style="display: block;position: relative;top:0px;left: 72px;">
+                                                                操作</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="th th-item">
-                                                    <div class="td-inner">所在地区
-                                                    </div>
-                                                </div>
-                                                <div class="th th-price">
-                                                    <div class="td-inner">详细地址
-                                                    </div>
-                                                </div>
-                                                <div class="th th-amount">
-                                                    <div class="td-inner">邮编
-                                                    </div>
-                                                </div>
-                                                <div class="th th-sum">
-                                                    <div class="td-inner">电话/手机</div>
-                                                </div>
-                                                <div class="th th-op">
-                                                    <div class="td-inner"
-                                                        style="display: block;position: relative;top:0px;left: 72px;">
-                                                        操作</div>
                                                 </div>
                                             </div>
                                         </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </li>
+                        <!-- </li>
+                    </template> -->
+                </ul>
+                <ul class="item-content clearfix">
+                        <template v-for="(addr,index) in addrs">
+                            <li style="margin-top: 6px;" :data-index="index">
+                                <tr class="item-list">
+                                    <div class="bundle  bundle-last">
                                         <div class="clear"></div>
-                                        <template v-for="(addr,index) in addrs">
-                                            <li style="margin-top: 6px;" :data-index="index">
-                                                <!-- <template v-for="(sc,index) in shopCarts"> -->
-                                                <tr class="item-list">
-                                                    <div class="bundle  bundle-last" style="height: 80px;">
-                                                        <div class="clear"></div>
-                                                        <div class="bundle-main">
-                                                            <ul class="item-content clearfix">
-                                                                <!-- <li class="td td-chk">
+                                        <div class="bundle-main">
+                                                <!-- <li class="td td-chk">
                                                                 <div class="cart-checkbox ">
                                                                     <input class="check" id="J_CheckBox_170769542747"
                                                                         name="items[]" v-model="opts" :value="index"
@@ -132,93 +136,93 @@
                                                                     <label for="J_CheckBox_170769542747"></label>
                                                                 </div>
                                                             </li> -->
-                                                                <li class="consignee" style="
+                                                <li class="consignee" style="
                                                             text-align: center;
                                                             position: relative;
                                                             left: 0px;
                                                             top: 18px;
-                                                            width: 64px;">留简</li>
-                                                                <li class=" Location"
-                                                                    style="text-align: center;position: relative;left: 79px;top: -1px;width: 100px;">
-                                                                    江西</li>
-                                                                <li class="Detailed address"
-                                                                    style="text-align: center;position: relative;left: 204px;top: -21px;width: 100px;">
-                                                                    江西省吉安市安度线</li>
-                                                                <li class="Zip code"
-                                                                    style="text-align: center;position: relative;left: 305px;top: -63px;width: 100px;">
-                                                                    222</li>
-                                                                <li class="phone"
-                                                                    style="text-align: center;position: relative;left: 412px;top: -81px;width: 100px;">
-                                                                    12223333232</li>
-                                                                <li class="td td-amount">
-                                                                    <div class="amount-wrapper ">
-                                                                        <div class="item-amount ">
-                                                                            <div class="sl"
-                                                                                style=" position: relative;left: 531px;top: -121px;">
-                                                                                <input class="min am-btn" name=""
-                                                                                    type="button" value="删除"
-                                                                                    :data-id="index"
-                                                                                    @click="deleteAddress"
-                                                                                    style="width: 56px;"
-                                                                                    data-oper="-" />
-                                                                                <input class="add am-btn" name=""
-                                                                                    type="button" value="编辑"
-                                                                                    :data-id="index" @click="editChange"
-                                                                                    style="width: 56px;"
-                                                                                    data-oper="+" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="td td-op">
-                                                                    <div class="td-inner">
-                                                                        <a data-point-url="#" class="delete"
-                                                                            :data-id="index" @click="deleteCart">
-                                                                            删除</a>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
+                                                            width: 64px;">{{addr?.receiverName}}</li>
+                                                <li class=" Location"
+                                                    style="text-align: center;position: relative;left: 79px;top: -1px;width: 100px;">
+                                                    {{addr?.province}}.{{addr?.city}}</li>
+                                                <li class="Detailed address"
+                                                    style="text-align: center;position: relative;left: 204px;top: -21px;width: 100px;">
+                                                    {{addr?.province}}{{addr?.city}}{{addr?.area}}{{addr?.addr}}</li>
+                                                <li class="Zip code"
+                                                    style="text-align: center;position: relative;left: 305px;top: -63px;width: 100px;">
+                                                    {{addr?.postCode}}</li>
+                                                <li class="phone"
+                                                    style="text-align: center;position: relative;left: 412px;top: -81px;width: 100px;">
+                                                    {{addr?.receiverMobile}} </li>
+                                                <li class="td td-amount">
+                                                    <div class="amount-wrapper ">
+                                                        <div class="item-amount ">
+                                                            <div class="sl"
+                                                                style=" position: relative;left: 531px;top: -121px;">
+                                                                <input class="min am-btn" name="" type="button"
+                                                                    value="删除" :data-id="index" @click="deleteAddress"
+                                                                    style="width: 56px;" data-oper="-" />
+                                                                <input class="add am-btn" name="" type="button"
+                                                                    value="编辑" :data-id="index" @click="editChange"
+                                                                    style="width: 56px;" data-oper="+" />
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </tr>
-                                                <!-- </template> -->
-
+                                                </li>
+                                                <li class="td td-op">
+                                                    <div class="td-inner">
+                                                        <a data-point-url="#" class="delete" :data-id="index"
+                                                            @click="deleteCart">
+                                                            删除</a>
+                                                    </div>
+                                                </li>
+                                        </div>
                                     </div>
-                                    <div class="clear"></div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- <ins class="deftip" v-if="addr.commonAddr==1">默认地址</ins> -->
+                                </tr>
+                            </li>
+                        </ul>
+                        </template>
                 </div>
-                <!-- bundle-main -->
                 <div class="clear"></div>
-                </li>
-                </template>
-                <div class="footer">
-                    <div class="footer-hd">
-                        <p>
-                            <a href="#">吃了么</a>
-                            <b>|</b>
-                            <a href="#">商城首页</a>
-                            <b>|</b>
-                            <a href="#">支付宝</a>
-                            <b>|</b>
-                            <a href="#">物流</a>
-                        </p>
-                    </div>
-                </div>
-                </ul>
+
             </div>
         </div>
+
+    </div>
+
+    <!-- <ins class="deftip" v-if="addr.commonAddr==1">默认地址</ins> -->
+    <!-- bundle-main -->
+                        <div class="clear"></div>
+                        </li>
+                        </template>
+                    </ul>
+                </div>
+    <div class="footer">
+        <div class="footer-hd">
+            <p>
+                <a href="#">吃了么</a>
+                <b>|</b>
+                <a href="#">商城首页</a>
+                <b>|</b>
+                <a href="#">支付宝</a>
+                <b>|</b>
+                <a href="#">物流</a>
+            </p>
+        </div>
+    </div>
+    </ul>
+    </div>
+    </div>
     </div>
 
     </div>
     <script type="text/javascript" src="static/js/utils.js"></script>
     <script type="text/javascript" src="static/js/cookie_utils.js"></script>
     <script type="text/javascript" src="static/js/axios.min.js"></script>
+    <script type="text/javascript" src="static/js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
     <script type="text/javascript">
 
     </script>
@@ -227,6 +231,7 @@
         var vm = new Vue({
             el: "#app",
             data: {
+                clickNow:false,
                 showEdit: false,
                 addrs: [
                     {
@@ -257,6 +262,8 @@
                 input: 'dd'
             },
             created: function () {
+                console.log('这是地址页面')
+                console.log(this.showEdit, '---------->>>>')
                 var token = getCookieValue("token");
                 this.userId = getCookieValue("userId");
                 axios({
@@ -276,18 +283,22 @@
                         // window.location.href = encodeURI(login.html);
                     } else if (res.data.code == 10000) {
                         this.addrs = res.data.data;
+                        console.log(this.addrs, 'this.addrs')
+                        console.log(res.data.data, '-----')
+                        console.log(this.addrs[0]?.receiverName, '-----')
                     }
                 });
 
             },
             methods: {
-                deleteCart: function () {
-
+                nowState: function () {
+                    this.clickNow = !this.clickNow
                 },
                 editChange: function (event) {
-                    this.showEdit = true;
                     console.log(this)
-                    console.log(this.showEdit, 'this.showEdit')
+                    console.log(typeof(this.showEdit),this.showEdit,'------->')
+                    this.showEdit = true;
+                    console.log(typeof(this.showEdit),this.showEdit, 'this.showEdit')
                     this.$forceUpdate()
                 },
                 updateView: function (event) {
@@ -297,9 +308,34 @@
                     console.log(value);
                 },
                 setCommonAddr: function (event) {
+                    console.log('保存地址')
                     var addrId = event.srcElement.dataset.id;
                     axios({
-                        url: baseUrl + "useraddr/updataStatus",
+                        url: baseUrl + "useraddr/updateStatus",
+                        methods: "get",
+                        headers: {
+                            token: getCookieValue("token"),
+                        },
+                        params: {
+                            userId: this.userId,
+                            addrId: addrId
+                        },
+                    }
+                    ).then(res => {
+                        if (res.data.code == 99999) {
+                            alert("保存地址失败");
+                            location.reload();
+                        } else if (res.data.code == 10000) {
+                            location.reload();
+                        }
+                    })
+
+                },
+                setDefultAddr: function (event) {
+                    console.log('保存默认地址')
+                    var addrId = event.srcElement.dataset.id;
+                    axios({
+                        url: baseUrl + "/useraddr/updateDefult",
                         methods: "get",
                         headers: {
                             token: getCookieValue("token"),
@@ -314,10 +350,10 @@
                             alert("设置默认地址失败");
                             location.reload();
                         } else if (res.data.code == 10000) {
+                            this.showEdit = !this.showEdit;
                             location.reload();
                         }
                     })
-
                 },
                 deleteAddress: function (event) {
                     alert('确定删除改地址吗？')
