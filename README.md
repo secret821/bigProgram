@@ -1,6 +1,6 @@
 #前后端分离  
 
-前端分支：devLY && devfont
+前端分支：devLY && devfront
 
 git init
 
